@@ -46,3 +46,5 @@ app.get('/questions', function(req, res) {
 // Mis pordi peal kuulata muudatusi
 app.listen(3000);
 console.log("Hosting on port 3000");
+
+//test test test @Richard
