@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <tr>
+      <th>Küsimus</th>
+      <th>Vastus</th>
+      <th>Algus</th>
+      <th>Kulunud aeg</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- questions tuleb QuestionControllerist mis asub /public/controllers/question.js failis -->
+    <tr ng-repeat="x in questions">
+      <td>{{x.question}}</td>
+      <td>{{x.answer}}</td>
+      <td>{{x.timeStart}}</td>
+      <td>{{x.timeElapsed}}</td>
+    </tr>
+  </tbody>
+</table>

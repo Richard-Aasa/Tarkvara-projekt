@@ -11,12 +11,12 @@
 
         $routeProvider
         .when('/', {
-            templateUrl: '/js/home/home.html',
+            templateUrl: '/views/home.html',
             controller: 'HomeController'
         })
-        .when('/topic/:id', {
-            templateUrl: '/js/topic/topic.html',
-            controller: 'TopicController'
+        .when('/question/:id', {
+            templateUrl: '/views/question.html',
+            controller: 'QuestionController'
         })
         .otherwise({redirectTo: '/'});
 
