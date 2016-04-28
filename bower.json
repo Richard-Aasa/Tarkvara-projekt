@@ -1,0 +1,24 @@
+{
+  "name": "tarkvara-projekt",
+  "description": "Testide loomise ja täitmise rakendus koolidele",
+  "main": "server.js",
+  "authors": [
+    "Richard Aasa <richard.aasa@gmail.com>"
+  ],
+  "license": "GPL-3.0",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-material": "^1.0.7",
+    "angular-resource": "^1.5.5"
+  }
+}
