@@ -53,6 +53,9 @@
                 console.log(question);
                 console.log(variant);
             }
+            $scope.addQuestion = function() {
+              $http.post('/questions', $scope.question);
+            }
         }]);
 
 }());

@@ -25,42 +25,38 @@ server.get('/questions', function(req, res) {
         }
         res.json(questions);
     });
-    // var questions = [{
-    //     title: "Millal sündis X",
-    //     type: 'Valik',
-    //     variants: [{
-    //         answer: "1337",
-    //         points: 0,
-    //         bool: false
-    //     }, {
-    //         answer: "1990",
-    //         points: 0,
-    //         bool: false
-    //     }, {
-    //         answer: "2016",
-    //         points: 15,
-    //         bool: true
-    //     }],
-    //     maxPoints: 15
-    // }, {
-    //     title: "Millal sündis Y",
-    //     type: 'Sisestus',
-    //     variants: [{
-    //         answer: "Aastal 1928",
-    //         points: 5
-    //     }, {
-    //         answer: "Aastal 1928, kuskil Siberis",
-    //         points: 10
-    //     }, {
-    //         answer: "Aastal",
-    //         points: 15
-    //     }, {
-    //         answer: "Kuskil Siberis",
-    //         points: 1
-    //     }],
-    //     maxPoints: 15
-    // }];
-    // res.json(questions);
+});
+
+server.post('/questions', function(req, res) {
+    var postData = req.body;
+
+    console.log(postData);
+
+    if (postData.title && postData.type && postData.variants && postData.maxPoints) {
+
+        var newQuestion = new Question({
+            title: postData.name,
+            type: postData.type,
+            variants: postData.variants,
+            maxPoints: postData.maxPoints
+        });
+
+        newQuestion.save(function(err, question) {
+
+            //handle saving error
+            if (err) {
+                console.error(err);
+                return res.json(err);
+            }
+
+            //return saved entry
+            res.json(question);
+        });
+
+    } else {
+        //if missing parameters returs error
+        res.sendStatus(400);
+    }
 });
 server.get('/types', function(req, res) {
     // Siin oleks reaalsuses ühendus MONGOGA
