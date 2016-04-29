@@ -59,11 +59,6 @@ server.post('/questions', function(req, res) {
         res.sendStatus(400);
     }
 });
-server.get('/types', function(req, res) {
-    // Siin oleks reaalsuses ühendus MONGOGA
-    var types = ["Valik", "Paigutus", "Sisestus"];
-    res.json(types);
-});
 
 //404
 server.use(function(req, res, next) {
