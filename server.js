@@ -4,7 +4,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     env = process.env;
 
-mongoose.connect(config.db);
+mongoose.createConnection(config.db);
 var server = express();
 server.use(bodyParser.urlencoded({
     extended: false
