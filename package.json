@@ -2,10 +2,10 @@
   "name": "tarkvara-projekt",
   "version": "0.1.0",
   "description": "Testide loomise ja täitmise rakendus koolidele",
-  "main": "start.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+     "start": "node server.js"
   },
+  "main": "start.js",
   "author": "",
   "license": "GPL-3.0",
   "repository": "https://github.com/Richard-Aasa/Tarkvara-projekt.git",
