@@ -17,6 +17,7 @@ server.get('/health', function(req, res) {
 });
 
 var Question = require('./models/question').Question;
+
 server.get('/questions', function(req, res) {
     Question.find(function(err, questions) {
         if (err) {
