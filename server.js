@@ -6,52 +6,61 @@ var express = require('express'),
 
 mongoose.connect(config.db);
 var server = express();
-server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.urlencoded({
+    extended: false
+}));
 server.use(bodyParser.json());
 server.use(express.static(__dirname + "/public"));
 
 server.get('/health', function(req, res) {
-  res.send(200)
+    res.send(200)
 });
 
+var Question = require('./models/question').Question;
 server.get('/questions', function(req, res) {
-    // Siin oleks reaalsuses ühendus MONGOGA
-    var questions = [{
-        title: "Millal sündis X",
-        type: 'Valik',
-        variants: [{
-            answer: "1337",
-            points: 0,
-            bool: false
-        }, {
-            answer: "1990",
-            points: 0,
-            bool: false
-        }, {
-            answer: "2016",
-            points: 15,
-            bool: true
-        }],
-        maxPoints: 15
-    }, {
-        title: "Millal sündis Y",
-        type: 'Sisestus',
-        variants: [{
-            answer: "Aastal 1928",
-            points: 5
-        }, {
-            answer: "Aastal 1928, kuskil Siberis",
-            points: 10
-        }, {
-            answer: "Aastal",
-            points: 15
-        }, {
-            answer: "Kuskil Siberis",
-            points: 1
-        }],
-        maxPoints: 15
-    }];
-    res.json(questions);
+    Question.find(function(err, questions) {
+        if (err) {
+            console.error(err);
+            return res.json(err);
+        }
+        res.json(questions);
+    });
+    // var questions = [{
+    //     title: "Millal sündis X",
+    //     type: 'Valik',
+    //     variants: [{
+    //         answer: "1337",
+    //         points: 0,
+    //         bool: false
+    //     }, {
+    //         answer: "1990",
+    //         points: 0,
+    //         bool: false
+    //     }, {
+    //         answer: "2016",
+    //         points: 15,
+    //         bool: true
+    //     }],
+    //     maxPoints: 15
+    // }, {
+    //     title: "Millal sündis Y",
+    //     type: 'Sisestus',
+    //     variants: [{
+    //         answer: "Aastal 1928",
+    //         points: 5
+    //     }, {
+    //         answer: "Aastal 1928, kuskil Siberis",
+    //         points: 10
+    //     }, {
+    //         answer: "Aastal",
+    //         points: 15
+    //     }, {
+    //         answer: "Kuskil Siberis",
+    //         points: 1
+    //     }],
+    //     maxPoints: 15
+    // }];
+    // res.json(questions);
 });
 server.get('/types', function(req, res) {
     // Siin oleks reaalsuses ühendus MONGOGA
@@ -69,11 +78,13 @@ server.use(function(err, req, res, next) {
 
     // ADD if auth error, wrong or expired token
     if (err.name === 'UnauthorizedError') {
-        res.status(403).json({message: "Not authorized"});
+        res.status(403).json({
+            message: "Not authorized"
+        });
         return;
     }
 
-    console.error("["+(err.status || 500)+"] "+(new Date()).toString()+" "+req.url +' '+ err);
+    console.error("[" + (err.status || 500) + "] " + (new Date()).toString() + " " + req.url + ' ' + err);
     var message = err.status == 404 ? err.message : "Unknown error";
     res.status(err.status || 500).json({
         status: err.status || 500,
@@ -81,7 +92,7 @@ server.use(function(err, req, res, next) {
     });
 });
 
-process.on('uncaughtException', function (err) {
+process.on('uncaughtException', function(err) {
     console.error((new Date()).toString() + ' uncaughtException:', err.message);
     console.error(err.stack);
     process.exit(1);
