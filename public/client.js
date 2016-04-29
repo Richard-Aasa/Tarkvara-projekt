@@ -14,8 +14,8 @@
             templateUrl: '/views/home.html',
             controller: 'HomeController'
         })
-        .when('/question/:id', {
-            templateUrl: '/views/question.html',
+        .when('/test/create', {
+            templateUrl: '/views/test.html',
             controller: 'QuestionController'
         })
         .otherwise({redirectTo: '/'});

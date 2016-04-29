@@ -1,8 +1,10 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     config = require('./config'),
+    mongoose = require('mongoose'),
     env = process.env;
 
+mongoose.connect(config.db);
 var server = express();
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
@@ -88,5 +90,3 @@ process.on('uncaughtException', function (err) {
 server.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function() {
     console.log(`Application worker started...`);
 });
-
-module.exports = server;
