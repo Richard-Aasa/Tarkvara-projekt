@@ -1,18 +1,39 @@
 <!DOCTYPE html>
-<!-- NB! ng-app="app" tähendab, et kui me loome controllerit/servicet vms,
-  siis põhirakendusele viitame sõnaga "app". Näiteks angular.module('app').controller() -->
-<html ng-app="app" ng-cloak ng-strict-di>
-  <head>
+<html>
+<head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Esileht</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/lib/angular-material/angular-material.css">
     <link rel="stylesheet" href="/css/main.css">
-  </head>
-  <body layout="column">
+</head>
+<!-- NB! ng-app="app" tähendab, et kui me loome controllerit/servicet vms,
+  siis põhirakendusele viitame sõnaga "app". Näiteks angular.module('app').controller() -->
+<body ng-app="app" ng-cloak layout="row" ng-controller="MainCtrl">
 
-    <div layout="column" ng-view></div>
+    <section layout="row" flex>
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools">Sidenav Left</h1>
+            </md-toolbar>
+            <md-content layout-padding ng-controller="LeftNavCtrl">
+                <md-button ng-click="close()" class="md-primary" hide-gt-md>
+                    Close Sidenav Left
+                </md-button>
+                <p hide-md show-gt-md>
+                    This sidenav is locked open on your device. To go back to the default behavior, narrow your display.
+                </p>
+            </md-content>
+        </md-sidenav>
+
+        <md-content flex layout-padding>
+          <md-button ng-click="toggleLeft()" class="md-primary" hide-gt-md>
+              Toggle left
+          </md-button>
+          <div ng-view layout="column"></div>
+        </md-content>
+    </section>
+
 
     <!-- Main angular modules from bower install -->
     <script src="/lib/angular/angular.min.js"></script>
@@ -24,7 +45,8 @@
 
     <!-- Need to decalre all the controllers here (e.g HomeController required to run home.html view)-->
     <script src="/client.js"></script>
-    <script src="/controllers/home.js"></script>
+    <script src="/controllers/main.js"></script>
     <script src="/controllers/question.js"></script>
-  </body>
+</body>
+
 </html>

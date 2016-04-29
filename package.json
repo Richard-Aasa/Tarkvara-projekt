@@ -2,7 +2,7 @@
   "name": "tarkvara-projekt",
   "version": "0.1.0",
   "description": "Testide loomise ja täitmise rakendus koolidele",
-  "main": "server.js",
+  "main": "start.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
