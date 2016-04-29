@@ -95,7 +95,6 @@ server.use(function(err, req, res, next) {
 process.on('uncaughtException', function(err) {
     console.error((new Date()).toString() + ' uncaughtException:', err.message);
     console.error(err.stack);
-    process.exit(1);
 });
 
 server.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function() {
