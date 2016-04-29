@@ -1,20 +1,14 @@
-// See fail on Node.js alguspunkt
-// Selles failis peavad olema mainitud kõik 'moodulid'
-// mis lähevad kasutusse
+var express = require('express'),
+    env = process.env;
 
-// Tegeleb serveri loogikaga,
-// täpsemalt GET, POST requestidega.
-// Kliendipoolne routimine on /public/client.js failis
-var express = require('express');
+var server = express();
+server.use(express.static(__dirname + "/public"));
 
-// app on objekt mis hõlmab tervet rakendust
-var app = express();
+server.get('/health', function(req, res) {
+  res.send(200)
+});
 
-// Kust otsida staatilisi (CSS/HTML/pildid) faile
-// Siia tekivad erinevad 'vaated' nagu opetaja/opilane/login/register
-app.use(express.static(__dirname + "/public"));
-
-app.get('/questions', function(req, res) {
+server.get('/questions', function(req, res) {
     // Siin oleks reaalsuses ühendus MONGOGA
     var questions = [{
         title: "Millal sündis X",
@@ -53,13 +47,11 @@ app.get('/questions', function(req, res) {
     }];
     res.json(questions);
 });
-app.get('/questiontypes', function(req, res) {
+server.get('/types', function(req, res) {
     // Siin oleks reaalsuses ühendus MONGOGA
     var types = ["Valik", "Paigutus", "Sisestus"];
     res.json(types);
 });
-// Mis pordi peal kuulata muudatusi
-app.listen(3000);
-console.log("Hosting on port 3000");
-
-//test test test @Richard
+server.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function() {
+    console.log(`Application worker started...`);
+});

@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "Testide loomise ja täitmise rakendus koolidele",
   "scripts": {
-     "start": "node app.js"
+     "start": "node server.js"
   },
-  "main": "app.js",
+  "main": "server.js",
   "author": "",
   "license": "GPL-3.0",
   "repository": "https://github.com/Richard-Aasa/Tarkvara-projekt.git",
