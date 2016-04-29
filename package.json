@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Testide loomise ja täitmise rakendus koolidele",
   "scripts": {
-     "start": "node start.js"
+     "start": "node app.js"
   },
   "main": "start.js",
   "author": "",
