@@ -44,16 +44,13 @@
                 */
                 $scope.question.variants.push(angular.copy(variant));
                 $scope.question.maxPoints += variant.points;
-                console.log(question);
-                console.log(variant);
             }
             $scope.remVariant = function(question,variant) {
                 $scope.question.maxPoints -= variant.points;
                 $scope.question.variants.splice(question.variants.indexOf(variant), 1);
-                console.log(question);
-                console.log(variant);
             }
             $scope.addQuestion = function() {
+              console.log($scope.question);
               $http.post('/questions', $scope.question);
             }
         }]);
