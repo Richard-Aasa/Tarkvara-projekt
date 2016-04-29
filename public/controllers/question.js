@@ -25,7 +25,7 @@
                 // attribuuti, kuna "questions" ei oleks defineeritud
                 $scope.questions = response;
             });
-            $http.get('/questiontypes').success(function(response) {
+            $http.get('/types').success(function(response) {
                 $scope.types = response;
             });
             $scope.question = {};
