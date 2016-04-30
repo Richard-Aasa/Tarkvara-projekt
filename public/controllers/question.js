@@ -4,7 +4,7 @@
 
     angular
         .module('app')
-        .controller('QuestionController', ['$scope', Question, '$mdToast', function($scope, Question, $mdToast) {
+        .controller('QuestionController', ['$scope', 'Question', '$mdToast', function($scope, Question, $mdToast) {
 
             // // Küsime ligipääsu serveripoolsele routile "questions"
             // // NB! Kõik kliendipoolsed addressid mis ei "lae" uut vaadet algavad localhost:3000/#/kamarajura
@@ -73,6 +73,14 @@
                         }
                     );
             }
+            var showToast = function(message){
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent(message)
+                        .position('top right')
+                        .hideDelay(3000)
+                );
+            };
         }]);
 
 }());
