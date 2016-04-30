@@ -44,7 +44,7 @@ app.get('/questions', function(req, res) {
         res.json(questions);
     });
 });
-app.get('questions/:id', function(req, res, next) {
+app.get('/questions/:id', function(req, res, next) {
 
     var params = req.params;
 
@@ -76,7 +76,7 @@ app.get('questions/:id', function(req, res, next) {
     }
 
 });
-app.delete('questions/:id', function(req, res, next) {
+app.delete('/questions/:id', function(req, res, next) {
 
     var params = req.params;
 

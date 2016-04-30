@@ -27,11 +27,11 @@
             $scope.addVariant = function(question, variant) {
                 $scope.question.variants.push(angular.copy(variant));
                 $scope.question.maxPoints += variant.points;
-            }
+            };
             $scope.remVariant = function(question, variant) {
                 $scope.question.maxPoints -= variant.points;
                 $scope.question.variants.splice(question.variants.indexOf(variant), 1);
-            }
+            };
 
             $scope.save = function(question) {
 
@@ -53,7 +53,7 @@
                             showToast(error.status + ' ' + error.statusText);
                         }
                     );
-            }
+            };
             $scope.delete = function(question) {
                 var index = $scope.questions.indexOf(question);
                 $scope.questions.splice(index, 1);
@@ -66,7 +66,7 @@
                             showToast(error.status + ' ' + error.statusText);
                         }
                     );
-            }
+            };
             var showToast = function(message) {
                 $mdToast.show(
                     $mdToast.simple()
