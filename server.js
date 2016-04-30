@@ -78,31 +78,30 @@ app.get('questions/:id', function(req, res, next) {
 });
 app.delete('questions/:id', function(req, res, next) {
 
-        var params = req.params;
+    var params = req.params;
 
-        if (params.id) {
+    if (params.id) {
 
-            var conditions = {
-                _id: params.id
-            };
+        var conditions = {
+            _id: params.id
+        };
 
-            var query = Question.findOneAndRemove(conditions);
+        var query = Question.findOneAndRemove(conditions);
 
-            query.exec(function(err, question) {
-                if (err) {
-                    console.error(err);
-                    return res.status(500).json({
-                        "error": "Did not find question or no authorization"
-                    });
-                }
-                res.json(question);
-            });
+        query.exec(function(err, question) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({
+                    "error": "Did not find question or no authorization"
+                });
+            }
+            res.json(question);
+        });
 
-        } else {
-            res.sendStatus(400);
-        }
+    } else {
+        res.sendStatus(400);
     }
-}
+});
 app.post('/questions', function(req, res) {
     var postData = req.body;
 
