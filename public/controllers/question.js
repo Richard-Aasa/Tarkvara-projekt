@@ -49,6 +49,7 @@
                             $scope.questions.push(question);
                             $scope.question = {};
                             $scope.question.type = question.type;
+                            $scope.variant = null;
                             $scope.question.variants = [];
                             $scope.question.maxPoints = 0;
                         },
