@@ -5,20 +5,20 @@ var express = require('express'),
     env = process.env;
 
 var url = config.db
-// if OPENSHIFT env variables are present, use the available connection info:
+    // if OPENSHIFT env variables are present, use the available connection info:
 if (process.env.OPENSHIFT_MONGODB_DB_URL) {
     url = process.env.OPENSHIFT_MONGODB_DB_URL +
-    process.env.OPENSHIFT_APP_NAME;
+        process.env.OPENSHIFT_APP_NAME;
 }
 // Connect to mongodb
-var connect = function () {
+var connect = function() {
     mongoose.connect(url);
 };
 connect();
 var db = mongoose.connection;
 
-db.on('error', function(error){
-    console.log("Error loading the db - "+ error);
+db.on('error', function(error) {
+    console.log("Error loading the db - " + error);
 });
 
 db.on('disconnected', connect);
@@ -55,14 +55,6 @@ app.get('questions/:id', function(req, res, next) {
         var conditions = {
             _id: params.id
         };
-        var update = {
-            $inc: {
-                viewCount: 1
-            }
-        };
-        var options = {
-            new: true
-        };
 
         var query = Question.findOne({
             '_id': 'params.id'
@@ -84,6 +76,33 @@ app.get('questions/:id', function(req, res, next) {
     }
 
 });
+app.delete('questions/:id', function(req, res, next) {
+
+        var params = req.params;
+
+        if (params.id) {
+
+            var conditions = {
+                _id: params.id
+            };
+
+            var query = Question.findOneAndRemove(conditions);
+
+            query.exec(function(err, question) {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({
+                        "error": "Did not find question or no authorization"
+                    });
+                }
+                res.json(question);
+            });
+
+        } else {
+            res.sendStatus(400);
+        }
+    }
+}
 app.post('/questions', function(req, res) {
     var postData = req.body;
 

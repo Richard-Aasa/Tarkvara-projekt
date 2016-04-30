@@ -54,6 +54,19 @@
                         }
                     );
             }
+            $scope.delete = function(question) {
+                var index = $scope.questions.indexOf(question);
+                $scope.questions.splice(index, 1);
+                question.$delete()
+                    .then(
+                        function(data) {
+                            showToast('Küsimus edukalt kustutatud: ' + question.title);
+                        },
+                        function(error) {
+                            showToast(error.status + ' ' + error.statusText);
+                        }
+                    );
+            }
             var showToast = function(message) {
                 $mdToast.show(
                     $mdToast.simple()
