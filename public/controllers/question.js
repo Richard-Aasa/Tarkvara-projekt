@@ -46,8 +46,9 @@
                     .then(
                         function(data) {
                             showToast('Küsimus edukalt salvestatud: ' + question.title);
-                            $scope.questions.push($scope.question);
+                            $scope.questions.push(question);
                             $scope.question = {};
+                            $scope.question.type = question.type;
                             $scope.question.variants = [];
                             $scope.question.maxPoints = 0;
                         },
