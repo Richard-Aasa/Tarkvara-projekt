@@ -7,15 +7,18 @@
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <!-- <md-input-container>
+                <md-input-container>
                     <label>Tüüp</label>
                     <md-select ng-model="question.type ">
-                        <md-option ng-repeat="item in questions | unique:'type' " value="{{item.type}}">
+                        <!-- <md-option ng-repeat="item in questions | unique:'type' " value="{{item.type}}">
                             {{item.type}}
+                        </md-option> -->
+                        <md-option>
+                          Valik
                         </md-option>
                     </md-select>
-                </md-input-container> -->
-                <div>
+                </md-input-container>
+                <div ng-if="question.type=='Valik'">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Küsimus</label>
                         <input ng-model="question.title">
