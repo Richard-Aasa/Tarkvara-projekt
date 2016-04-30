@@ -4,13 +4,15 @@
 
     angular
         .module('app')
-        .controller('QuestionController', ['$scope', 'Question', '$mdToast', function($scope, Question, $mdToast) {
+        .controller('QuestionController', ['$scope', 'QuestionService', '$mdToast', function($scope, QuestionService, $mdToast) {
             $scope.questions = [];
             $scope.question = {};
-            $scope.question.maxPoints = 0;
             $scope.question.variants = [];
+            $scope.question.maxPoints = 0;
             $scope.loading = true;
-            Question.query()
+
+            // WORKS
+            QuestionService.query()
                 .$promise.then(
                     function(data) {
                         console.log(data);
@@ -30,17 +32,25 @@
                 $scope.question.maxPoints -= variant.points;
                 $scope.question.variants.splice(question.variants.indexOf(variant), 1);
             }
-            $scope.addQuestion = function() {
-                var newQuestion = new Question($scope.question);
+
+            $scope.save = function(question) {
+
+                var newQuestion = new QuestionService({
+                    title: question.title,
+                    type: question.type,
+                    variants: question.variants,
+                    maxPoints: question.maxPoints
+                });
+
                 newQuestion.$save()
                     .then(
                         function(data) {
-                            showToast('Successfully saved ' + data.name);
-                            $scope.questions.push(data);
+                            showToast('Küsimus edukalt salvestatud: ' + question.title);
+                            console.log(data);
+                            $scope.questions.push($scope.question);
                         },
                         function(error) {
                             showToast(error.status + ' ' + error.statusText);
-                            console.log($scope.question);
                         }
                     );
             }

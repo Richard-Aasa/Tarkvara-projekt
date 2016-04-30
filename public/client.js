@@ -5,20 +5,23 @@
     'use strict';
 
     angular
-    .module('app', ['ngRoute','ngResource', 'ngMaterial'])
-    .config(['$routeProvider','$locationProvider','$resourceProvider',
-    function($routeProvider,$locationProvider,$resourceProvider) {
+        .module('app', ['ngRoute', 'ngResource', 'ngMaterial'])
+        .config(['$routeProvider', '$locationProvider', '$resourceProvider',
+            function($routeProvider, $locationProvider, $resourceProvider) {
 
-        $routeProvider
-        .when('/', {
-            templateUrl: '/views/home.html',
-            controller: 'HomeController'
-        })
-        .when('/test/create', {
-            templateUrl: '/views/test.html',
-            controller: 'QuestionController'
-        })
-        .otherwise({redirectTo: '/'});
+                $routeProvider
+                    .when('/', {
+                        templateUrl: '/views/home.html',
+                        controller: 'HomeController'
+                    })
+                    .when('/test/create', {
+                        templateUrl: '/views/question.html',
+                        controller: 'QuestionController'
+                    })
+                    .otherwise({
+                        redirectTo: '/'
+                    });
 
-    }]);
+            }
+        ]);
 }());

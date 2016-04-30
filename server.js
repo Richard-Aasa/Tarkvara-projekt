@@ -4,21 +4,38 @@ var express = require('express'),
     mongoose = require('mongoose'),
     env = process.env;
 
-mongoose.createConnection(config.db);
-var server = express();
-server.use(bodyParser.urlencoded({
+var url = config.db
+// if OPENSHIFT env variables are present, use the available connection info:
+if (process.env.OPENSHIFT_MONGODB_DB_URL) {
+    url = process.env.OPENSHIFT_MONGODB_DB_URL +
+    process.env.OPENSHIFT_APP_NAME;
+}
+// Connect to mongodb
+var connect = function () {
+    mongoose.connect(url);
+};
+connect();
+var db = mongoose.connection;
+
+db.on('error', function(error){
+    console.log("Error loading the db - "+ error);
+});
+
+db.on('disconnected', connect);
+var app = express();
+app.use(bodyParser.urlencoded({
     extended: false
 }));
-server.use(bodyParser.json());
-server.use(express.static(__dirname + "/public"));
+app.use(bodyParser.json());
+app.use(express.static(__dirname + "/public"));
 
-server.get('/health', function(req, res) {
+app.get('/health', function(req, res) {
     res.send(200)
 });
 
 var Question = require('./models/question').Question;
 
-server.get('/questions', function(req, res) {
+app.get('/questions', function(req, res) {
     Question.find(function(err, questions) {
         if (err) {
             console.error(err);
@@ -27,16 +44,55 @@ server.get('/questions', function(req, res) {
         res.json(questions);
     });
 });
+app.get('questions/:id', function(req, res, next) {
 
-server.post('/questions', function(req, res) {
+    var params = req.params;
+
+    console.log(params);
+
+    if (params.id) {
+
+        var conditions = {
+            _id: params.id
+        };
+        var update = {
+            $inc: {
+                viewCount: 1
+            }
+        };
+        var options = {
+            new: true
+        };
+
+        var query = Question.findOne({
+            '_id': 'params.id'
+        });
+
+        query.select("title type variants maxPoints");
+        query.exec(function(err, questions) {
+            if (err) {
+                console.error(err);
+                return res.json({
+                    "error": "did not find any matching questions"
+                });
+            }
+            res.json(questions);
+        });
+
+    } else {
+        res.sendStatus(400);
+    }
+
+});
+app.post('/questions', function(req, res) {
     var postData = req.body;
 
     console.log(postData);
 
-    if (postData.title && postData.type && postData.variants && postData.maxPoints) {
+    if (postData.title) {
 
         var newQuestion = new Question({
-            title: postData.name,
+            title: postData.title,
             type: postData.type,
             variants: postData.variants,
             maxPoints: postData.maxPoints
@@ -61,12 +117,12 @@ server.post('/questions', function(req, res) {
 });
 
 //404
-server.use(function(req, res, next) {
+app.use(function(req, res, next) {
     var err = new Error('Resource not found');
     err.status = 404;
     next(err);
 });
-server.use(function(err, req, res, next) {
+app.use(function(err, req, res, next) {
 
     // ADD if auth error, wrong or expired token
     if (err.name === 'UnauthorizedError') {
@@ -89,6 +145,6 @@ process.on('uncaughtException', function(err) {
     console.error(err.stack);
 });
 
-server.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function() {
+app.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function() {
     console.log(`Application worker started...`);
 });

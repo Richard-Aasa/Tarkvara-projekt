@@ -7,7 +7,6 @@ var QuestionSchema = new Schema({
     //Sedasi saame luua erinevaid küsimuste tüüpe
     //ilma täiesti uute mudelite loomiseta
     variants: [Schema.Types.Mixed],
-    created: { type: Date, default: Date.now },
     maxPoints: { type: Number, required: true}
 });
 
