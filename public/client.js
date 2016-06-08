@@ -14,7 +14,7 @@
                         templateUrl: '/views/home.html',
                         controller: 'HomeController'
                     })
-                    .when('/test/create', {
+                    .when('/test/question', {
                         templateUrl: '/views/question.html',
                         controller: 'QuestionController'
                     })
