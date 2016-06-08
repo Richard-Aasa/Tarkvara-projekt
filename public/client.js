@@ -14,6 +14,7 @@
                         templateUrl: '/views/home.html',
                         controller: 'HomeController'
                     })
+					//localhost:3000/#/ siia otsa rakendub see .when, et kui url on /test/question/ siis laetakse seda vaadet
                     .when('/test/question', {
                         templateUrl: '/views/question.html',
                         controller: 'QuestionController'

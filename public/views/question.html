@@ -16,6 +16,10 @@
                         <md-option>
                             Valik
                         </md-option>
+						<md-option>
+                            Valik2
+                        </md-option>				
+						
                     </md-select>
                 </md-input-container>
                 <div ng-if="question.type=='Valik'">
@@ -42,6 +46,16 @@
                     <md-checkbox ng-model="variant.bool" aria-label="Õige/Vale" ng-init="variant.bool=true"></md-checkbox>
                     <md-card-action>
                         <md-button class="md-raised md-accent" ng-click="addVariant(question, variant)">+</md-button>
+                    </md-card-action>
+                </div>
+				<div ng-if="question.type=='Valik2'">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Küsimus</label>
+                        <input ng-model="question.title">
+                    </md-input-container>
+                    <md-input-container>
+                    </md-input-container>
+                    <md-card-action>
                     </md-card-action>
                 </div>
             </md-card-content>
