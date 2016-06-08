@@ -16,8 +16,8 @@
                         <md-option>
                             Valik
                         </md-option>
-						<md-option>
-                            Valik2
+						<md-option value='tyhihulk'>
+                            Tühi hulk
                         </md-option>				
 						
                     </md-select>
@@ -48,7 +48,7 @@
                         <md-button class="md-raised md-accent" ng-click="addVariant(question, variant)">+</md-button>
                     </md-card-action>
                 </div>
-				<div ng-if="question.type=='Tühi lünk'">
+				<div ng-if="question.type=='tyhihulk'">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Küsimus</label>
                         <input ng-model="question.title">

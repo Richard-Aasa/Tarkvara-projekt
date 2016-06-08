@@ -68,6 +68,7 @@
 								}else{
 									showToast('Tüübi "Valik" puhul peab kasutama vähemalt kahte vastuse varianti.');
 								}
+							}else if($scope.question.type == "tyhihulk"){
 								if($scope.question.variants.length == 1){
 									showToast('Küsimus edukalt salvestatud: ' + question.title);
 									console.log(data);																
