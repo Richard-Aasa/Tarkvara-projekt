@@ -48,29 +48,40 @@
 					};
             $scope.save = function(question) {
 				
-				if($scope.question.variants.length>1){
-					var newQuestion = new QuestionService({
-						title: question.title,
-						type: question.type,
-						variants: question.variants,
-						maxPoints: question.maxPoints
-					});
+				
+				var newQuestion = new QuestionService({
+					title: question.title,
+					type: question.type,
+					variants: question.variants,
+					maxPoints: question.maxPoints
+				});
 
-					newQuestion.$save()
-						.then(
-							function(data) {
-								showToast('Küsimus edukalt salvestatud: ' + question.title);
-								console.log(data);																
-								$scope.questions.push($scope.question);
-								$scope.question = {};
-							},
-							function(error) {
-								showToast(error.status + ' ' + error.statusText);
+				newQuestion.$save()
+					.then(
+						function(data) {
+							if($scope.question.type == "Valik"){
+								if($scope.question.variants.length>1){
+									showToast('Küsimus edukalt salvestatud: ' + question.title);
+									console.log(data);																
+									$scope.questions.push($scope.question);
+									$scope.question = {};
+								}else{
+									showToast('Tüübi "Valik" puhul peab kasutama vähemalt kahte vastuse varianti.');
+								}
+								if($scope.question.variants.length == 1){
+									showToast('Küsimus edukalt salvestatud: ' + question.title);
+									console.log(data);																
+									$scope.questions.push($scope.question);
+									$scope.question = {};
+								}else{
+									showToast('Tüübi "Tühi lünk" puhul peab kasutama ainult ühte vastuse varianti.');
+								}
 							}
-						);
-				}else{
-					showToast('Tüübi "' + question.type + '" puhul peab kasutama vähemalt kahte vastuse varianti.');
-				}
+						},
+						function(error) {
+							showToast(error.status + ' ' + error.statusText);
+						}
+					);			
 			}
             var showToast = function(message) {
                 $mdToast.show(
