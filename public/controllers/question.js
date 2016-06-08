@@ -47,26 +47,31 @@
                     );
 					};
             $scope.save = function(question) {
+				
+				if($scope.question.variants.length>1){
+					var newQuestion = new QuestionService({
+						title: question.title,
+						type: question.type,
+						variants: question.variants,
+						maxPoints: question.maxPoints
+					});
 
-                var newQuestion = new QuestionService({
-                    title: question.title,
-                    type: question.type,
-                    variants: question.variants,
-                    maxPoints: question.maxPoints
-                });
-
-                newQuestion.$save()
-                    .then(
-                        function(data) {
-                            showToast('Küsimus edukalt salvestatud: ' + question.title);
-                            console.log(data);
-                            $scope.questions.push($scope.question);
-                        },
-                        function(error) {
-                            showToast(error.status + ' ' + error.statusText);
-                        }
-                    );
-            }
+					newQuestion.$save()
+						.then(
+							function(data) {
+								showToast('Küsimus edukalt salvestatud: ' + question.title);
+								console.log(data);																
+								$scope.questions.push($scope.question);
+								$scope.question = {};
+							},
+							function(error) {
+								showToast(error.status + ' ' + error.statusText);
+							}
+						);
+				}else{
+					showToast('Tüübi "' + question.type + '" puhul peab kasutama vähemalt kahte vastuse varianti.');
+				}
+			}
             var showToast = function(message) {
                 $mdToast.show(
                     $mdToast.simple()
