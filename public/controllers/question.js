@@ -4,7 +4,7 @@
 
     angular
         .module('app')
-        .controller('QuestionController', ['$scope', 'QuestionService', '$mdToast', function($scope, QuestionService, $mdToast) {
+        .controller('QuestionController', ['$scope', 'QuestionService', '$mdToast', '$mdDialog', function($scope, QuestionService, $mdToast, $mdDialog) {
             $scope.questions = [];
             $scope.question = {};
             $scope.question.variants = [];
@@ -69,6 +69,28 @@
                             showToast(error.status + ' ' + error.statusText);
                         }
                     );
+            };
+            $scope.clear = function() {
+                $scope.question.variants = [];
+                $scope.question.maxPoints = 0;
+            };
+            $scope.edit = function($event, question) {
+                $mdDialog.show({
+                    parent: angular.element(document.body),
+                    targetEvent: $event,
+                    templateUrl: 'views/question_edit.html',
+                    locals: {
+                        question: question
+                    },
+                    controller: DialogController
+                });
+                function DialogController($scope, $mdDialog, question) {
+                  $scope.question = question;
+                  $scope.closeDialog = function(item) {
+                    $scope.save(item)
+                    $mdDialog.hide();
+                  }
+              }
             };
             var showToast = function(message) {
                 $mdToast.show(

@@ -1,0 +1,24 @@
+<md-dialog aria-label="Muuda küsimus">
+    <md-dialog-content>
+      <h3>Küsimus: {{ question.title }}</h3>
+      <h4>Tüüp: {{ question.type }}</h4>
+      <div ng-if="question.type=='Valik'">
+          <md-list-item ng-repeat="variant in question.variants">
+              <div class="md-list-item-text">
+                  <h4>Vastus: {{ variant.answer }}</h4>
+                  <h4>Punktid: {{ variant.points }}</h4>
+                  <h4>Boolean: {{ variant.bool }}</h4>
+              </div>
+          </md-list-item>
+      </div>
+      <div ng-if="question.type=='Tühi lünk'">
+          Vastus: {{ question.variants[0] }}
+      </div>
+      <h4>Max punktid: {{ question.maxPoints }}</h4>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="closeDialog(question)" class="md-primary">
+            SALVESTA
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>'
