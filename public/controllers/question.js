@@ -32,7 +32,20 @@
                 $scope.question.maxPoints -= variant.points;
                 $scope.question.variants.splice(question.variants.indexOf(variant), 1);
             }
-
+			//kustuta andmebaasist tegemisel!!!
+			$scope.delete = function(question) {
+                var index = $scope.questions.indexOf(question);
+                $scope.questions.splice(index, 1);
+                question.$delete()
+                    .then(
+                        function(data) {
+                            showToast('Küsimus edukalt kustutatud: ' + question.title);
+                        },
+                        function(error) {
+                            showToast(error.status + ' ' + error.statusText);
+                        }
+                    );
+					};
             $scope.save = function(question) {
 
                 var newQuestion = new QuestionService({
