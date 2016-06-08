@@ -18,6 +18,10 @@
                         templateUrl: '/views/question.html',
                         controller: 'QuestionController'
                     })
+					.when('/test/question1', {
+                        templateUrl: '/views/question.html',
+                        controller: 'QuestionController'
+                    })
                     .otherwise({
                         redirectTo: '/'
                     });
