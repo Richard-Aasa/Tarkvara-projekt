@@ -14,7 +14,7 @@
                         templateUrl: '/views/home.html',
                         controller: 'HomeController'
                     })
-                    .when('/test/question', {
+                    .when('/test/create', {
                         templateUrl: '/views/question.html',
                         controller: 'QuestionController'
                     })
@@ -25,6 +25,8 @@
                     .otherwise({
                         redirectTo: '/'
                     });
+					
+					//testing
 
             }
         ]);
