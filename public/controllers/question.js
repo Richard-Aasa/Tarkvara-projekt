@@ -32,28 +32,58 @@
                 $scope.question.maxPoints -= variant.points;
                 $scope.question.variants.splice(question.variants.indexOf(variant), 1);
             }
-
-            $scope.save = function(question) {
-
-                var newQuestion = new QuestionService({
-                    title: question.title,
-                    type: question.type,
-                    variants: question.variants,
-                    maxPoints: question.maxPoints
-                });
-
-                newQuestion.$save()
+			//kustuta andmebaasist tegemisel!!!
+			$scope.delete = function(question) {
+                var index = $scope.questions.indexOf(question);
+                $scope.questions.splice(index, 1);
+                question.$delete()
                     .then(
                         function(data) {
-                            showToast('Küsimus edukalt salvestatud: ' + question.title);
-                            console.log(data);
-                            $scope.questions.push($scope.question);
+                            showToast('Küsimus edukalt kustutatud: ' + question.title);
                         },
                         function(error) {
                             showToast(error.status + ' ' + error.statusText);
                         }
                     );
-            }
+					};
+            $scope.save = function(question) {
+				
+				
+				var newQuestion = new QuestionService({
+					title: question.title,
+					type: question.type,
+					variants: question.variants,
+					maxPoints: question.maxPoints
+				});
+
+				newQuestion.$save()
+					.then(
+						function(data) {
+							if($scope.question.type == "Valik"){
+								if($scope.question.variants.length>1){
+									showToast('Küsimus edukalt salvestatud: ' + question.title);
+									console.log(data);																
+									$scope.questions.push($scope.question);
+									$scope.question = {};
+								}else{
+									showToast('Tüübi "Valik" puhul peab kasutama vähemalt kahte vastuse varianti.');
+								}
+							}else if($scope.question.type == "Tühi_hulk"){
+								if($scope.question.variants.length == 1){
+									showToast('Küsimus edukalt salvestatud: ' + question.title);
+									console.log(data);																
+									$scope.questions.push($scope.question);
+									$scope.question = {};
+								}else{
+									showToast('Tüübi "Tühi lünk" puhul peab kasutama ainult ühte vastuse varianti.');
+								}
+							}
+						},
+						function(error) {
+							showToast(error.status + ' ' + error.statusText);
+						}
+					);			
+			}
             var showToast = function(message) {
                 $mdToast.show(
                     $mdToast.simple()

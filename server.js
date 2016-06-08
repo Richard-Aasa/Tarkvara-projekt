@@ -84,6 +84,37 @@ app.get('questions/:id', function(req, res, next) {
     }
 
 });
+app.delete('questions/:id', function(req, res, next) {
+
+    var params = req.params;
+
+    console.log(params);
+
+    if (params.id) {
+
+        var conditions = {
+            _id: params.id
+        };
+
+        var query = Question.findOneAndRemove({
+            '_id': 'params.id'
+        });
+		
+        query.exec(function(err, questions) {
+            if (err) {
+                console.error(err);
+                return res.json({
+                    "error": "did not find any matching questions"
+                });
+            }
+            res.json(questions);
+        });
+
+    } else {
+        res.sendStatus(400);
+    }
+
+});
 app.post('/questions', function(req, res) {
     var postData = req.body;
 
