@@ -19,18 +19,22 @@
                         templateUrl: '/views/question.html',
                         controller: 'QuestionController'
                     })
-					.when('/questionnaire', {
-                        templateUrl: '/views/questionnaire.html',
-                        controller: 'QuestionnaireController'
-                    })
-					.when('/fill', {
-                        templateUrl: '/views/fill.html',
-                        controller: 'FillController'
-                    })
+          					.when('/questionnaire', {
+                                  templateUrl: '/views/questionnaire.html',
+                                  controller: 'QuestionnaireController'
+                              })
+          					.when('/fill', {
+                                  templateUrl: '/views/fill.html',
+                                  controller: 'FillController'
+                              })
+                    .when('/login', {
+                                  templateUrl: '/views/login.html',
+                                  controller: 'HomeController'
+                              })
                     .otherwise({
                         redirectTo: '/'
                     });
-					
+
 					//testing
 
             }

@@ -6,7 +6,7 @@ var express = require('express'),
     env = process.env;
 
 // MongoDB address
-var url = config.db
+var url = config.db;
 
 // Ühenda MongoDB andmebaasiga mongoose mooduli abil
 var connect = function() {
@@ -36,7 +36,7 @@ app.use(express.static(__dirname + "/public"));
 
 // Lõpp-punkt töötamise kontrollimiseks
 app.get('/health', function(req, res) {
-    res.send(200)
+    res.send(200);
 });
 
 // Mudelite deklareerimine
@@ -122,10 +122,10 @@ app.put('/questions/:id', function(req, res) {
 
         if (question.title && req.body.title) {
 
-            question.title = req.body.title,
-            question.type = req.body.type,
-            question.variants = req.body.variants,
-            question.maxPoints = req.body.maxPoints
+            question.title = req.body.title;
+            question.type = req.body.type;
+            question.variants = req.body.variants;
+            question.maxPoints = req.body.maxPoints;
 
             question.save(function(err, question) {
                 if (err)
@@ -192,7 +192,7 @@ app.post('/questionnaire', function(req, res) {
 			saved: postData.saved,
 			published: postData.published,
 			archieved: postData.archieved
-                    
+
         });
 
         newQuestionnaire.save(function(err, questionnaire) {
@@ -244,20 +244,20 @@ app.put('/questionnaire/:id', function(req, res) {
         if (err)
             res.send(err);
 		//lihtsustamiseks loome muutuja
-		var postData = req.body; //request (päring, mis tuleb vaatest)
-		
+		    var postData = req.body; //request (päring, mis tuleb vaatest)
+
         if (questionnaire.title && postData.title) {
-			questionnaire.title: postData.title,
-			questionnaire.author: postData.author,
-			///date tuleb automaatselt, seda pole siia vaja
-			questionnaire.questions: postData.questions,
-			questionnaire.totalTime: postData.totalTime,
-			questionnaire.totalPoints: postData.totalPoints,
-			questionnaire.saved: postData.saved,
-			questionnaire.published: postData.published,
-			questionnaire.archieved: postData.archieved
-			
-			questionnaire.save(function(err, questionnaire) {
+      			questionnaire.title = postData.title;
+      			questionnaire.author = postData.author;
+      			///date tuleb automaatselt, seda pole siia vaja
+      			questionnaire.questions = postData.questions;
+      			questionnaire.totalTime = postData.totalTime;
+      			questionnaire.totalPoints = postData.totalPoints;
+      			questionnaire.saved = postData.saved;
+      			questionnaire.published = postData.published;
+      			questionnaire.archieved = postData.archieved;
+
+			      questionnaire.save(function(err, questionnaire) {
                 if (err)
                     res.send(err);
 
