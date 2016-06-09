@@ -23,6 +23,10 @@
                         templateUrl: '/views/questionnaire.html',
                         controller: 'QuestionnaireController'
                     })
+					.when('/fill', {
+                        templateUrl: '/views/fill.html',
+                        controller: 'FillController'
+                    })
                     .otherwise({
                         redirectTo: '/'
                     });
