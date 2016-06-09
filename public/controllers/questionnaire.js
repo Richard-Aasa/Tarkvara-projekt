@@ -120,7 +120,7 @@
                       $mdDialog.hide();
                       save(item);
                   };
-				  $scope.close = function(item) {
+				  $scope.close = function() {
                       $mdDialog.hide();
                   };
                 }
