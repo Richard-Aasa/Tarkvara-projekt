@@ -1,9 +1,5 @@
 module.exports = {
-<<<<<<< HEAD
-    db: 'mongodb://richard:123@127.0.0.1/test',
-=======
-    db: 'mongodb://stenverk:eb45ad@127.0.0.1/test',
->>>>>>> origin/master
+	db: 'mongodb://juku:1234@ds013280.mlab.com:13280/school_quiz',
     secret: 'big_secret',
     googleKey: '',
     googleSecret: ''
