@@ -21,17 +21,17 @@
                         console.log(error);
                     }
                 );
-			
+
 			var pointCounter = function() {
 				var points = 0;
-				for(question in $scope.questionnaire.questions){					
+				for(question in $scope.questionnaire.questions){
 					points += $scope.questionaire.questions.maxPoints;
 				}
 				return points;
 			};
 
             $scope.save = function(questionnaire) {
-				
+
 				var points = pointCounter(questionnaire);
                 var newQuestionnaire = new QuestionnaireService({
 					title: questionnaire.title,
@@ -47,7 +47,7 @@
                 newQuestionnaire.$save()
                     .then(
                         function(data) {
-                            showToast('Küsimustik edukalt salvestatud: ' + questionnaire.title);
+                            showToast('KÃ¼simustik edukalt salvestatud: ' + questionnaire.title);
                             $scope.questionnaires.push(questionnaire);
                             $scope.questionnaire = {};
                         },
@@ -56,7 +56,7 @@
                         }
                     );
             };
-			
+
 			$scope.create = function($event) {
                 $mdDialog.show({
                     parent: angular.element(document.body),
@@ -87,14 +87,14 @@
 				  $scope.clear = function() {
 					$scope.question.variants = [];
 					$scope.question.maxPoints = 0;
-				  }
+        };
 				  $scope.addQuestion = function(question) {
 					  $scope.questionnaire.questions.push(question);
-				  }
+				  };
                   $scope.create = function(item) {
                       $mdDialog.hide();
                       save(item);
-                  }
+                  };
                 }
             };
             $scope.update = function(questionnaire) {
@@ -106,7 +106,7 @@
               } else {
                   return questionnaire.$create();
               }
-            }
+            };
             /*$scope.clear = function() {
                 $scope.question.variants = [];
                 $scope.question.maxPoints = 0;

@@ -1,17 +1,18 @@
-<md-button class="md-fab" aria-label="Insert Drive" ng-click="create()">
-	<md-icon md-svg-src="img/icons/ic_insert_drive_file_24px.svg"></md-icon>
+<md-button class="md-fab" aria-label="Lisa uus">
+	<md-icon md-svg-src="img/icons/ic_insert_drive_file_24px.svg" ng-click="create()"></md-icon>
 		<md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
 						Insert Drive
 		</md-tooltip>
 </md-button>
 <md-content class="md-padding" layout="row">
     <div layout="column" flex>
+			<md-divider ></md-divider>
 			<md-list>
-				<md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader>
-						<md-list-item>test</md-list-item>
-						<md-list-item>test</md-list-item>
-						<md-list-item>test</md-list-item>
-			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="null">
+				<md-subheader class="md-no-sticky"></md-subheader>
+						<md-list-item ng-click="modify()">test</md-list-item>
+						<md-list-item ng-click="modify()">test</md-list-item>
+						<md-list-item ng-click="modify()">test</md-list-item>
+			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="modify()">
 			          <div class="md-list-item-text" layout="column">
 			            <span>
 										item.title
@@ -31,12 +32,13 @@
 			</md-list>
 		</div>
 		<div layout="column" flex>
+			<md-divider ></md-divider>
 			<md-list>
-				<md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader>
-						<md-list-item>test</md-list-item>
-						<md-list-item>test</md-list-item>
-						<md-list-item>test</md-list-item>
-			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="null">
+				<md-subheader class="md-no-sticky"></md-subheader>
+						<md-list-item ng-click="modify()">test</md-list-item>
+						<md-list-item ng-click="modify()">test</md-list-item>
+						<md-list-item ng-click="modify()">test</md-list-item>
+			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="modify()">
 			          <div class="md-list-item-text" layout="column">
 			            <span>
 							item.title
