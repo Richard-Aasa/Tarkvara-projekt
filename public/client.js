@@ -15,9 +15,13 @@
                         controller: 'HomeController'
                     })
 					//localhost:3000/#/ siia otsa rakendub see .when, et kui url on /test/question/ siis laetakse seda vaadet
-                    .when('/test/question', {
+                    .when('/question', {
                         templateUrl: '/views/question.html',
                         controller: 'QuestionController'
+                    })
+					.when('/questionnaire', {
+                        templateUrl: '/views/questionnaire.html',
+                        controller: 'QuestionnaireController'
                     })
                     .otherwise({
                         redirectTo: '/'
