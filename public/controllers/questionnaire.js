@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('QuestionnaireController', ['$scope', 'QuestionnaireService', 'QuestionService', '$mdToast', '$mdDialog', function($scope, QuestionnaireService, QuestionService, $mdToast, $mdDialog) {
+        .controller('QuestionnaireController', ['$scope', 'QuestionnaireService', '$mdToast', '$mdDialog', function($scope, QuestionnaireService, $mdToast, $mdDialog) {
             $scope.questionnaires = [];
             $scope.questionnaire = {};
             $scope.loading = true;
