@@ -70,6 +70,16 @@
                         }
                     );
             };
+            $scope.update = function(question) {
+              $mdDialog.hide();
+              var index = $scope.questions.indexOf(question);
+
+              if (question.id) {
+                      return question.$update();
+              } else {
+                  return question.$create();
+              }
+            }
             $scope.clear = function() {
                 $scope.question.variants = [];
                 $scope.question.maxPoints = 0;
@@ -80,18 +90,22 @@
                     targetEvent: $event,
                     templateUrl: 'views/question_edit.html',
                     locals: {
-                        question: question
+                        question: question,
+                        questions: $scope.questions,
+                        update: $scope.update
                     },
                     controller: DialogController
                 });
-                function DialogController($scope, $mdDialog, question) {
+                function DialogController($scope, $mdDialog, question, questions, update) {
                   $scope.question = question;
-                  $scope.closeDialog = function(item) {
-                    $scope.save(item)
-                    $mdDialog.hide();
+                  $scope.questions = questions;
+                  $scope.modify = function(item) {
+                      $mdDialog.hide();
+                      update(item);
                   }
-              }
+                }
             };
+
             var showToast = function(message) {
                 $mdToast.show(
                     $mdToast.simple()
