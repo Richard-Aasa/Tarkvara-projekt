@@ -7,7 +7,7 @@ var QuestionSchema = new Schema({
     //Sedasi saame luua erinevaid küsimuste tüüpe
     //ilma täiesti uute mudelite loomiseta
     variants: [Schema.Types.Mixed],
-    maxPoints: { type: Number, required: true}
+    maxPoints: { type: Number, required: true},
 });
 
 var Question = mongoose.model('Question', QuestionSchema);
