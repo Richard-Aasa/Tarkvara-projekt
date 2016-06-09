@@ -63,6 +63,14 @@
 			};
 			$scope.view = function(questionnaire) {
 				$scope.activeQuestionnaire = questionnaire;
+				$scope.addQuestion = function(question) {
+					$scope.questionnaire.questions.push(angular.copy(question));
+					$scope.questionnaire.totalPoints += question.maxPoints;
+				};
+				$scope.remQuestion = function(question) {
+					$scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);					  
+					$scope.questionnaire.totalPoints -= question.maxPoints;
+				};
 			}
 			
 			$scope.create = function($event) {
