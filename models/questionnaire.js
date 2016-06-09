@@ -8,12 +8,7 @@ var QuestionnaireSchema = new Schema({
 	createdDate: { type: Date, default: Date.now},
     //Sedasi saame luua erinevaid küsimuste tüüpe
     //ilma täiesti uute mudelite loomiseta
-    questions: [{
-		title: { type: String, required: true },
-		type: { type: String, required: true},
-		variants: [Schema.Types.Mixed],
-		maxPoints: { type: Number, required: true}
-	}],
+    questions: [Question],
 	totalTime: {type: Number, required: true},
     totalPoints: {type: Number, required: true},
 	saved: Date,
