@@ -1,9 +1,11 @@
-<md-content class="md-padding">
+<md-content class="md-padding" layout="column">
+
   <md-toolbar class="md-hue-2">
         <div class="md-toolbar-tools">
           <h2 class="md-flex">Logi sisse</h2>
         </div>
       </md-toolbar>
+
   <md-content class="md-no-momentum">
   <md-input-container class="md-icon-float md-block">
     <!-- Use floating label instead of placeholder -->
@@ -11,41 +13,47 @@
     <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
     <input ng-model="user.name" type="text">
   </md-input-container>
-  <md-input-container md-no-float class="md-block">
-    <md-icon md-svg-src="img/icons/ic_phone_24px.svg"></md-icon>
-    <input ng-model="user.phone" type="text" placeholder="Parool">
-    
-    <md-button class="md-raised">Logi sisse</md-button>
+  <md-input-container class="md-icon-float md-block">
+    <label>Parool</label>
+    <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
+    <input ng-model="user.name" type="text">
   </md-input-container>
+  <md-button class="md-raised">Logi sisse</md-button>
 
+  <br>
   <br/>
+
 <md-toolbar class="md-hue-2">
       <div class="md-toolbar-tools">
         <h2 class="md-flex">Loo kasutaja</h2>
       </div>
-    </md-toolbar>
-<md-content class="md-no-momentum">
+</md-toolbar>
+
 <md-input-container class="md-icon-float md-block">
   <label>Nimi</label>
   <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
   <input ng-model="user.name" type="text">
 </md-input-container>
-<md-input-container md-no-float class="md-block">
-  <md-icon md-svg-src="img/icons/ic_phone_24px.svg"></md-icon>
-  <input ng-model="user.phone" type="text" placeholder="Telefoninumber">
+<md-input-container class="md-icon-float md-block">
+  <label>Telefoninumber</label>
+  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
+  <input ng-model="user.name" type="text">
 </md-input-container>
-<md-input-container class="md-block">
-  <!-- Use floating placeholder instead of label -->
-  <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
-  <input ng-model="user.email" type="email" placeholder="E-post (kohustuslik)" ng-required="true">
+
+<md-input-container class="md-icon-float md-block">
+  <label>E-post</label>
+  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
+  <input ng-model="email.name" type="text">
 </md-input-container>
-<md-input-container md-no-float class="md-block">
-  <input ng-model="user.class" type="text" placeholder="Klass" >
-  <md-icon md-svg-src="img/icons/ic_place_24px.svg" style="display:inline-block;"></md-icon>
+<md-input-container class="md-icon-float md-block">
+  <label>Klass</label>
+  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
+  <input ng-model="email.name" type="text">
 </md-input-container>
-<md-input-container md-no-float class="md-block">
-  <input ng-model="user.password" type="text" placeholder="Vali endale salasõna" >
-  <md-icon md-svg-src="img/icons/ic_place_24px.svg" style="display:inline-block;"></md-icon>
+<md-input-container class="md-icon-float md-block">
+  <label>Parool</label>
+  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
+  <input ng-model="email.name" type="text">
 </md-input-container>
-</md-content>
+<md-button class="md-raised">Loo kasutaja</md-button>
 </md-content>

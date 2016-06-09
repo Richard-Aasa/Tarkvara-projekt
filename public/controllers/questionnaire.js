@@ -24,22 +24,27 @@
                 );
 
 			var pointCounter = function(questionnaire) {
+<<<<<<< HEAD
 				var points = 0;
 				for(var question in questionnaire.questions){
 					points += question.maxPoints;
 				}
 				return points;
+=======
+				for(question in questionnaire.questions){
+					$scope.questionnaire.totalPoints += question.maxPoints;
+				};
+>>>>>>> origin/master
 			};
 
             $scope.save = function(questionnaire) {
-
-				var points = pointCounter(questionnaire);
+				pointCounter(questionnaire);
                 var newQuestionnaire = new QuestionnaireService({
 					title: questionnaire.title,
 					author: "test",
 					questions: questionnaire.questions,
 					totalTime: questionnaire.totalTime,
-					totalPoints: points,
+					totalPoints: questionnaire.totalPoints,
 					saved: questionnaire.saved,
 					published: questionnaire.published,
 					archieved: questionnaire.archived
@@ -61,8 +66,17 @@
 			$scope.modify = function(questionnaire) {
 				//$scope.modify.
 			};
+			
 			$scope.view = function(questionnaire) {
 				$scope.activeQuestionnaire = questionnaire;
+				$scope.addQuestion = function(question) {
+					$scope.questionnaire.questions.push(angular.copy(question));
+					$scope.questionnaire.totalPoints += question.maxPoints;
+				};
+				$scope.remQuestion = function(question) {
+					$scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);					  
+					$scope.questionnaire.totalPoints -= question.maxPoints;
+				};
 			}
 
 			$scope.create = function($event) {
