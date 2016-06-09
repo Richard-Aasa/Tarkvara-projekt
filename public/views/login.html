@@ -1,59 +1,74 @@
 <md-content class="md-padding" layout="column">
 
-  <md-toolbar class="md-hue-2">
+    <md-toolbar class="md-hue-2">
         <div class="md-toolbar-tools">
-          <h2 class="md-flex">Logi sisse</h2>
+            <h2 class="md-flex">Logi sisse</h2>
         </div>
-      </md-toolbar>
+    </md-toolbar>
 
-  <md-content class="md-no-momentum">
-  <md-input-container class="md-icon-float md-block">
-    <!-- Use floating label instead of placeholder -->
-    <label>Nimi</label>
-    <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-    <input ng-model="user.name" type="text">
-  </md-input-container>
-  <md-input-container class="md-icon-float md-block">
-    <label>Parool</label>
-    <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-    <input ng-model="user.name" type="text">
-  </md-input-container>
-  <md-button class="md-raised">Logi sisse</md-button>
+    <md-content class="md-no-momentum">
+        <md-input-container class="md-icon-float md-block">
+            <!-- Use floating label instead of placeholder -->
+            <label>Nimi</label>
+            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+            <input ng-model="user.name" type="text">
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+            <label>Parool</label>
+            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+            <input ng-model="user.password" type="password">
+        </md-input-container>
+        <md-button class="md-raised">Logi sisse</md-button>
 
-  <br>
-  <br/>
 
-<md-toolbar class="md-hue-2">
-      <div class="md-toolbar-tools">
-        <h2 class="md-flex">Loo kasutaja</h2>
-      </div>
-</md-toolbar>
 
-<md-input-container class="md-icon-float md-block">
-  <label>Nimi</label>
-  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-  <input ng-model="user.name" type="text">
-</md-input-container>
-<md-input-container class="md-icon-float md-block">
-  <label>Telefoninumber</label>
-  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-  <input ng-model="user.name" type="text">
-</md-input-container>
+        <br>
+        <br/>
 
-<md-input-container class="md-icon-float md-block">
-  <label>E-post</label>
-  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-  <input ng-model="email.name" type="text">
-</md-input-container>
-<md-input-container class="md-icon-float md-block">
-  <label>Klass</label>
-  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-  <input ng-model="email.name" type="text">
-</md-input-container>
-<md-input-container class="md-icon-float md-block">
-  <label>Parool</label>
-  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-  <input ng-model="email.name" type="text">
-</md-input-container>
-<md-button class="md-raised">Loo kasutaja</md-button>
-</md-content>
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+                <h2 class="md-flex">Loo kasutaja</h2>
+            </div>
+        </md-toolbar>
+
+        <md-input-container class="md-icon-float md-block">
+            <label>Nimi</label>
+            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+            <input ng-model="user.reg_name" type="text">
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+            <label>Telefoninumber</label>
+            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+            <input ng-model="user.phone" type="text">
+        </md-input-container>
+
+        <md-input-container class="md-icon-float md-block">
+            <label>E-post</label>
+            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+            <input ng-model="user.email1" type="text">
+        </md-input-container>
+
+        <md-input-container class="md-icon-float md-block">
+            <label>E-post</label>
+            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+            <input name="email" ng-model="user.email" required minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+            <div ng-messages="userForm.email.$error">
+                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                    Mailiaadressi kuju ei ole õige.
+                </div>
+            </div>
+        </md-input-container>
+
+
+        <md-input-container class="md-icon-float md-block">
+            <label>Klass</label>
+            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+            <input ng-model="user.class" type="text">
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+            <label>Parool</label>
+            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+            <input ng-model="user.reg_password" type="password">
+        </md-input-container>
+        <md-button class="md-raised">Loo kasutaja</md-button>
+    </md-content>
