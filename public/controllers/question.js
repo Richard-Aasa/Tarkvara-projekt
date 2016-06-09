@@ -4,7 +4,7 @@
 
     angular
         .module('app')
-        .controller('QuestionController', ['$scope', 'QuestionService', '$mdToast', function($scope, QuestionService, $mdToast) {
+        .controller('QuestionController', ['$scope', 'QuestionService', '$mdToast', '$mdDialog', function($scope, QuestionService, $mdToast, $mdDialog) {
             $scope.questions = [];
             $scope.question = {};
             $scope.question.variants = [];
@@ -27,13 +27,37 @@
             $scope.addVariant = function(question, variant) {
                 $scope.question.variants.push(angular.copy(variant));
                 $scope.question.maxPoints += variant.points;
-            }
+            };
             $scope.remVariant = function(question, variant) {
                 $scope.question.maxPoints -= variant.points;
                 $scope.question.variants.splice(question.variants.indexOf(variant), 1);
-            }
-			//kustuta andmebaasist tegemisel!!!
-			$scope.delete = function(question) {
+            };
+
+            $scope.save = function(question) {
+
+                var newQuestion = new QuestionService({
+                    title: question.title,
+                    type: question.type,
+                    variants: question.variants,
+                    maxPoints: question.maxPoints
+                });
+
+                newQuestion.$save()
+                    .then(
+                        function(data) {
+                            showToast('Küsimus edukalt salvestatud: ' + question.title);
+                            $scope.questions.push(question);
+                            $scope.question = {};
+                            $scope.question.type = question.type;
+                            $scope.question.variants = [];
+                            $scope.question.maxPoints = 0;
+                        },
+                        function(error) {
+                            showToast(error.status + ' ' + error.statusText);
+                        }
+                    );
+            };
+            $scope.delete = function(question) {
                 var index = $scope.questions.indexOf(question);
                 $scope.questions.splice(index, 1);
                 question.$delete()
@@ -45,45 +69,43 @@
                             showToast(error.status + ' ' + error.statusText);
                         }
                     );
-					};
-            $scope.save = function(question) {
-				
-				
-				var newQuestion = new QuestionService({
-					title: question.title,
-					type: question.type,
-					variants: question.variants,
-					maxPoints: question.maxPoints
-				});
+            };
+            $scope.update = function(question) {
+              $mdDialog.hide();
+              var index = $scope.questions.indexOf(question);
 
-				newQuestion.$save()
-					.then(
-						function(data) {
-							if($scope.question.type == "Valik"){
-								if($scope.question.variants.length>1){
-									showToast('Küsimus edukalt salvestatud: ' + question.title);
-									console.log(data);																
-									$scope.questions.push($scope.question);
-									$scope.question = {};
-								}else{
-									showToast('Tüübi "Valik" puhul peab kasutama vähemalt kahte vastuse varianti.');
-								}
-							}else if($scope.question.type == "Tühi_hulk"){
-								if($scope.question.variants.length == 1){
-									showToast('Küsimus edukalt salvestatud: ' + question.title);
-									console.log(data);																
-									$scope.questions.push($scope.question);
-									$scope.question = {};
-								}else{
-									showToast('Tüübi "Tühi lünk" puhul peab kasutama ainult ühte vastuse varianti.');
-								}
-							}
-						},
-						function(error) {
-							showToast(error.status + ' ' + error.statusText);
-						}
-					);			
-			}
+              if (question.id) {
+                      return question.$update();
+              } else {
+                  return question.$create();
+              }
+            }
+            $scope.clear = function() {
+                $scope.question.variants = [];
+                $scope.question.maxPoints = 0;
+            };
+            $scope.edit = function($event, question) {
+                $mdDialog.show({
+                    parent: angular.element(document.body),
+                    targetEvent: $event,
+                    templateUrl: 'views/question_edit.html',
+                    locals: {
+                        question: question,
+                        questions: $scope.questions,
+                        update: $scope.update
+                    },
+                    controller: DialogController
+                });
+                function DialogController($scope, $mdDialog, question, questions, update) {
+                  $scope.question = question;
+                  $scope.questions = questions;
+                  $scope.modify = function(item) {
+                      $mdDialog.hide();
+                      update(item);
+                  }
+                }
+            };
+
             var showToast = function(message) {
                 $mdToast.show(
                     $mdToast.simple()
