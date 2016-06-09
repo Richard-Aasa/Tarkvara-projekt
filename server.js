@@ -41,6 +41,7 @@ app.get('/health', function(req, res) {
 
 // Mudelite deklareerimine
 var Question = require('./models/question').Question;
+var Questionnaire = require('./models/questionnaire').Questionnaire;
 
 // REST API lõpp-punktide deklareerimine
 /*
@@ -126,7 +127,7 @@ app.put('/questions/:id', function(req, res) {
             question.variants = req.body.variants,
             question.maxPoints = req.body.maxPoints
 
-            question.save(function(err) {
+            question.save(function(err, question) {
                 if (err)
                     res.send(err);
 
@@ -159,6 +160,136 @@ app.delete('/questions/:id', function(req, res, next) {
                 });
             }
             res.json(question);
+        });
+
+    } else {
+        res.sendStatus(400);
+    }
+});
+//küsimustiku aadresside deklareerimine
+
+app.get('/questionnaire', function(req, res) {
+    Questionnaire.find(function(err, questionnaires) {
+        if (err) {
+            console.error(err);
+            return res.json(err);
+        }
+        res.json(questionnaires);
+    });
+});
+//küsimustiku loomine
+app.post('/questionnaire', function(req, res) {
+    var postData = req.body;
+
+    if (postData.title) {
+		var newQuestionnaire = new Questionnaire({
+			title: postData.title,
+			author: postData.author,
+			///date tuleb automaatselt, seda pole siia vaja
+			questions: postData.questions,
+			totalTime: postData.totalTime,
+			totalPoints: postData.totalPoints,
+			saved: postData.saved,
+			published: postData.published,
+			archieved: postData.archieved
+                    
+        });
+
+        newQuestionnaire.save(function(err, questionnaire) {
+
+            //handle saving error
+            if (err) {
+                console.error(err);
+                return res.json(err);
+            }
+
+            //return saved entry
+            res.json(questionnaire);
+        });
+
+    } else {
+        //if missing parameters returns error
+        res.sendStatus(400);
+    }
+});
+app.get('/questionnaire/:id', function(req, res, next) {
+    var params = req.params;
+
+    if (params.id) {
+
+        var query = Questionnaire.findOne({
+            '_id': 'params.id'
+        });
+
+        query.select("title author createdDate questions totalTime totalPoints saved published archieved");
+        query.exec(function(err, questionnaire) {
+            if (err) {
+                console.error(err);
+                return res.json({
+                    "error": "did not find matching questionnaire"
+                });
+            }
+            res.json(questionnaire);
+        });
+
+    } else {
+        res.sendStatus(400);
+    }
+
+});
+//parameetrite saatmine
+app.put('/questionnaire/:id', function(req, res) {
+    Questionnaire.findById(req.params.id, function(err, questionnaire) {
+
+        if (err)
+            res.send(err);
+		//lihtsustamiseks loome muutuja
+		var postData = req.body; //request (päring, mis tuleb vaatest)
+		
+        if (questionnaire.title && postData.title) {
+			questionnaire.title: postData.title,
+			questionnaire.author: postData.author,
+			///date tuleb automaatselt, seda pole siia vaja
+			questionnaire.questions: postData.questions,
+			questionnaire.totalTime: postData.totalTime,
+			questionnaire.totalPoints: postData.totalPoints,
+			questionnaire.saved: postData.saved,
+			questionnaire.published: postData.published,
+			questionnaire.archieved: postData.archieved
+			
+			questionnaire.save(function(err, questionnaire) {
+                if (err)
+                    res.send(err);
+
+                res.json(questionnaire);
+            });
+
+        } else {
+            //if missing parameters returs error
+            res.sendStatus(400);
+        }
+    });
+});
+app.delete('/questionnaire/:id', function(req, res, next) {
+
+    var params = req.params;
+
+    if (params.id) {
+
+        var conditions = {
+            _id: params.id
+        };
+
+        var query = Questionnaire.findOneAndRemove(conditions);
+
+        query.exec(function(err, questionnaire) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({
+                    "error": "Did not find questionnaire or no authorization"
+                });
+            }
+            res.json(questionnaire);
         });
 
     } else {
