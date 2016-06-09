@@ -29,7 +29,7 @@
                               })
                     .when('/login', {
                                   templateUrl: '/views/login.html',
-                                  controller: 'HomeController'
+                                  controller: 'QuestionController'
                               })
                     .otherwise({
                         redirectTo: '/'
