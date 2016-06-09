@@ -1,30 +1,26 @@
 <md-button class="md-fab" aria-label="Lisa uus">
 	<md-icon md-svg-src="img/icons/ic_insert_drive_file_24px.svg" ng-click="create()"></md-icon>
 		<md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
-						Insert Drive
+						Lisa uus!
 		</md-tooltip>
 </md-button>
 <md-content class="md-padding" layout="row">
     <div layout="column" flex>
-			<md-divider ></md-divider>
 			<md-list>
 				<md-subheader class="md-no-sticky"></md-subheader>
-						<md-list-item ng-click="modify()">test</md-list-item>
-						<md-list-item ng-click="modify()">test</md-list-item>
-						<md-list-item ng-click="modify()">test</md-list-item>
-			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="modify()">
+			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="modify($event, item)">
 			          <div class="md-list-item-text" layout="column">
 			            <span>
-										item.title
+										 {{item.title}}
 									</span>
 									<span>
-										item.createdDate
+										{{item.createdDate}}
 									</span>
 									<span>
-										item.totalTime
+										{{item.totalTime}}
 									</span>
 									<span>
-										item.totalPoints
+										{{item.totalPoints}}
 									</span>
 			          </div>
 			        </md-list-item>
@@ -32,29 +28,19 @@
 			</md-list>
 		</div>
 		<div layout="column" flex>
-			<md-divider ></md-divider>
-			<md-list>
-				<md-subheader class="md-no-sticky"></md-subheader>
-						<md-list-item ng-click="modify()">test</md-list-item>
-						<md-list-item ng-click="modify()">test</md-list-item>
-						<md-list-item ng-click="modify()">test</md-list-item>
-			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="modify()">
-			          <div class="md-list-item-text" layout="column">
-			            <span>
-							item.title
-						</span>
-						<span>
-							item.createdDate
-						</span>
-						<span>
-							item.totalTime
-						</span>
-						<span>
-							item.totalPoints
-						</span>
-			          </div>
-			        </md-list-item>
-				<md-divider ></md-divider>
-			</md-list>
+			<div ng-if="activeQuestionnaire">
+				<md-input-container class="md-block" flex-gt-sm>
+						<label>Pealkiri</label>
+						<input ng-model="activeQuestionnaire.title">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+						<label>Küsimus</label>
+						<input ng-model="question.title">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+						<label></label>
+						<input ng-model="question.title">
+				</md-input-container>
+			</div>
 		</div>
 </md-content>

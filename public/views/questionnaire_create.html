@@ -11,14 +11,19 @@
                       <label>Pealkiri</label>
                       <input ng-model="questionnaire.title">
                 </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Täitmise aeg minutites</label>
+                    <input ng-model="questionnaire.totalTime">
+                </md-input-container>
                 <label>Küsimused</label>
-                  <md-list-item class="secondary-button-padding" ng-repeat="x in questions track by $index">
+                  <md-list-item class="secondary-button-padding" ng-repeat="x in questionnaire.questions track by $index">
                       <div class="md-list-item-text">
                           <span>{{x.title}}</span>
                           <span>{{x.type}}</span>
                           <span>{{x.maxPoints}}</span>
-                          <md-button class="md-warn" ng-click="remQuestion(question, x)">Kustuta</md-button>
+                          <md-button class="md-warn" ng-click="remQuestion(x)">Kustuta</md-button>
                       </div>
+
                   </md-list-item>
                   <md-input-container>
                       <label>Küsimus</label>
@@ -77,7 +82,7 @@
       </md-card>
     </md-dialog-content>
     <md-dialog-actions>
-        <md-button ng-disabled="!(question.type && question.variants.length > 0 && question.title && question.maxPoints)" ng-click="modify(question)" class="md-primary">
+        <md-button ng-disabled="!(question.type && question.variants.length > 0 && question.title && question.maxPoints)" ng-click="create(question)" class="md-primary">
             SALVESTA
         </md-button>
     </md-dialog-actions>

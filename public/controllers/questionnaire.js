@@ -23,10 +23,10 @@
                     }
                 );
 
-			var pointCounter = function() {
+			var pointCounter = function(questionnaire) {
 				var points = 0;
-				for(question in $scope.questionnaire.questions){
-					points += $scope.questionaire.questions.maxPoints;
+				for(question in questionnaire.questions){
+					points += question.maxPoints;
 				}
 				return points;
 			};
@@ -101,7 +101,7 @@
 					  $scope.questionnaire.totalPoints += question.maxPoints;
 				  };
 				  $scope.remQuestion = function(question) {
-					  $scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);					  
+					  $scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
 					  $scope.questionnaire.totalPoints -= question.maxPoints;
 				  };
                   $scope.create = function(item) {
