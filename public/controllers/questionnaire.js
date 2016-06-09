@@ -76,25 +76,24 @@
 					$scope.questionnaire.questions = [];
 					$scope.question.variants = [];
 					$scope.question.maxPoints = 0;
-					$scope.addVariant = function(variant) {
+					$scope.addVariant = function(question, variant) {
 						$scope.question.variants.push(angular.copy(variant));
 							$scope.question.maxPoints += variant.points;
 					};
-					$scope.remVariant = function(variant) {
+					$scope.remVariant = function(question, variant) {
 						$scope.question.maxPoints -= variant.points;
-						$scope.question.variants.splice($scope.question.variants.indexOf(variant), 1);
+						$scope.question.variants.splice(question.variants.indexOf(variant), 1);
 					};
 				  $scope.clear = function() {
 					$scope.question.variants = [];
 					$scope.question.maxPoints = 0;
 				  };
 				  $scope.addQuestion = function(question) {
-					  $scope.questionnaire.totalPoints += question.maxPoints;
-					  $scope.questionnaire.questions.push(question);
+					  $scope.questionnaire.questions.push(angular.copy(question));
 				  };
 				  $scope.remQuestion = function(question) {
-					  $scope.questionnaire.totalPoints -= question.maxPoints;
-					  $scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
+					  $scope.questionnaire.questions -= questions.question;
+					  $scope.questionnaire.questions.splice(questions.question.indexOf(question), 1);
 				  };
                   $scope.create = function(item) {
                       $mdDialog.hide();
