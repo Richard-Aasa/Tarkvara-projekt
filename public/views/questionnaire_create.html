@@ -1,7 +1,10 @@
 <md-dialog aria-label="Loo küsimustik">
     <md-dialog-content>
       <md-card>
-      <md-button style="background-image: url(../img/close.svg)" height="100%" ng-click="close()"></md-button>
+      <!--<md-button style="background-image: url(../img/close.svg)" height="100%" ng-click="close()"></md-button>-->
+      <md-card-actions layout="row" layout-align="center">
+          <i ng-click="close()" class="material-icons">face</i>
+      </md-card-actions>
           <md-card-title>
               <md-card-title-text layout-align="end center">
                   <span class="md-headline">Loo küsimustik</span>
@@ -79,6 +82,7 @@
                   </div>
                   <md-card-actions ng-if="question.type" layout="row" layout-align="end center">
                       <md-button class="md-raised md-primary" ng-disabled="!(question.type && question.variants.length > 0 && question.title && question.maxPoints)" ng-click="addQuestion(question)">Lisa</md-button>
+
                   </md-card-actions>
       </md-card>
     </md-dialog-content>
