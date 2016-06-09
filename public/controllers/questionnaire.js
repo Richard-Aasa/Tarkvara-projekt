@@ -25,7 +25,7 @@
 
 			var pointCounter = function(questionnaire) {
 				var points = 0;
-				for(question in questionnaire.questions){
+				for(var question in questionnaire.questions){
 					points += question.maxPoints;
 				}
 				return points;
@@ -57,14 +57,14 @@
                         }
                     );
             };
-			
+
 			$scope.modify = function(questionnaire) {
 				//$scope.modify.
 			};
 			$scope.view = function(questionnaire) {
 				$scope.activeQuestionnaire = questionnaire;
 			}
-			
+
 			$scope.create = function($event) {
                 $mdDialog.show({
                     parent: angular.element(document.body),
@@ -106,6 +106,7 @@
 				  };
                   $scope.create = function(item) {
                       $mdDialog.hide();
+                      console.log(item);
                       save(item);
                   };
                 }

@@ -8,7 +8,7 @@
     <div layout="column" flex>
 			<md-list>
 				<md-subheader class="md-no-sticky"></md-subheader>
-			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="modify($event, item)">
+			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="view(item)">
 			          <div class="md-list-item-text" layout="column">
 			            <span>
 										 {{item.title}}
@@ -28,19 +28,25 @@
 			</md-list>
 		</div>
 		<div layout="column" flex>
-			<div ng-if="activeQuestionnaire">
+			<div ng-if="activeQuestionnaire.title">
 				<md-input-container class="md-block" flex-gt-sm>
 						<label>Pealkiri</label>
 						<input ng-model="activeQuestionnaire.title">
 				</md-input-container>
 				<md-input-container class="md-block" flex-gt-sm>
-						<label>Küsimus</label>
-						<input ng-model="question.title">
+						<label>Täitmise aeg</label>
+						<input ng-model="activeQuestionnaire.totalTime">
 				</md-input-container>
-				<md-input-container class="md-block" flex-gt-sm>
-						<label></label>
-						<input ng-model="question.title">
-				</md-input-container>
+				<label>Küsimused</label>
+				<md-list-item class="secondary-button-padding" ng-repeat="x in activeQuestionnaire.questions track by $index">
+						<div class="md-list-item-text">
+								<span>{{x.title}}</span>
+								<span>{{x.type}}</span>
+								<span>{{x.maxPoints}}</span>
+								<md-button class="md-warn" ng-click="remQuestion(x)">Kustuta</md-button>
+						</div>
+				</md-list-item>
+
 			</div>
 		</div>
 </md-content>
