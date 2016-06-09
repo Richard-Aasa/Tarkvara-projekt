@@ -15,5 +15,10 @@ Kasutaja, kes teste täita saab
 (6) Kui jah, siis vaata tulemust võiks viia konkreetse õpilase konkreetse testi statistika lehele
 (7) Täida ja täida uuesti peaks viima siis küsimustiku täitmise lehele.
 
+
+Laiendused:
+Õpilane näeb iga testi kohta konkreetselt, mis oli valesti
+Õpilane näeb oma testide tulemustest tehtud koondi, mis kirjeldab tema üldist edukust testide tegemisel.
+
  
 
