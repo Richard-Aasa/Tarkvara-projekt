@@ -11,9 +11,9 @@ var QuestionnaireSchema = new Schema({
     questions: [Question],
 	totalTime: {type: Number, required: true},
     totalPoints: {type: Number, required: true},
-	saved: Boolean,
-	published: Boolean,
-	archieved: Boolean
+	saved: Date,
+	published: Date,
+	archieved: Date,
 	// staatused: salvestatud, avaldatud, arhiveeritud
 	// total tuleb küsimuste max punktide summast
 });
