@@ -6,6 +6,7 @@
         .controller('QuestionnaireController', ['$scope', 'QuestionnaireService', '$mdToast', '$mdDialog', function($scope, QuestionnaireService, $mdToast, $mdDialog) {
             $scope.questionnaires = [];
             $scope.questionnaire = {};
+			$scope.activeQuestionnaire = {};
             $scope.loading = true;
 
             // WORKS
@@ -56,7 +57,14 @@
                         }
                     );
             };
-
+			
+			$scope.modify = function(questionnaire) {
+				//$scope.modify.
+			};
+			$scope.view = function(questionnaire) {
+				$scope.activeQuestionnaire = questionnaire;
+			}
+			
 			$scope.create = function($event) {
                 $mdDialog.show({
                     parent: angular.element(document.body),
