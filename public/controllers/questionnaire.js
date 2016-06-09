@@ -6,7 +6,8 @@
         .controller('QuestionnaireController', ['$scope', 'QuestionnaireService', '$mdToast', '$mdDialog', function($scope, QuestionnaireService, $mdToast, $mdDialog) {
             $scope.questionnaires = [];
             $scope.questionnaire = {};
-			$scope.activeQuestionnaire = {};
+            $scope.questionnaire.totalPoints = 0;
+			      $scope.activeQuestionnaire = {};
             $scope.loading = true;
 
             // WORKS
@@ -26,7 +27,10 @@
 			var pointCounter = function(questionnaire) {
 
 				for(var question in questionnaire.questions){
-					$scope.questionnaire.totalPoints += question.maxPoints;
+					$scope.questionnaire.totalPoints += questionnaire.questions[question].maxPoints;
+            console.log("kana");
+            console.log(questionnaire);
+            console.log(questionnaire.questions[question].maxPoints);
 				}
 
 			};
