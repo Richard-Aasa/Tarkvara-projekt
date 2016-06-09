@@ -118,8 +118,10 @@
 				  };
                   $scope.create = function(item) {
                       $mdDialog.hide();
-                      console.log(item);
                       save(item);
+                  };
+				  $scope.close = function(item) {
+                      $mdDialog.hide();
                   };
                 }
             };
