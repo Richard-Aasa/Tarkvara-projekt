@@ -10,18 +10,18 @@
 				<md-subheader class="md-no-sticky"></md-subheader>
 			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="view(item)">
 			          <div class="md-list-item-text" layout="column">
-			            <span>
-										 {{item.title}}
-									</span>
-									<span>
-										{{item.createdDate}}
-									</span>
-									<span>
-										{{item.totalTime}}
-									</span>
-									<span>
-										{{item.totalPoints}}
-									</span>
+			            <h4>
+										Pealkiri: {{item.title}}
+									</h4>
+									<p>
+										Aeg mis kulub: {{item.totalTime}}
+									</p>
+									<p>
+										Maksimum punktid: {{item.totalPoints}}
+									</p>
+									<p>
+										Loodud: {{item.createdDate}}
+									</p>
 			          </div>
 			        </md-list-item>
 				<md-divider ></md-divider>
@@ -35,7 +35,7 @@
 				</md-input-container>
 				<md-input-container class="md-block" flex-gt-sm>
 						<label>Täitmise aeg</label>
-						<input ng-model="activeQuestionnaire.totalTime">
+						<input ng-model="activeQuestionnaire.totalTime" type="number" step="1" min="0" max="1888900">
 				</md-input-container>
 				<label>Küsimused</label>
 				<md-list-item class="secondary-button-padding" ng-repeat="x in activeQuestionnaire.questions track by $index">
