@@ -72,11 +72,8 @@
 					questionnaire.totalPoints += question.maxPoints;
 				};
 				$scope.remQuestion = function(question) {
-<<<<<<< HEAD
           console.log(question);
           console.log(questionnaire);
-=======
->>>>>>> origin/master
 					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
 					questionnaire.totalPoints -= question.maxPoints;
 				};
