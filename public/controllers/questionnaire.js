@@ -75,13 +75,17 @@
 				};
 				$scope.addVariant = function(questionnaire, question){
 					console.log("tere");
-					
+					var index = $scope.questionnaires.indexOf(questionnaire);
+					var qIndex = $scope.questionnaires[index].questions.indexOf(question);
+					var variant = { "answer" : "a", "bool" : true , "points" : 0 };
+					$scope.questionnaires[index].questions[qIndex].variants.push(variant);
 				}
 				$scope.remVariant = function(questionnaire, question, variant){
 					var index = $scope.questionnaires.indexOf(questionnaire);
 					var qIndex = $scope.questionnaires[index].questions.indexOf(question);
 					var vIndex = $scope.questionnaires[index].questions[qIndex].variants.indexOf(variant);
 					$scope.questionnaires[index].questions[qIndex].variants.splice($scope.questionnaires[index].questions[qIndex].variants.indexOf(variant), 1);
+					//console.log($scope.questionnaires[index].questions[qIndex].variants);
 				}
 				
 				$scope.delete = function(questionnaire) {
