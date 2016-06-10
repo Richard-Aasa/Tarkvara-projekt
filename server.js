@@ -134,16 +134,18 @@ app.post('/auth/signup', function(req, res) {
   u.username = req.body.username;
   u.password = req.body.password;
   u.name = req.body.name;
-  u.phone = req.body.phone;
-
-  u.save(function(err) {
+  u.phone = parseInt(req.body.phone);
+  u.teacher = false;
+  u.save(function(err, user) {
     if (err) {
+      console.log(err);
       res.json({
-        'alert': 'Registration error'
+        'alert': 'Registreerimisel tekkis viga'
       });
     } else {
+      console.log(user);
       res.json({
-        'alert': 'Registration success'
+        'alert': 'Registreerumine õnnestus!'
       });
     }
   });
