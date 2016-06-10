@@ -72,9 +72,15 @@
 					questionnaire.totalPoints += question.maxPoints;
 				};
 				$scope.remQuestion = function(question) {
+<<<<<<< HEAD
+          console.log(question);
+          console.log(questionnaire);
+=======
+>>>>>>> origin/master
 					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
 					questionnaire.totalPoints -= question.maxPoints;
 				};
+<<<<<<< HEAD
 				$scope.delete = function(questionnaire) {
 						var index = $scope.questionnaires.indexOf(questionnaire);
 						$scope.questionnaires.splice(index, 1);
@@ -119,6 +125,8 @@
 						  return question.$create();
 					  }
 					}
+=======
+>>>>>>> origin/master
 			};
 
 			$scope.create = function($event) {
@@ -142,31 +150,32 @@
 					$scope.question.maxPoints = 0;
 					$scope.addVariant = function(question, variant) {
 						$scope.question.variants.push(angular.copy(variant));
-						$scope.question.maxPoints += variant.points;
+							$scope.question.maxPoints += variant.points;
 					};
 					$scope.remVariant = function(question, variant) {
 						$scope.question.maxPoints -= variant.points;
 						$scope.question.variants.splice(question.variants.indexOf(variant), 1);
 					};
-					$scope.clear = function() {
-						$scope.question.variants = [];
-						$scope.question.maxPoints = 0;
-					};
-					$scope.addQuestion = function(question) {
-						$scope.questionnaire.questions.push(angular.copy(question));
-						$scope.questionnaire.totalPoints += question.maxPoints;
-					};
-					$scope.remQuestion = function(question) {
-						$scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
-						$scope.questionnaire.totalPoints -= question.maxPoints;
-					};					
-					$scope.create = function(item) {
-						$mdDialog.hide();
-						save(item);
-					};
-					$scope.close = function() {
-						$mdDialog.hide();
-					};
+				  $scope.clear = function() {
+					$scope.question.variants = [];
+					$scope.question.maxPoints = 0;
+				  };
+				  $scope.addQuestion = function(question) {
+					  $scope.questionnaire.questions.push(angular.copy(question));
+					  $scope.questionnaire.totalPoints += question.maxPoints;
+				  };
+				  $scope.remQuestion = function(question) {
+					  $scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
+					  $scope.questionnaire.totalPoints -= question.maxPoints;
+
+				  };
+                  $scope.create = function(item) {
+                      $mdDialog.hide();
+                      save(item);
+                  };
+				  $scope.close = function() {
+                      $mdDialog.hide();
+                  };
                 }
             };
             $scope.update = function(questionnaire) {
