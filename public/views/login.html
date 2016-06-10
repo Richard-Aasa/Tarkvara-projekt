@@ -27,7 +27,7 @@
         </div>
       </md-input-container>
 
-      <md-button class="md-raised">Logi sisse</md-button>
+      <md-button ng-disabled="!(user.username && user.password)" ng-clicked="login(user)" class="md-raised">Logi sisse</md-button>
     </form>
 
   </md-content>

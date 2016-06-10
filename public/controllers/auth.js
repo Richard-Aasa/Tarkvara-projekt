@@ -19,7 +19,7 @@
         $http.post('/auth/login', user).
         success(function(data) {
           $scope.loggeduser = data;
-          $location.path('/user');
+          $location.path('/questionnaire');
         }).
         error(function() {
           $scope.alert = 'Login failed';

@@ -47,6 +47,6 @@
           </div>
         </div>
       </md-input-container>
-      <md-button ng-click="signup(user)" class="md-raised">Loo kasutaja</md-button>
+      <md-button ng-disabled="!(user.username && user.password && user.phone && user.name)" ng-click="signup(user)" class="md-raised">Loo kasutaja</md-button>
     </form>
   </md-content>
