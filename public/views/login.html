@@ -11,9 +11,8 @@
             <md-input-container class="md-icon-float md-block">
 
                 <label>Kasutajanimi (e-post)</label>
-                <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-                <input required type="email" ng-model="user.username" required minlength="2" maxlength="30" ng-pattern="/^.+@.+\..+$/" />
-                <div ng-messages="userForm.email.$error" role="alert">
+              <input name="username" type="email" ng-model="user.username" required minlength="2" maxlength="30" ng-pattern="/^.+@.+\..+$/" />
+                <div ng-messages="userForm.username.$error" role="alert">
                     <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
                         Palun kontrolli, kas e-post on õigesti sisestatud
                     </div>
@@ -21,8 +20,7 @@
             </md-input-container>
             <md-input-container class="md-icon-float md-block">
                 <label>Parool</label>
-                <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-                <input required type="password" ng-model="user.password" required minlength="4" maxlength="10">
+                <input required name="password" type="password" ng-model="user.password" minlength="4" maxlength="10">
                 <div ng-messages="userForm.password.$error" role="alert">
                     <div ng-message-exp="['required', 'minlength', 'maxlength']">
                         Parool peab olema 4-10 tähemärki pikk
