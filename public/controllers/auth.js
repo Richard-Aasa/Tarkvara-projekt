@@ -6,7 +6,9 @@
     .controller('AuthController', ['$scope', '$http', '$location', function($scope, $http, $location) {
       $scope.user = {
         username: '',
-        password: ''
+        password: '',
+        name: '',
+        phone: ''
       };
       $scope.showHints = true;
       $scope.loggeduser = {};
