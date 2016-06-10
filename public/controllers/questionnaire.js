@@ -75,48 +75,7 @@
 					$scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
 					$scope.questionnaire.totalPoints -= question.maxPoints;
 				};
-			};
-
-			$scope.create = function($event) {
-                $mdDialog.show({
-                    parent: angular.element(document.body),
-                    targetEvent: $event,
-                    templateUrl: 'views/questionnaire_create.html',
-                    locals: {
-                        questionnaire: $scope.questionnaire,
-                        questionnaires: $scope.questionnaires,
-						save: $scope.save
-                    },
-                    controller: DialogController
-                });
-                function DialogController($scope, $mdDialog, questionnaire, questionnaires, save) {
-					$scope.questionnaire = questionnaire;
-					$scope.questionnaires = questionnaires;
-					$scope.question = {};
-					$scope.questionnaire.questions = [];
-					$scope.question.variants = [];
-					$scope.question.maxPoints = 0;
-					$scope.addVariant = function(question, variant) {
-						$scope.question.variants.push(angular.copy(variant));
-						$scope.question.maxPoints += variant.points;
-					};
-					$scope.remVariant = function(question, variant) {
-						$scope.question.maxPoints -= variant.points;
-						$scope.question.variants.splice(question.variants.indexOf(variant), 1);
-					};
-					$scope.clear = function() {
-						$scope.question.variants = [];
-						$scope.question.maxPoints = 0;
-					};
-					$scope.addQuestion = function(question) {
-						$scope.questionnaire.questions.push(angular.copy(question));
-						$scope.questionnaire.totalPoints += question.maxPoints;
-					};
-					$scope.remQuestion = function(question) {
-						$scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
-						$scope.questionnaire.totalPoints -= question.maxPoints;
-					};
-					$scope.delete = function(question) {
+				$scope.delete = function(question) {
 						var index = $scope.questions.indexOf(question);
 						$scope.questions.splice(index, 1);
 						question.$delete()
@@ -160,6 +119,47 @@
 						  return question.$create();
 					  }
 					}
+			};
+
+			$scope.create = function($event) {
+                $mdDialog.show({
+                    parent: angular.element(document.body),
+                    targetEvent: $event,
+                    templateUrl: 'views/questionnaire_create.html',
+                    locals: {
+                        questionnaire: $scope.questionnaire,
+                        questionnaires: $scope.questionnaires,
+						save: $scope.save
+                    },
+                    controller: DialogController
+                });
+                function DialogController($scope, $mdDialog, questionnaire, questionnaires, save) {
+					$scope.questionnaire = questionnaire;
+					$scope.questionnaires = questionnaires;
+					$scope.question = {};
+					$scope.questionnaire.questions = [];
+					$scope.question.variants = [];
+					$scope.question.maxPoints = 0;
+					$scope.addVariant = function(question, variant) {
+						$scope.question.variants.push(angular.copy(variant));
+						$scope.question.maxPoints += variant.points;
+					};
+					$scope.remVariant = function(question, variant) {
+						$scope.question.maxPoints -= variant.points;
+						$scope.question.variants.splice(question.variants.indexOf(variant), 1);
+					};
+					$scope.clear = function() {
+						$scope.question.variants = [];
+						$scope.question.maxPoints = 0;
+					};
+					$scope.addQuestion = function(question) {
+						$scope.questionnaire.questions.push(angular.copy(question));
+						$scope.questionnaire.totalPoints += question.maxPoints;
+					};
+					$scope.remQuestion = function(question) {
+						$scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
+						$scope.questionnaire.totalPoints -= question.maxPoints;
+					};					
 					$scope.create = function(item) {
 						$mdDialog.hide();
 						save(item);
