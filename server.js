@@ -136,14 +136,13 @@ app.post('/auth/signup', function(req, res) {
   u.name = req.body.name;
   u.phone = parseInt(req.body.phone);
   u.teacher = false;
+
   u.save(function(err, user) {
     if (err) {
-      console.log(err);
       res.json({
         'alert': 'Registreerimisel tekkis viga'
       });
     } else {
-      console.log(user);
       res.json({
         'alert': 'Registreerumine õnnestus!'
       });
