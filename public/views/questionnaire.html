@@ -1,5 +1,5 @@
 <md-button class="md-fab" aria-label="Lisa uus">
-	<md-icon md-svg-src="img/icons/ic_insert_drive_file_24px.svg" ng-click="create()"></md-icon>
+	<md-icon ng-click="create()" class="material-icons">create</md-icon>
 		<md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
 						Lisa uus!
 		</md-tooltip>
@@ -63,7 +63,7 @@
 												<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda</md-button>-->
 										</div>
 								</md-list-item>
-								<md-button class="md-raised" ng-click="close()">Eemalda küsimus</md-button>
+								<md-button class="md-raised" ng-click="remQuestion(question)">Eemalda küsimus</md-button>
 						</div>
 				</md-list-item>
 				<md-input-container class="md-block" flex-gt-sm>
