@@ -42,6 +42,8 @@
 							<md-input-container class="md-block" flex-gt-sm>
 									<label>Küsimus:</label>
 									<input ng-click="x.active ? x.active=false : x.active=true" ng-model="x.title">
+									<label>Tüüp:</label>
+									<input ng-model="x.type">
 							</md-input-container>
 								<!--<span>{{x.type}}</span>
 								<span>{{x.maxPoints}}</span>
@@ -64,7 +66,7 @@
 												<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda</md-button>-->
 										</div>
 								</md-list-item>
-								<md-button class="md-primary" ng-click="addVariant(x)">Lisa variant</md-button>
+								<md-button ng-if="x.type=='Valik'" class="md-primary" ng-click="addVariant(activeQuestionnaire,x)">Lisa variant</md-button>
 								<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda küsimus</md-button>
 							</div>
 						</div>
