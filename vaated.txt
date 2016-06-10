@@ -7,18 +7,58 @@ Vaated
 
 (3)  1. Koosta test
 (4)  2. Vaata statistikat
+  * Momendil piirdume küsimustiku põhiselt, mitte klassi, ehk vajutades küsimustiku peale tuleb ette kokkuvõte
+  Kontrolleri funktsionaalsus:
+  * Näita üldine ajakulu keskmine
+  * Näita üldine punktisumma keskmine
+  * Näita keskmine ajakulu iga küsimuse peale (mean,mode,median)
+  * Näita keskmised punktid iga küsimuse peale
+  * Graafi kujul näidata spetsiifilise küsimuse kohta kui palju võttis iga õpilane aega ning mis tulemus tuli
+    * x telg (0 - õpilased.count()): õpilased
+    * y telg (protsentides lähtudes küsimustiku totalTimeist ning küsimuse maxPointsist): ajakulu - sinine joon, punktid - roheline joon
+
+  Kontrolleri keerukus:
+  * Matemaatikat
+  * NB! NB! kuidas graafe kujutada (pie chart keskmiste jaoks(mean,mode,median), line chart detailse info kuvamiseks)?
+  * for(var vastus in statistics) {
+      if(vastus.questionnaire == selectedQuestionnaire) {
+        vastused.push(vastus);
+      }
+    }
+    // eeldus, et järeltöö puhul kirjutatakse üle, mitte ei looda uus
+    students = vastused.length;
+    avg = 0;
+    // arvutab KOGU testi keskmist, yksiku kysimuse jaoks on analoogne
+    for(var question in selectedQuestionnaire.questions) {
+      for(var vaste in vastused) {
+        for(var answer in vaste.questions) {
+          if(question.title == answer.title) {
+            avg += answer.points;
+          }
+        }
+      }
+    }
+    avg /= selectedQuestionnaire.totalPoints;
 
 
 Kasutaja, kes teste täita saab
 (5) Esileht sisse logides kus näha testid. Testi taga siis valik "täida"
     Kas samas ka juba täidetud testid ja variandid täida uuesti ja vaata tulemust?
+    Ma arvan pigem kujul:
+    Ajalugu KT.1 | 20/06/2016 (avalikustatud kuupäev) | <25/07/2016> (valikuline parameeter näiteks järeltöö kuupäeva märkimiseks või fillDate märkimiseks?) | 45 min |
+    | Täida (hall kui arhiveeritud/unpublished, ehk kui antakse järeltöö võimalus, test avalikustatakse uuesti täitmiseks) | Tulemus (kui statistika objektil on userPoints)
+    Kontrolleri funktsionaalsus:
+    * Tuvasta küsimustikud (Questionnaires) mis on seotud sisselogitud õpilasega ja populeeri list
+    * Tuvasta kas küsimustik on täidetav(published)
+    * Küsimustiku JA õpilase põhiselt vaata, kas leidub statistika objekt mis kajastaks antud küsimustiku tulemust (userPoints)
+    Lisa märkused:
+    * Momendil näita kõiki küsimustikke millele kasutaja on 'regisreerinud', alati on võimalik andmestikku sorteerida, filtreerida, peita, kustutada, muuta
+    * Keerukus - keerulisim osa on kasutaja, statistika, küsimustiku sidumine, muu jaoks on piisavalt koodi loodud, et sujuks kergesti
+
 (6) Kui jah, siis vaata tulemust võiks viia konkreetse õpilase konkreetse testi statistika lehele
-(7) Täida ja täida uuesti peaks viima siis küsimustiku täitmise lehele.
+(7) Täida ja täida uuesti peaks viima siis küsimustiku täitmise lehele. (Fill)
 
 
 Laiendused:
 Õpilane näeb iga testi kohta konkreetselt, mis oli valesti
 Õpilane näeb oma testide tulemustest tehtud koondi, mis kirjeldab tema üldist edukust testide tegemisel.
-
- 
-
