@@ -35,7 +35,7 @@
             };
 
             $scope.save = function(item){
-              console.log(item);
+              
             };
 
             // WORKS
