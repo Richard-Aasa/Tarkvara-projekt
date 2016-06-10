@@ -7,7 +7,7 @@
             $scope.questionnaires = [];
             $scope.questionnaire = {};
             $scope.questionnaire.totalPoints = 0;
-			      $scope.activeQuestionnaire = {};
+			$scope.activeQuestionnaire = {};
             $scope.loading = true;
 
             // WORKS
@@ -25,14 +25,12 @@
                 );
 
 			var pointCounter = function(questionnaire) {
-
 				for(var question in questionnaire.questions){
 					$scope.questionnaire.totalPoints += questionnaire.questions[question].maxPoints;
-            console.log("kana");
-            console.log(questionnaire);
-            console.log(questionnaire.questions[question].maxPoints);
+					console.log("kana");
+					console.log(questionnaire);
+					console.log(questionnaire.questions[question].maxPoints);
 				}
-
 			};
 
             $scope.save = function(questionnaire) {
@@ -95,66 +93,54 @@
 						$scope.questions = questionnaire.questions;
 						$scope.modify = function(item) {
 							$mdDialog.hide();
-							updateQuestion(item);
+							update(item);
 						};
-					}
+					}					
 				};
 				$scope.delete = function(questionnaire) {
-						var index = $scope.questionnaires.indexOf(questionnaire);
-						$scope.questionnaires.splice(index, 1);
-						questionnaire.$delete()
-							.then(
-								function(data) {
-									showToast('Küsimus edukalt kustutatud: ' + question.title);
-								},
-								function(error) {
-									showToast(error.status + ' ' + error.statusText);
-								}
-							);
-					};
+					var index = $scope.questionnaires.indexOf(questionnaire);
+					$scope.questionnaires.splice(index, 1);
+					questionnaire.$delete()
+						.then(
+							function(data) {
+								showToast('Küsimus edukalt kustutatud: ' + question.title);
+							},
+							function(error) {
+								showToast(error.status + ' ' + error.statusText);
+							}
+						);
+					};				
 
-				$scope.updateQuestion = function(question) {
+				$scope.edit = function($event, question) {
+					$mdDialog.show({
+						parent: angular.element(document.body),
+						targetEvent: $event,
+						templateUrl: 'views/question_edit.html',
+						locals: {
+							question: question,
+							questions: $scope.questions,
+							update: $scope.update
+						},
+						controller: DialogController
+					});
+					function DialogController($scope, $mdDialog, question, questions, update) {
+						$scope.question = question;
+						$scope.questions = questions;
+						$scope.modify = function(item) {
+							$mdDialog.hide();
+							update(item);
+						};
+						}
+					};
+				$scope.update = function(question) {
 					$mdDialog.hide();
 					var index = $scope.questions.indexOf(question);
-
 					if (question.id) {
 						return question.$update();
 					} else {
 						return question.$create();
 					}
 				};
-
-					$scope.edit = function($event, question) {
-						$mdDialog.show({
-							parent: angular.element(document.body),
-							targetEvent: $event,
-							templateUrl: 'views/question_edit.html',
-							locals: {
-								question: question,
-								questions: $scope.questions,
-								update: $scope.update
-							},
-							controller: DialogController
-						});
-						function DialogController($scope, $mdDialog, question, questions, update) {
-						  $scope.question = question;
-						  $scope.questions = questions;
-						  $scope.modify = function(item) {
-							  $mdDialog.hide();
-							  update(item);
-						  };
-						}
-					};
-					$scope.update = function(question) {
-					  $mdDialog.hide();
-					  var index = $scope.questions.indexOf(question);
-
-					  if (question.id) {
-							  return question.$update();
-					  } else {
-						  return question.$create();
-					  }
-					};
 			};
 			$scope.create = function($event) {
                 $mdDialog.show({
