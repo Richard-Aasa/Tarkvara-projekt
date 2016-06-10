@@ -10,6 +10,7 @@
       };
       $scope.showHints = true;
       $scope.loggeduser = {};
+      $scope.userForm = {};
       $scope.alert = '';
 
       $scope.login = function(user) {
