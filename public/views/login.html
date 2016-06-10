@@ -45,13 +45,7 @@
         <md-input-container class="md-icon-float md-block">
             <label>E-post</label>
             <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input ng-model="user.email1" type="text">
-        </md-input-container>
-
-        <md-input-container class="md-icon-float md-block">
-            <label>E-post</label>
-            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input name="email" ng-model="user.email" required minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+            <input name="email" ng-model="user.email" required minlength="2" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
             <div ng-messages="userForm.email.$error">
                 <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
                     Mailiaadressi kuju ei ole õige.
