@@ -1,40 +1,42 @@
 <md-content class="md-padding" layout="row">
-    <div layout="column" flex>
-			<md-list>
-			        <md-list-item ng-repeat="item in questionnaire.questions" ng-click="null">
-			            <span>
-										{{item.title}}
-									</span>
-									<span>
-										{{item.maxPoints}}
-									</span>
-			        </md-list-item>
-				<md-divider ></md-divider>
-			</md-list>
-		</div>
-		<div layout="column" flex>
-			<md-list>
-
-						<md-list-item>test</md-list-item>
-						<md-list-item>test</md-list-item>
-						<md-list-item>test</md-list-item>
-			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="null">
-			          <div class="md-list-item-text" layout="column">
-			            <span>
-							item.title
-						</span>
-						<span>
-							item.createdDate
-						</span>
-						<span>
-							item.totalTime
-						</span>
-						<span>
-							item.totalPoints
-						</span>
-			          </div>
-			        </md-list-item>
-				<md-divider ></md-divider>
-			</md-list>
-		</div>
+  <div layout="row" flex>
+    <md-card>
+      <md-card-content>
+        <span>{{activeQuestion.title}}</span>
+        <!-- kui on valikvastusega küsimus -->
+        <div ng-if="activeQuestion.type=='Valik'">
+          <md-list>
+            <md-list-item ng-repeat="item in activeQuestion.variants" ng-click="null">
+              <span>
+                {{item.answer}}
+              </span>
+              <md-checkbox ng-model="answer" aria-label="Õige/Vale" ng-init=""></md-checkbox>
+            </md-list-item>
+          </md-list>
+        </div>
+        <!-- kui on tühja lüngaga küsimus -->
+        <div ng-if="activeQuestion.type=='Tühi lünk'">
+          <md-input-container>
+            <label>Vastus</label>
+            <input ng-model="answer">
+          </md-input-container>
+        </div>
+        <md-button class="md-raised md-primary" ng-click="save(answer)">Salvesta</md-button>
+      </md-card-content>
+    </md-card>
+  </div>
+  <md-divider ></md-divider>
+  <div layout="column" flex>
+		<md-list>
+		  <md-list-item ng-repeat="item in questionnaire.questions" ng-click="view(item)">
+        <span>
+					{{item.title}}
+				</span>
+				<span>
+					{{item.maxPoints}}
+				</span>
+      </md-list-item>
+		  <md-divider ></md-divider>
+		</md-list>
+  </div>
 </md-content>

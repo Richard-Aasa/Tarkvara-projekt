@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 
 var OneQuestionSchema = new Schema({
 	totalTime: { type: Number, required: true },
-	points: { type: Number, required: true }
+	points: { type: Number, required: true },
+	correct: Boolean
 });
 
 var StatisticsSchema = new Schema({
