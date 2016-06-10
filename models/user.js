@@ -8,8 +8,7 @@ var UserSchema = new Schema({
     type: String,
     trim: true,
     unique: true,
-    required: true,
-    validate: [validator.isEmail, 'invalid email']
+    required: true
   },
   password: {
     type: String,
@@ -23,10 +22,7 @@ var UserSchema = new Schema({
     type: Number,
     required: true
   },
-  teacher: {
-    type: Boolean,
-    default: false
-  }
+  teacher: Boolean
 });
 
 var User = mongoose.model('User', UserSchema);
