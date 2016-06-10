@@ -1,5 +1,5 @@
-<md-button class="md-fab" aria-label="Lisa uus">
-	<md-icon ng-click="create()" class="material-icons">create</md-icon>
+<md-button class="md-fab" ng-click="create()" aria-label="Lisa uus">
+	<md-icon  class="material-icons">create</md-icon>
 		<md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
 						Lisa uus!
 		</md-tooltip>
@@ -41,7 +41,7 @@
 						<div class="md-list-item-text">
 							<md-input-container class="md-block" flex-gt-sm>
 									<label>Küsimus:</label>
-									<input ng-model="x.title">
+									<input ng-click="x.active ? x.active=false : x.active=true" ng-model="x.title">
 							</md-input-container>
 								<!--<span>{{x.type}}</span>
 								<span>{{x.maxPoints}}</span>
@@ -49,13 +49,14 @@
 								<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda</md-button>
 								<br>
 								<label class="md-block" flex-gt-sm>Vastused:</label>-->
-								<md-list-item class="secondary-button-padding" ng-repeat="y in x.variants track by $index">
+								<div ng-if="x.active">
+									<md-list-item class="secondary-button-padding" ng-repeat="y in x.variants track by $index">
 										<div class="md-list-item-text">
 											<md-input-container class="md-block" flex-gt-sm>
 													<label>Vastus:</label>
 													<input ng-model="y.answer">
 													<md-card-actions layout="row" layout-align="center">
-										          <i ng-click="close()" class="material-icons">clear</i>
+										          <i ng-click="remVariant(activeQuestionnaire,x,y)" class="material-icons">clear</i>
 										      </md-card-actions>
 											</md-input-container>
 												<!--<span>{{y.answer}}</span>
@@ -63,12 +64,14 @@
 												<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda</md-button>-->
 										</div>
 								</md-list-item>
-								<md-button class="md-raised" ng-click="remQuestion(x)">Eemalda küsimus</md-button>
+								<md-button class="md-primary" ng-click="addVariant(x)">Lisa variant</md-button>
+								<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda küsimus</md-button>
+							</div>
 						</div>
 				</md-list-item>
 				<md-input-container class="md-block" flex-gt-sm>
 						<label>Loomise aeg</label>
-						<input ng-model="activeQuestionnaire.createdDate">
+						<input ng-model="activeQuestionnaire.createdDate" readonly>
 				</md-input-container>
 	 				 	 <md-button class="md-raised md-warn" ng-click="delete(activeQuestionnaire)">Kustuta</md-button>
 						 <md-button class="md-raised md-primary" ng-click="editQuestionnaire(activeQuestionnaire)">Salvesta</md-button>
