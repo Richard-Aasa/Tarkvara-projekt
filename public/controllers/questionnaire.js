@@ -113,16 +113,20 @@
 
 				$scope.editQuestionnaire = function(questionnaire) {
 					var index = $scope.questionnaires.indexOf(questionnaire);
-					$scope.questionnaires.questionnaire[index] = questionnaire;
-					$scope.update($scope.questionnaires.questionnaire[index]);
+					console.log(questionnaire);
+					console.log($scope.questionnaires[index]);
+					console.log(index);					
+					$scope.questionnaires[index] = questionnaire;
+					$scope.update($scope.questionnaires[index]);
 				};
 				$scope.update = function(questionnaire) {
 					$mdDialog.hide();
 					var index = $scope.questionnaires.indexOf(questionnaire);
-					if (question.id) {
+					if(questionnaire._id) {
 						return questionnaire.$update();
-					} else {
-						return questionnaire.$create();
+					}else{
+						console.log("ei tööta");
+						//return questionnaire.$create();
 					}
 				};
 			};
