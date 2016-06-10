@@ -94,14 +94,9 @@
 						$scope.questions = questionnaire.questions;
 						$scope.modify = function(item) {
 							$mdDialog.hide();
-							update(item);
+							updateQuestion(item);
 						};
 					}
-				};
-          console.log(question);
-          console.log(questionnaire);
-					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
-					questionnaire.totalPoints -= question.maxPoints;
 				};
 				$scope.delete = function(questionnaire) {
 						var index = $scope.questionnaires.indexOf(questionnaire);
@@ -117,7 +112,7 @@
 							);
 					};
 
-				$scope.update = function(question) {
+				$scope.updateQuestion = function(question) {
 					$mdDialog.hide();
 					var index = $scope.questions.indexOf(question);
 
