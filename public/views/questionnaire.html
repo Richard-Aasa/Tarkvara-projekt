@@ -38,12 +38,12 @@
 						<input ng-model="activeQuestionnaire.totalTime" type="number" step="1" min="0" max="1888900">
 				</md-input-container>
 				<label>Küsimused</label>
-				<!-- Test-->
 				<md-list-item class="secondary-button-padding" ng-repeat="x in activeQuestionnaire.questions track by $index">
 						<div class="md-list-item-text">
 								<span>{{x.title}}</span>
 								<span>{{x.type}}</span>
 								<span>{{x.maxPoints}}</span>
+								<md-button md-no-ink class="md-primary" ng-click="editQuestion(x)">Muuda</md-button>
 								<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda</md-button>
 						</div>
 				</md-list-item>
@@ -51,7 +51,7 @@
 						<label>Loomise aeg</label>
 						<input ng-model="activeQuestionnaire.createdDate">
 				</md-input-container>
-				 <md-button class="md-raised md-warn" ng-click="delete(activeQuestionnaire)">Kustuta</md-button>
+	 				 	 <md-button class="md-raised md-warn" ng-click="delete(activeQuestionnaire)">Kustuta</md-button>
 			</div>
 		</div>
 </md-content>

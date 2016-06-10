@@ -72,6 +72,7 @@
 					questionnaire.totalPoints += question.maxPoints;
 				};
 				$scope.remQuestion = function(question) {
+<<<<<<< HEAD
 					console.log(question);
 					console.log(questionnaire);
 					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
@@ -98,6 +99,13 @@
 						}
 					}
 				};
+=======
+          console.log(question);
+          console.log(questionnaire);
+					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
+					questionnaire.totalPoints -= question.maxPoints;
+				};
+>>>>>>> origin/master
 				$scope.delete = function(questionnaire) {
 						var index = $scope.questionnaires.indexOf(questionnaire);
 						$scope.questionnaires.splice(index, 1);
@@ -111,6 +119,7 @@
 								}
 							);
 					};
+<<<<<<< HEAD
 					
 				$scope.update = function(question) {
 					$mdDialog.hide();
@@ -123,6 +132,39 @@
 					}
 				};
 
+=======
+					$scope.edit = function($event, question) {
+						$mdDialog.show({
+							parent: angular.element(document.body),
+							targetEvent: $event,
+							templateUrl: 'views/question_edit.html',
+							locals: {
+								question: question,
+								questions: $scope.questions,
+								update: $scope.update
+							},
+							controller: DialogController
+						});
+						function DialogController($scope, $mdDialog, question, questions, update) {
+						  $scope.question = question;
+						  $scope.questions = questions;
+						  $scope.modify = function(item) {
+							  $mdDialog.hide();
+							  update(item);
+						  };
+						}
+					};
+					$scope.update = function(question) {
+					  $mdDialog.hide();
+					  var index = $scope.questions.indexOf(question);
+
+					  if (question.id) {
+							  return question.$update();
+					  } else {
+						  return question.$create();
+					  }
+					};
+>>>>>>> origin/master
 			};
 
 			$scope.create = function($event) {
