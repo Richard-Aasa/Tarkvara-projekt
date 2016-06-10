@@ -70,52 +70,33 @@
 					questionnaire.totalPoints += question.maxPoints;
 				};
 				$scope.remQuestion = function(question) {
-					console.log(question);
-					console.log(questionnaire);
 					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
 					questionnaire.totalPoints -= question.maxPoints;
 				};
-				//tere
-				$scope.editQuestion = function($event, question) {
-					$mdDialog.show({
-						parent: angular.element(document.body),
-						targetEvent: $event,
-						templateUrl: 'views/question_edit.html',
-						locals: {
-							question: question,
-							questions: questionnaire.questions,
-							update: $scope.update
-						},
-						controller: DialogController
-					});
-					function DialogController($scope, $mdDialog, question, questions, update) {
-						$scope.question = question;
-						$scope.questions = questionnaire.questions;
-						$scope.modify = function(item) {
-							$mdDialog.hide();
-							update(item);
-						};
-					}					
-				};
+				$scope.addVariant = function(){
+					console.log("tere");
+				}
+				$scope.remVariant = function(questionnaire, question, variant){
+					var index = $scope.questionnaires.indexOf(questionnaire);
+					var qIndex = $scope.questionnaires[index].questions.indexOf(question);
+					var vIndex = $scope.questionnaires[index].questions[qIndex].variants.indexOf(variant);
+					/*console.log(variant);
+					console.log(question);
+					console.log(vIndex);*/
+					//console.log($scope.questionnaires[index].questions[qIndex].variants[vIndex]);
+					$scope.questionnaires[index].questions[qIndex].variants.splice($scope.questionnaires[index].questions[qIndex].variants.indexOf(variant), 1);
+				}
 				$scope.delete = function(questionnaire) {
 					var index = $scope.questionnaires.indexOf(questionnaire);
 					$scope.questionnaires.splice(index, 1);
-					questionnaire.$delete()
-						.then(
-							function(data) {
-								showToast('Küsimus edukalt kustutatud: ' + question.title);
-							},
-							function(error) {
-								showToast(error.status + ' ' + error.statusText);
-							}
-						);
-					};				
+					showToast('Küsimustik edukalt kustutatud: ' + questionnaire.title);
+				};				
 
 				$scope.editQuestionnaire = function(questionnaire) {
 					var index = $scope.questionnaires.indexOf(questionnaire);
-					console.log(questionnaire);
-					console.log($scope.questionnaires[index]);
-					console.log(index);					
+					//console.log(questionnaire);
+					//console.log($scope.questionnaires[index]);
+					//console.log(index);					
 					$scope.questionnaires[index] = questionnaire;
 					$scope.update($scope.questionnaires[index]);
 				};
@@ -124,10 +105,10 @@
 					var index = $scope.questionnaires.indexOf(questionnaire);
 					if(questionnaire._id) {
 						return questionnaire.$update();
-					}else{
+					}/*else{
 						console.log("ei tööta");
 						//return questionnaire.$create();
-					}
+					}*/
 				};
 			};
 			$scope.create = function($event) {
