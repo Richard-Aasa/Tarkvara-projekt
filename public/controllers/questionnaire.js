@@ -75,10 +75,10 @@
 					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
 					questionnaire.totalPoints -= question.maxPoints;
 				};
-				$scope.delete = function(question) {
-						var index = $scope.questions.indexOf(question);
-						$scope.questions.splice(index, 1);
-						question.$delete()
+				$scope.delete = function(questionnaire) {
+						var index = $scope.questionnaires.indexOf(questionnaire);
+						$scope.questionnaires.splice(index, 1);
+						questionnaire.$delete()
 							.then(
 								function(data) {
 									showToast('Küsimus edukalt kustutatud: ' + question.title);
