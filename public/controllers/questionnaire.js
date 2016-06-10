@@ -72,15 +72,32 @@
 					questionnaire.totalPoints += question.maxPoints;
 				};
 				$scope.remQuestion = function(question) {
-<<<<<<< HEAD
-          console.log(question);
-          console.log(questionnaire);
-=======
->>>>>>> origin/master
+					console.log(question);
+					console.log(questionnaire);
 					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
 					questionnaire.totalPoints -= question.maxPoints;
 				};
-<<<<<<< HEAD
+				$scope.editQuestion = function($event, question) {
+					$mdDialog.show({
+						parent: angular.element(document.body),
+						targetEvent: $event,
+						templateUrl: 'views/question_edit.html',
+						locals: {
+							question: question,
+							questions: questionnaire.questions,
+							update: $scope.update
+						},
+						controller: DialogController
+					});
+					function DialogController($scope, $mdDialog, question, questions, update) {
+						$scope.question = question;
+						$scope.questions = questions;
+						$scope.modify = function(item) {
+							$mdDialog.hide();
+							update(item);
+						}
+					}
+				};
 				$scope.delete = function(questionnaire) {
 						var index = $scope.questionnaires.indexOf(questionnaire);
 						$scope.questionnaires.splice(index, 1);
@@ -94,39 +111,18 @@
 								}
 							);
 					};
-					$scope.edit = function($event, question) {
-						$mdDialog.show({
-							parent: angular.element(document.body),
-							targetEvent: $event,
-							templateUrl: 'views/question_edit.html',
-							locals: {
-								question: question,
-								questions: $scope.questions,
-								update: $scope.update
-							},
-							controller: DialogController
-						});
-						function DialogController($scope, $mdDialog, question, questions, update) {
-						  $scope.question = question;
-						  $scope.questions = questions;
-						  $scope.modify = function(item) {
-							  $mdDialog.hide();
-							  update(item);
-						  }
-						}
-					};
-					$scope.update = function(question) {
-					  $mdDialog.hide();
-					  var index = $scope.questions.indexOf(question);
+					
+				$scope.update = function(question) {
+					$mdDialog.hide();
+					var index = $scope.questions.indexOf(question);
 
-					  if (question.id) {
-							  return question.$update();
-					  } else {
-						  return question.$create();
-					  }
+					if (question.id) {
+						return question.$update();
+					} else {
+						return question.$create();
 					}
-=======
->>>>>>> origin/master
+				};
+
 			};
 
 			$scope.create = function($event) {
