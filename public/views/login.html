@@ -7,68 +7,28 @@
     </md-toolbar>
 
     <md-content class="md-no-momentum">
-        <md-input-container class="md-icon-float md-block">
-            <!-- Use floating label instead of placeholder -->
-            <label>Nimi</label>
-            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input ng-model="user.name" type="text">
-        </md-input-container>
+      <md-input-container class="md-icon-float md-block">
+          <label>Kasutajanimi (e-post)</label>
+          <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+          <input required type="email" ng-model="user.username" required minlength="2" maxlength="30" ng-pattern="/^.+@.+\..+$/" />
+          <div ng-messages="email.$error" role="alert">
+              <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                Palun kontrolli, kas e-post on õigesti sisestatud
+              </div>
+          </div>
+      </md-input-container>
         <md-input-container class="md-icon-float md-block">
             <label>Parool</label>
             <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input ng-model="user.password" type="password">
-        </md-input-container>
-        <md-button class="md-raised">Logi sisse</md-button>
-
-
-
-        <br>
-        <br/>
-
-        <md-toolbar class="md-hue-2">
-            <div class="md-toolbar-tools">
-                <h2 class="md-flex">Loo kasutaja</h2>
-            </div>
-        </md-toolbar>
-
-        <md-input-container class="md-icon-float md-block">
-            <label>Nimi</label>
-            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input ng-model="user.reg_name" type="text">
-        </md-input-container>
-        <md-input-container class="md-icon-float md-block">
-            <label>Telefoninumber</label>
-            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input ng-model="user.phone" type="text">
-        </md-input-container>
-
-        <md-input-container class="md-icon-float md-block">
-            <label>E-post</label>
-            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input ng-model="user.email1" type="text">
-        </md-input-container>
-
-        <md-input-container class="md-icon-float md-block">
-            <label>E-post</label>
-            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input name="email" ng-model="user.email" required minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-            <div ng-messages="userForm.email.$error">
-                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-                    Mailiaadressi kuju ei ole õige.
+            <input required type="password" ng-model="user.password" required minlength="4" maxlength="10">
+            <div ng-messages="password.$error" role="alert">
+                <div ng-message-exp="['required', 'minlength', 'maxlength']">
+                    Parool peab olema 4-10 tähemärki pikk
                 </div>
             </div>
         </md-input-container>
 
+        <md-button class="md-raised">Logi sisse</md-button>
 
-        <md-input-container class="md-icon-float md-block">
-            <label>Klass</label>
-            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input ng-model="user.class" type="text">
-        </md-input-container>
-        <md-input-container class="md-icon-float md-block">
-            <label>Parool</label>
-            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input ng-model="user.reg_password" type="password">
-        </md-input-container>
-        <md-button class="md-raised">Loo kasutaja</md-button>
+
     </md-content>

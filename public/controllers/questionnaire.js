@@ -6,6 +6,7 @@
         .controller('QuestionnaireController', ['$scope', 'QuestionnaireService', '$mdToast', '$mdDialog', function($scope, QuestionnaireService, $mdToast, $mdDialog) {
             $scope.questionnaires = [];
             $scope.questionnaire = {};
+            $scope.questionnaire.totalPoints = 0;
 			$scope.activeQuestionnaire = {};
             $scope.loading = true;
 
@@ -24,11 +25,12 @@
                 );
 
 			var pointCounter = function(questionnaire) {
-
 				for(var question in questionnaire.questions){
-					$scope.questionnaire.totalPoints += question.maxPoints;
+					$scope.questionnaire.totalPoints += questionnaire.questions[question].maxPoints;
+					console.log("kana");
+					console.log(questionnaire);
+					console.log(questionnaire.questions[question].maxPoints);
 				}
-
 			};
 
             $scope.save = function(questionnaire) {
@@ -64,15 +66,70 @@
 			$scope.view = function(questionnaire) {
 				$scope.activeQuestionnaire = questionnaire;
 				$scope.addQuestion = function(question) {
-					$scope.questionnaire.questions.push(angular.copy(question));
-					$scope.questionnaire.totalPoints += question.maxPoints;
+					questionnaire.questions.push(angular.copy(question));
+					questionnaire.totalPoints += question.maxPoints;
 				};
 				$scope.remQuestion = function(question) {
-					$scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
-					$scope.questionnaire.totalPoints -= question.maxPoints;
+					console.log(question);
+					console.log(questionnaire);
+					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
+					questionnaire.totalPoints -= question.maxPoints;
+				};
+				//tere
+				$scope.editQuestion = function($event, question) {
+					$mdDialog.show({
+						parent: angular.element(document.body),
+						targetEvent: $event,
+						templateUrl: 'views/question_edit.html',
+						locals: {
+							question: question,
+							questions: questionnaire.questions,
+							update: $scope.update
+						},
+						controller: DialogController
+					});
+					function DialogController($scope, $mdDialog, question, questions, update) {
+						$scope.question = question;
+						$scope.questions = questionnaire.questions;
+						$scope.modify = function(item) {
+							$mdDialog.hide();
+							update(item);
+						};
+					}					
+				};
+				$scope.delete = function(questionnaire) {
+					var index = $scope.questionnaires.indexOf(questionnaire);
+					$scope.questionnaires.splice(index, 1);
+					questionnaire.$delete()
+						.then(
+							function(data) {
+								showToast('Küsimus edukalt kustutatud: ' + question.title);
+							},
+							function(error) {
+								showToast(error.status + ' ' + error.statusText);
+							}
+						);
+					};				
+
+				$scope.editQuestionnaire = function(questionnaire) {
+					var index = $scope.questionnaires.indexOf(questionnaire);
+					console.log(questionnaire);
+					console.log($scope.questionnaires[index]);
+					console.log(index);					
+					$scope.questionnaires[index] = questionnaire;
+					$scope.update($scope.questionnaires[index]);
+				};
+				$scope.update = function(questionnaire) {
+					$mdDialog.hide();
+					var index = $scope.questionnaires.indexOf(questionnaire);
+					if(questionnaire._id) {
+						return questionnaire.$update();
+					}else{
+						console.log("ei tööta");
+						//return questionnaire.$create();
+					}
 				};
 			};
-
 			$scope.create = function($event) {
                 $mdDialog.show({
                     parent: angular.element(document.body),
@@ -100,23 +157,25 @@
 						$scope.question.maxPoints -= variant.points;
 						$scope.question.variants.splice(question.variants.indexOf(variant), 1);
 					};
-				  $scope.clear = function() {
-					$scope.question.variants = [];
-					$scope.question.maxPoints = 0;
-				  };
-				  $scope.addQuestion = function(question) {
-					  $scope.questionnaire.questions.push(angular.copy(question));
-					  $scope.questionnaire.totalPoints += question.maxPoints;
-				  };
-				  $scope.remQuestion = function(question) {
-					  $scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
-					  $scope.questionnaire.totalPoints -= question.maxPoints;
-				  };
-                  $scope.create = function(item) {
-                      $mdDialog.hide();
-                      console.log(item);
-                      save(item);
-                  };
+					$scope.clear = function() {
+						$scope.question.variants = [];
+						$scope.question.maxPoints = 0;
+					};
+					$scope.addQuestion = function(question) {
+						$scope.questionnaire.questions.push(angular.copy(question));
+						$scope.questionnaire.totalPoints += question.maxPoints;
+					};
+					$scope.remQuestion = function(question) {
+						$scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
+						$scope.questionnaire.totalPoints -= question.maxPoints;
+					};
+					$scope.create = function(item) {
+						$mdDialog.hide();
+						save(item);
+					};
+					$scope.close = function() {
+						$mdDialog.hide();
+					};
                 }
             };
             $scope.update = function(questionnaire) {
