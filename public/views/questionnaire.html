@@ -37,14 +37,23 @@
 						<label>Täitmise aeg</label>
 						<input ng-model="activeQuestionnaire.totalTime" type="number" step="1" min="0" max="1888900">
 				</md-input-container>
-				<label>Küsimused</label>
+				<label class="md-block" flex-gt-sm>Küsimused:</label>
 				<md-list-item class="secondary-button-padding" ng-repeat="x in activeQuestionnaire.questions track by $index">
 						<div class="md-list-item-text">
 								<span>{{x.title}}</span>
 								<span>{{x.type}}</span>
 								<span>{{x.maxPoints}}</span>
-								<md-button md-no-ink class="md-primary" ng-click="editQuestion(x)">Muuda</md-button>
+								<md-button md-no-ink class="md-primary" ng-click="editQuestion(x, event)">Muuda</md-button>
 								<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda</md-button>
+								<br>
+								<label class="md-block" flex-gt-sm>Vastused:</label>
+								<md-list-item class="secondary-button-padding" ng-repeat="x in activeQuestionnaire.questions track by $index">
+										<div class="md-list-item-text">
+												<span>{{x.variants[$index].answer}}</span>
+												<md-button md-no-ink class="md-primary" ng-click="editQuestion(x, event)">Muuda</md-button>
+												<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda</md-button>
+										</div>
+								</md-list-item>
 						</div>
 				</md-list-item>
 				<md-input-container class="md-block" flex-gt-sm>
