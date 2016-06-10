@@ -77,7 +77,7 @@
 					console.log("tere");
 					var index = $scope.questionnaires.indexOf(questionnaire);
 					var qIndex = $scope.questionnaires[index].questions.indexOf(question);
-					var variant = { "answer" : "a", "bool" : true , "points" : 0 };
+					var variant = { "answer" : " ", "bool" : true , "points" : 0 };
 					$scope.questionnaires[index].questions[qIndex].variants.push(variant);
 				}
 				$scope.remVariant = function(questionnaire, question, variant){
