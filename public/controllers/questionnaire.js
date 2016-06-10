@@ -91,7 +91,7 @@
 					});
 					function DialogController($scope, $mdDialog, question, questions, update) {
 						$scope.question = question;
-						$scope.questions = questions;
+						$scope.questions = questionnaire.questions;
 						$scope.modify = function(item) {
 							$mdDialog.hide();
 							update(item);
