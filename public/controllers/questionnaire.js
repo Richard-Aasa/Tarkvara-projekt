@@ -26,10 +26,9 @@
 
 			var pointCounter = function(questionnaire) {
 				for(var question in questionnaire.questions){
-					$scope.questionnaire.totalPoints += questionnaire.questions[question].maxPoints;
-					console.log("kana");
-					console.log(questionnaire);
-					console.log(questionnaire.questions[question].maxPoints);
+					for(var variant in question){
+						questionnaire.questions[question].maxPoint += variant.points;
+					}
 				}
 			};
 
