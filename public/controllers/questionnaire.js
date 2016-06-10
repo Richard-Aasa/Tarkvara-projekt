@@ -77,6 +77,7 @@
 					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
 					questionnaire.totalPoints -= question.maxPoints;
 				};
+				//tere
 				$scope.editQuestion = function($event, question) {
 					$mdDialog.show({
 						parent: angular.element(document.body),
