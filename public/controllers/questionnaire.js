@@ -68,12 +68,12 @@
 			$scope.view = function(questionnaire) {
 				$scope.activeQuestionnaire = questionnaire;
 				$scope.addQuestion = function(question) {
-					$scope.questionnaire.questions.push(angular.copy(question));
-					$scope.questionnaire.totalPoints += question.maxPoints;
+					questionnaire.questions.push(angular.copy(question));
+					questionnaire.totalPoints += question.maxPoints;
 				};
 				$scope.remQuestion = function(question) {
-					$scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
-					$scope.questionnaire.totalPoints -= question.maxPoints;
+					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
+					questionnaire.totalPoints -= question.maxPoints;
 				};
 				$scope.delete = function(question) {
 						var index = $scope.questions.indexOf(question);
