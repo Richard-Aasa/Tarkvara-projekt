@@ -33,7 +33,7 @@
           $scope.alert = data.alert;
         }).
         error(function() {
-          $scope.alert = 'Registreerumine ei õnnestunud!';
+          $scope.alert = 'Registration failed';
         });
 
       };
