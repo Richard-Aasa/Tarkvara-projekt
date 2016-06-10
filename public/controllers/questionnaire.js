@@ -155,7 +155,7 @@
 						  return question.$create();
 					  }
 					};
-
+			};
 			$scope.create = function($event) {
                 $mdDialog.show({
                     parent: angular.element(document.body),
