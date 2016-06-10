@@ -5,15 +5,11 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngResource', 'ngMaterial'])
+        .module('app', ['ngRoute', 'ngResource', 'ngMaterial', 'ngMessages'])
         .config(['$routeProvider', '$locationProvider', '$resourceProvider',
             function($routeProvider, $locationProvider, $resourceProvider) {
 
                 $routeProvider
-                    .when('/', {
-                        templateUrl: '/views/home.html',
-                        controller: 'HomeController'
-                    })
 					//localhost:3000/#/ siia otsa rakendub see .when, et kui url on /test/question/ siis laetakse seda vaadet
                     .when('/question', {
                         templateUrl: '/views/question.html',
