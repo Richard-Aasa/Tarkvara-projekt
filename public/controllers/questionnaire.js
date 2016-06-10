@@ -83,11 +83,7 @@
 					var vIndex = $scope.questionnaires[index].questions[qIndex].variants.indexOf(variant);
 					$scope.questionnaires[index].questions[qIndex].variants.splice($scope.questionnaires[index].questions[qIndex].variants.indexOf(variant), 1);
 				}
-				$scope.deleteQuestion = function(questionnaire) {
-					var index = $scope.questionnaires.indexOf(questionnaire);
-					$scope.questionnaires.splice(index, 1);
-                    showToast('Küsimus edukalt kustutatud: ' + question.title);
-				};
+				
 				$scope.delete = function(questionnaire) {
 					var index = $scope.questionnaires.indexOf(questionnaire);
 					$scope.questionnaires.splice(index, 1);
