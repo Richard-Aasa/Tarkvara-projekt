@@ -72,8 +72,10 @@
 					$scope.questionnaire.totalPoints += question.maxPoints;
 				};
 				$scope.remQuestion = function(question) {
-					$scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
-					$scope.questionnaire.totalPoints -= question.maxPoints;
+          console.log(question);
+          console.log(questionnaire);
+					questionnaire.questions.splice(questionnaire.questions.indexOf(question), 1);
+					questionnaire.totalPoints -= question.maxPoints;
 				};
 			};
 
@@ -115,6 +117,7 @@
 				  $scope.remQuestion = function(question) {
 					  $scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
 					  $scope.questionnaire.totalPoints -= question.maxPoints;
+
 				  };
                   $scope.create = function(item) {
                       $mdDialog.hide();
