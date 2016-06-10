@@ -43,6 +43,7 @@
 								<span>{{x.title}}</span>
 								<span>{{x.type}}</span>
 								<span>{{x.maxPoints}}</span>
+								<md-button md-no-ink class="md-primary" ng-click="editQuestion(x)">Muuda</md-button>
 								<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda</md-button>
 						</div>
 				</md-list-item>
@@ -50,7 +51,7 @@
 						<label>Loomise aeg</label>
 						<input ng-model="activeQuestionnaire.createdDate">
 				</md-input-container>
-				 <md-button class="md-raised md-warn" ng-click="delete(activeQuestionnaire)">Kustuta</md-button>
+	 				 	 <md-button class="md-raised md-warn" ng-click="delete(activeQuestionnaire)">Kustuta</md-button>
 			</div>
 		</div>
 </md-content>
