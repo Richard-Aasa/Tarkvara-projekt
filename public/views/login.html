@@ -7,28 +7,30 @@
     </md-toolbar>
 
     <md-content class="md-no-momentum">
-      <md-input-container class="md-icon-float md-block">
-          <label>Kasutajanimi (e-post)</label>
-          <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-          <input required type="email" ng-model="user.username" required minlength="2" maxlength="30" ng-pattern="/^.+@.+\..+$/" />
-          <div ng-messages="email.$error" role="alert">
-              <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-                Palun kontrolli, kas e-post on õigesti sisestatud
-              </div>
-          </div>
-      </md-input-container>
-        <md-input-container class="md-icon-float md-block">
-            <label>Parool</label>
-            <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
-            <input required type="password" ng-model="user.password" required minlength="4" maxlength="10">
-            <div ng-messages="password.$error" role="alert">
-                <div ng-message-exp="['required', 'minlength', 'maxlength']">
-                    Parool peab olema 4-10 tähemärki pikk
+        <form name="userForm">
+            <md-input-container class="md-icon-float md-block">
+
+                <label>Kasutajanimi (e-post)</label>
+                <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+                <input required type="email" ng-model="user.username" required minlength="2" maxlength="30" ng-pattern="/^.+@.+\..+$/" />
+                <div ng-messages="userForm.email.$error" role="alert">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        Palun kontrolli, kas e-post on õigesti sisestatud
+                    </div>
                 </div>
-            </div>
-        </md-input-container>
+            </md-input-container>
+            <md-input-container class="md-icon-float md-block">
+                <label>Parool</label>
+                <md-icon md-svg-src="img/icons/ic_person_24px.svg"></md-icon>
+                <input required type="password" ng-model="user.password" required minlength="4" maxlength="10">
+                <div ng-messages="userForm.password.$error" role="alert">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength']">
+                        Parool peab olema 4-10 tähemärki pikk
+                    </div>
+                </div>
+            </md-input-container>
 
-        <md-button class="md-raised">Logi sisse</md-button>
-
+            <md-button class="md-raised">Logi sisse</md-button>
+        </form>
 
     </md-content>
