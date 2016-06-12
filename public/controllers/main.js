@@ -3,9 +3,12 @@
     angular
         .module('app')
         // Navigatsiooni controller
-        .controller('MainController', function($scope, $timeout, $mdSidenav, $mdDialog, AuthenticateService) {
+        .controller('MainController', function($scope, $timeout, $location, $mdSidenav, $mdDialog, AuthenticateService) {
             $scope.toggleLeft = buildDelayedToggler('left');
             $scope.service = AuthenticateService;
+            $scope.changeView = function(view){
+              $location.path(view); // path not hash
+            }
             /**
              * Supplies a function that will continue to operate until the
              * time is up.
