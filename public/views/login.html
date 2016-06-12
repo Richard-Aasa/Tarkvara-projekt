@@ -1,9 +1,13 @@
 <md-content layout="column">
 
     <md-toolbar class="md-hue-2">
-        <div class="md-toolbar-tools">
-            <h2 class="md-flex">Logi sisse</h2>
+        <div flex class="md-toolbar-tools">
+            <h2 flex>Logi sisse</h2>
+            <md-button ng-click="close()" class="md-icon-button md-secondary" aria-label="Close">
+                <md-icon class="material-icons">close</md-icon>
+            </md-button>
         </div>
+
     </md-toolbar>
 
     <md-content class="md-no-momentum md-padding">
@@ -29,7 +33,6 @@
             </md-input-container>
             <div layout="row" layout-align="end center">
               <md-button class="md-raised md-primary" ng-disabled="!(user.username && user.password)" ng-click="login(user)">Logi sisse</md-button>
-              <md-button class="md-warn" ng-click="close()">Välju</md-button>
             </div>
 
         </form>
