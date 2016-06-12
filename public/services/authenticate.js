@@ -33,10 +33,11 @@
             // this may be from a previous session.
             requestCurrentUser: function() {
                 if (service.isAuthenticated()) {
+                    console.log("init1");
                     return $q.when(service.currentUser);
                 } else {
-                    return $http.get('/auth/user').then(function(response) {
-                        service.currentUser = response;
+                    return $http.get('/auth/user').success(function(user) {
+                        service.currentUser = user;
                         return service.currentUser;
                     });
                 }

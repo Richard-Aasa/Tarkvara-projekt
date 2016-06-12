@@ -10,9 +10,9 @@
 
     </md-toolbar>
 
-    <md-content class="md-no-momentum md-padding">
+    <md-content class="md-no-momentum">
         <h2>{{alert}}</h2>
-        <form name="userForm">
+        <form name="userForm" layout-padding>
             <md-input-container class="md-block">
                 <label>Kasutajanimi (e-post)</label>
                 <input name="username" type="email" ng-model="user.username" required minlength="2" maxlength="30" ng-pattern="/^.+@.+\..+$/" />
