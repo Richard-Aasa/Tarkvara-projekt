@@ -9,28 +9,47 @@
 </head>
 <!-- NB! ng-app="app" tähendab, et kui me loome controllerit/servicet vms,
   siis põhirakendusele viitame sõnaga "app". Näiteks angular.module('app').controller() -->
-<body ng-app="app" ng-cloak layout="row" ng-controller="MainCtrl">
+<body ng-app="app" ng-cloak layout="row" ng-controller="MainController" ng-init="service.requestCurrentUser()">
 
     <section layout="row" flex>
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-            <md-toolbar class="md-theme-indigo">
-                <h1 class="md-toolbar-tools">Menüüü</h1>
+            <md-toolbar>
+                <h1 class="md-toolbar-tools">Menüü</h1>
             </md-toolbar>
             <md-content layout-padding ng-controller="LeftNavCtrl">
-                <md-button ng-click="toggleLeft()" class="md-primary" hide-gt-md>
-                <md-icon class="material-icons">backspace</md-icon>
-                </md-button>
+
                 <p hide-md show-gt-md>
                     Siia võiks kunagi tulla menüü
                 </p>
             </md-content>
         </md-sidenav>
 
-        <md-content flex layout-padding>
-          <md-button ng-click="toggleLeft()" class="md-primary" hide-gt-md>
-              <md-icon class="material-icons">menu</md-icon>
-          </md-button>
-          <div ng-view layout="column"></div>
+        <md-content flex>
+          <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+              <md-button ng-click="toggleLeft()" hide-gt-md md-no-ink class="md-icon-button md-secondary" aria-label="Settings">
+                  <md-icon class="material-icons">menu</md-icon>
+              </md-button>
+              <h2 flex>
+                <span>Mälumäng</span>
+              </h2>
+              <div ng-show="!service.isAuthenticated()"  layout-align="end center">
+                <md-button ng-click="login($event)">
+                  Login
+                </md-button>
+                <md-button ng-click="register($event)">
+                  Register
+                </md-button>
+              </div>
+              <div ng-show="service.isAuthenticated()" layout-align="end center">
+                <span>{{service.currentUser.name}}</span>
+                <md-button ng-click="service.logout()">
+                  Log out
+                </md-button>
+              </div>
+            </div>
+          </md-toolbar>
+          <div ng-view layout="column" layout-padding></div>
         </md-content>
     </section>
 
@@ -44,15 +63,15 @@
     <script src="/lib/angular-material/angular-material.min.js"></script>
     <script src="/lib/angular-messages/angular-messages.min.js"></script>
 
-    <!-- Need to declare all the controllers and services here (e.g HomeController required to run home.html view)-->
     <script src="/client.js"></script>
     <script src="/controllers/main.js"></script>
     <script src="/controllers/question.js"></script>
     <script src="/controllers/questionnaire.js"></script>
     <script src="/controllers/fill.js"></script>
-    <script src="/controllers/auth.js"></script>
+
     <script src="/services/question.js"></script>
     <script src="/services/questionnaire.js"></script>
+    <script src="/services/authenticate.js"></script>
 </body>
 
 </html>

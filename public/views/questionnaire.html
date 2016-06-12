@@ -1,10 +1,10 @@
-<md-button class="md-fab" ng-click="create()" aria-label="Lisa uus">
-	<md-icon  class="material-icons">create</md-icon>
-		<md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
-						Lisa uus!
-		</md-tooltip>
-</md-button>
-<md-content class="md-padding" layout="row">
+<md-content class="md-padding" layout="row" ng-init="service.isTeacher()">
+	<md-button class="md-fab" ng-click="create()" aria-label="Lisa uus">
+		<md-icon  class="material-icons">create</md-icon>
+			<md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
+							Lisa uus!
+			</md-tooltip>
+	</md-button>
     <div layout="column" flex>
 			<md-list>
 				<md-subheader class="md-no-sticky"></md-subheader>

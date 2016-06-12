@@ -6,8 +6,8 @@
 
   angular
     .module('app', ['ngRoute', 'ngResource', 'ngMaterial', 'ngMessages'])
-    .config(['$routeProvider', '$locationProvider', '$resourceProvider',
-      function($routeProvider, $locationProvider, $resourceProvider) {
+    .config(['$routeProvider', '$locationProvider', '$resourceProvider', '$mdThemingProvider',
+      function($routeProvider, $locationProvider, $resourceProvider, $mdThemingProvider) {
 
         $routeProvider
           //localhost:3000/#/ siia otsa rakendub see .when, et kui url on /test/question/ siis laetakse seda vaadet
@@ -23,20 +23,13 @@
             templateUrl: '/views/fill.html',
             controller: 'FillController'
           })
-          .when('/login', {
-            templateUrl: '/views/login.html',
-            controller: 'AuthController'
-          })
-          .when('/register', {
-            templateUrl: '/views/register.html',
-            controller: 'AuthController'
-          })
           .otherwise({
             redirectTo: '/'
           });
 
-        //testing
-
+        //Theme
+        $mdThemingProvider.theme('default')
+          .primaryPalette('blue-grey');
       }
     ]);
 }());
