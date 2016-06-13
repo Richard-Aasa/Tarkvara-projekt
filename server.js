@@ -28,6 +28,7 @@ db.on('disconnected', connect);
 // Mudelite deklareerimine
 var Question = require('./models/question').Question;
 var Questionnaire = require('./models/questionnaire').Questionnaire;
+var Statistics = require('./models/statistics').Statistics;
 var User = require('./models/user');
 
 // Kasutaja logimise moodul
@@ -391,6 +392,102 @@ app.delete('/questionnaire/:id', function(req, res, next) {
                 });
             }
             res.json(questionnaire);
+        });
+
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+// Statistika - testi tulemused
+app.get('/statistics', function(req, res) {
+    Statistics.find(function(err, statistics) {
+        if (err) {
+            console.error(err);
+            return res.json(err);
+        }
+        res.json(statistics);
+    });
+});
+
+//Testi tulemuse loomine
+app.post('/statistics', function(req, res) {
+    var postData = req.body;
+
+    if (postData.questions.length > 0) {
+        var newStatistics = new Statistics({
+            questionnaire: postData.questionnaire,
+            user: postData.user,
+            ///date tuleb automaatselt, seda pole siia vaja
+            fillDate: postData.fillDate,
+            questions: postData.questions,
+            userTime: postData.userTime,
+            userPoints: postData.userPoints
+        });
+
+        newStatistics.save(function(err, statistics) {
+
+            //handle saving error
+            if (err) {
+                console.error(err);
+                return res.json(err);
+            }
+
+            //return saved entry
+            res.json(statistics);
+        });
+
+    } else {
+        //if missing parameters returns error
+        res.sendStatus(400);
+    }
+});
+app.get('/statistics/:id', function(req, res, next) {
+    var params = req.params;
+
+    if (params.id) {
+
+        var query = Statistics.findOne({
+            '_id': 'params.id'
+        });
+
+        query.select("questionnaire user fillDate questions userTime userPoints");
+        query.exec(function(err, statistics) {
+            if (err) {
+                console.error(err);
+                return res.json({
+                    "error": "did not find matching result object"
+                });
+            }
+            res.json(statistics);
+        });
+
+    } else {
+        res.sendStatus(400);
+    }
+
+});
+
+app.delete('/statistics/:id', function(req, res, next) {
+
+    var params = req.params;
+
+    if (params.id) {
+
+        var conditions = {
+            _id: params.id
+        };
+
+        var query = Statistics.findOneAndRemove(conditions);
+
+        query.exec(function(err, statistics) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({
+                    "error": "Did not find statistics or no authorization"
+                });
+            }
+            res.json(statistics);
         });
 
     } else {
