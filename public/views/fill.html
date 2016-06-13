@@ -17,7 +17,7 @@
             </md-list-item>
           </md-list>
           <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(arrayOfItems, activeQuestion)">Järgmine</md-button>
-          <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="finish()">Lõpeta küsimustik</md-button>
+          <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
         </div>
         <!-- kui on tühja lüngaga küsimus -->
         <div ng-if="activeQuestion.type=='Tühi lünk'">
@@ -25,7 +25,7 @@
             <label>Vastus</label>
             <input ng-model="answer">
             <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(answer, activeQuestion)">Järgmine</md-button>
-			<md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="finish()">Lõpeta küsimustik</md-button>
+			<md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
           </md-input-container>
         </div>
       </md-card-content>
