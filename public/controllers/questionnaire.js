@@ -10,6 +10,7 @@
             $scope.currentIndex = 0;
             $scope.service = AuthenticateService;
             $scope.loading = true;
+            $scope.newQuestion = {};
 
             QuestionnaireService.query()
                 .$promise.then(
@@ -90,8 +91,10 @@
             //Korras!
             $scope.addQuestion = function(question) {
                 // Deep-copy on vajalik, vastasel juhul on kõik küsimused samad angular'i data-binding tõttu
+
                 $scope.activeQuestionnaire.questions.push(angular.copy(question));
                 $scope.activeQuestionnaire.totalPoints += question.maxPoints;
+                console.log($scope.activeQuestionnaire);
             };
 
             //Korras!
@@ -100,10 +103,12 @@
                 $scope.activeQuestionnaire.totalPoints -= question.maxPoints;
             };
             $scope.addVariant = function(question, variant) {
+                console.log(question.variants);
+                console.log(variant);
                 question.variants.push(angular.copy(variant));
                 question.maxPoints += variant.points;
             };
-            
+
             $scope.remVariant = function(question, variant) {
                 question.maxPoints -= variant.points;
                 question.variants.splice(question.variants.indexOf(variant), 1);
@@ -168,9 +173,9 @@
                 }
             };
 
-            $scope.clear = function() {
-                $scope.question.variants = [];
-                $scope.question.maxPoints = 0;
+            $scope.clear = function(question) {
+                question.variants = [];
+                question.maxPoints = 0;
             };
 
             var showToast = function(message) {
