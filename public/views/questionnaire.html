@@ -144,7 +144,7 @@
 							<th>Kustuta</th>
 						</tr>
 						<!-- Kui vastuse boolean on tõene - roheline taust -->
-						<tr ng-repeat="y in newQuestion.variants track by $index" ng-if="y.bool" bgcolor="#88C474">
+						<tr ng-repeat="y in newQuestion.variants track by $index" ng-if="y.bool" bgcolor="#4CAF50">
 							<td>{{y.answer}}</td>
 							<td>{{y.points}}</td>
 							<td>
@@ -154,7 +154,7 @@
 							</td>
 						</tr>
 						<!-- Kui vastuse boolean on tõene - punane taust -->
-						<tr ng-repeat="y in newQuestion.variants track by $index" ng-if="!y.bool" bgcolor="#C95D5D">
+						<tr ng-repeat="y in newQuestion.variants track by $index" ng-if="!y.bool" bgcolor="#F44336">
 							<td>{{y.answer}}</td>
 							<td>{{y.points}}</td>
 							<td>
