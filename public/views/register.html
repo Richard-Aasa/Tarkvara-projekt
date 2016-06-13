@@ -1,5 +1,4 @@
 <md-content layout="column" flex>
-
     <md-toolbar class="md-hue-2">
         <div class="md-toolbar-tools">
             <h2 flex>Loo kasutaja</h2>
@@ -8,8 +7,7 @@
             </md-button>
         </div>
     </md-toolbar>
-
-    <md-content class="md-no-momentum">
+    <md-content>
         <h2>{{alert}}</h2>
         <form name="userForm" layout-padding>
             <md-input-container class="md-block">
@@ -48,10 +46,6 @@
                     </div>
                 </div>
             </md-input-container>
-
-
-
-
             <div layout="row" layout-align="end center">
                 <md-button ng-disabled="!(user.username && user.password && user.phone && user.name)" ng-click="register(user)" class="md-raised md-primary">Registreeri</md-button>
             </div>

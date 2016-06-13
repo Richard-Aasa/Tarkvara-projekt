@@ -3,12 +3,10 @@
     angular
         .module('app')
         // Navigatsiooni controller
-        .controller('MainController', function($scope, $timeout, $location, $mdSidenav, $mdDialog, AuthenticateService) {
+        .controller('MainController', function($scope, $timeout, $mdSidenav, $mdDialog, AuthenticateService) {
             $scope.toggleLeft = buildDelayedToggler('left');
             $scope.service = AuthenticateService;
-            $scope.changeView = function(view){
-              $location.path(view); // path not hash
-            }
+
             /**
              * Supplies a function that will continue to operate until the
              * time is up.
@@ -130,9 +128,13 @@
              }
           }
         })
-        .controller('LeftNavCtrl', function($scope, $timeout, $mdSidenav) {
+        .controller('LeftNavCtrl', function($scope, $timeout, $mdSidenav, $location) {
             $scope.close = function() {
                 $mdSidenav('left').close();
-            };
+            }
+            $scope.changeView = function(view){
+              $mdSidenav('left').close();
+              $location.path(view); // path not hash
+            }
         });
 }());

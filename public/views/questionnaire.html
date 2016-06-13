@@ -5,7 +5,7 @@
 							Lisa uus!
 			</md-tooltip>
 	</md-button>
-    <div layout="column" flex>
+    <div layout="column" flex="20">
 			<md-list>
 				<md-subheader class="md-no-sticky"></md-subheader>
 			        <md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="view(item)">
@@ -20,7 +20,7 @@
 										Maksimum punktid: {{item.totalPoints}}
 									</p>
 									<p>
-										Loodud: {{item.createdDate}}
+										Loodud: {{item.createdDate | date:'MM/dd/yyyy @ h:mm'}}
 									</p>
 			          </div>
 			        </md-list-item>

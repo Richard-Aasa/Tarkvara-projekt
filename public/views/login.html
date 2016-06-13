@@ -1,5 +1,4 @@
 <md-content layout="column">
-
     <md-toolbar class="md-hue-2">
         <div flex class="md-toolbar-tools">
             <h2 flex>Logi sisse</h2>
@@ -7,10 +6,8 @@
                 <md-icon class="material-icons">close</md-icon>
             </md-button>
         </div>
-
     </md-toolbar>
-
-    <md-content class="md-no-momentum">
+    <md-content>
         <h2>{{alert}}</h2>
         <form name="userForm" layout-padding>
             <md-input-container class="md-block">
@@ -32,9 +29,8 @@
                 </div>
             </md-input-container>
             <div layout="row" layout-align="end center">
-              <md-button class="md-raised md-primary" ng-disabled="!(user.username && user.password)" ng-click="login(user)">Logi sisse</md-button>
+                <md-button class="md-raised md-primary" ng-disabled="!(user.username && user.password)" ng-click="login(user)">Logi sisse</md-button>
             </div>
-
         </form>
     </md-content>
 </md-content>

@@ -29,7 +29,10 @@
 
         //Theme
         $mdThemingProvider.theme('default')
-          .primaryPalette('blue-grey');
+          .primaryPalette('blue-grey')
+          .accentPalette('indigo', {
+            'default': '500'
+          });
       }
     ]);
 }());
