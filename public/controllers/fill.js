@@ -42,7 +42,7 @@
             //üht konkreetset küsimust puudutav aeg
             $scope.questionStartTime = 0;
             $scope.questionEndTime = 0;
-            $scope.questionTotalTime = 0;
+            $scope.allQuestionsTime = [];
 
             $interval(function () {
               $scope.questionnaireLeftTime = $scope.questionnaireEndTime - Date.now();
@@ -69,7 +69,7 @@
 
             $scope.view = function(item){
               $scope.questionEndTime = Date.now();
-              $scope.measureTime($scope.activeQuestion, $scope.questionStartTime, $scope.questionEndTime);
+              $scope.measureTime($scope.activeQuestion.title, $scope.questionStartTime, $scope.questionEndTime);
               $scope.activeQuestion = item;
               $scope.questionStartTime = Date.now();
               $scope.arrayOfItems = [];
@@ -96,10 +96,17 @@
               console.log(correct);
             };
 
+            //mõõdab üehele küsimusele kulunud aega
             $scope.measureTime = function(question, start, end){
-              //siin lisada ühele küsimusele kulunud aeg olemasolevale ajale juurde, andmebaasi siis
-              $scope.questionTotalTime = end - start;
-              console.log($scope.questionTotalTime);
+              var questionTotalTime = {};
+              questionTotalTime.title = question;
+              questionTotalTime.time = end - start;
+              //for(var i = 0; i < $scope.allQuestionsTime; i++){
+              //  if($scope.allQuestionsTime[i]. == )
+              //}
+              $scope.allQuestionsTime.push(questionTotalTime);
+              var asd = $scope.allQuestionsTime[3];
+              console.log(asd);
             };
 
             // WORKS
