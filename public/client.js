@@ -27,6 +27,10 @@
             templateUrl: '/views/home.html',
             controller: 'HomeController'
           })
+          .when('/stat', {
+            templateUrl: '/views/stat.html',
+            controller: 'StatController'
+          })
           .otherwise({
             redirectTo: '/'
           });

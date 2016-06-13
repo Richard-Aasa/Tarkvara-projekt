@@ -90,21 +90,21 @@
               $scope.questionStartTime = Date.now();
               $scope.arrayOfItems = [];
             };
-			
+
 			$scope.submit = function(answer, question){
 				var index = $scope.questionnaire.questions.indexOf(question);
 				var len = $scope.questionnaire.questions.length;
 				//$scope.filledQuestion[index].variants = [];
-				
+
 				$scope.filledQuestion[index].variants = answer;
 				$scope.filledQuestion[index].id = index;
-				$('.listItem')[index].className += " passedLi";				
+				$('.listItem')[index].className += " passedLi";
 				//console.log($scope.filledQuestion);
 				if(len!=index+1){
 					$scope.view($scope.questionnaire.questions[index+1]);
 				}else{
 					$scope.allQuestionsFilled = true;
-				}			
+				}
 				//console.log(index);
 			}
 
@@ -147,14 +147,14 @@
               }
               console.log($scope.allQuestionsTime);
             };
-			
+
 			$scope.save = function(){
 				//suhtleb serveriga
 				console.log($scope.filledQuestion);
 				var newStat = new StatisticsService({
-					
+
 				});
-				
+
 			}
 
             // WORKS
