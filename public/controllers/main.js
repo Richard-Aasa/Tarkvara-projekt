@@ -121,7 +121,7 @@
                      }
                    }).
                    error(function() {
-                     service.errors = "Vale kasutaja või parool!"
+                     service.errors = "Vale kasutaja või parool!";
                      $scope.alert = service.errors;
                    });
                  }
