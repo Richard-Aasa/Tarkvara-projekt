@@ -12,3 +12,40 @@ table, th, td {
 .passedLi{
 	background-color: green;
 }
+
+img.bg {
+  /* Set rules to fill background */
+  min-height: 100%;
+  min-width: 1024px;
+
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+
+  /* Set up positioning */
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+@media screen and (max-width: 1024px) { /* Specific to this particular image */
+  img.bg {
+    left: 50%;
+    margin-left: -512px;   /* 50% */
+  }
+}
+
+.loginbtn {
+  color : rgb(255, 255, 255);
+  background-color: rgb(136, 196, 116);
+}
+
+.registerbtn {
+  color : rgb(255, 255, 255);
+  background-color: rgb(201, 93, 93);
+}
+
+.logoutbtn {
+  color : rgb(255, 255, 255);
+  background-color: rgb(201, 93, 93);
+}

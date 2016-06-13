@@ -11,6 +11,7 @@
         <h2>{{alert}}</h2>
         <form name="userForm" layout-padding>
             <md-input-container class="md-block">
+                <md-icon class="md-primary material-icons">mail</md-icon>
                 <label>Kasutajanimi (e-post)</label>
                 <input name="username" type="email" ng-model="user.username" required minlength="2" maxlength="30" ng-pattern="/^.+@.+\..+$/" />
                 <div ng-messages="userForm.username.$error" role="alert">
@@ -20,6 +21,7 @@
                 </div>
             </md-input-container>
             <md-input-container class="md-block">
+              <md-icon class="md-primary material-icons">lock</md-icon>
                 <label>Parool</label>
                 <input required name="password" type="password" ng-model="user.password" minlength="4" maxlength="10">
                 <div ng-messages="userForm.password.$error" role="alert">
@@ -33,4 +35,4 @@
             </div>
         </form>
     </md-content>
-</md-content>
+  </md-content>
