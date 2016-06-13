@@ -7,11 +7,9 @@
             $scope.questionnaire = {
                 title: "asd",
                 questions: [{
-					_id: 0,
                     title: "esimene",
                     type: "Valik",
                     variants: [{
-						
                         answer: "vasts",
                         points: 123,
                         bool: true
@@ -26,7 +24,6 @@
                     }],
                     maxPoints: 12
                 }, {
-					_id: 1,
                     title: "teine",
                     type: "Tühi lünk",
                     variants: "mida asdf",
@@ -36,28 +33,26 @@
             };
 
             $scope.loading = true;
-			$scope.allQuestionsFilled = false;
             $scope.activeQuestion = {};
+            $scope.activeQuestion = $scope.questionnaire.questions[1];
             $scope.arrayOfItems = [];
-			$scope.filledQuestion = [{
-				id: 0,
-				type: "Valik",
-				variants: null},{
-				id: 0,
-				type: "Tühi lünk",
-				variants: null
-				}];
             //tervet küsimustikku puudutav aeg
             $scope.questionnaireStartTime = Date.now();
             $scope.questionnaireEndTime = $scope.questionnaireStartTime + ($scope.questionnaire.totalTime * 60000);
             $scope.questionnaireLeftTime = 0;
             //üht konkreetset küsimust puudutav aeg
-            $scope.questionStartTime = 0;
+            $scope.questionStartTime = Date.now();
             $scope.questionEndTime = 0;
-            $scope.questionTotalTime = 0;
+            //küsimustele kulunud aja massiiv
+            $scope.allQuestionsTime = [];
 
+            //mõõdab aega, mis tervele testile kulub, st countdown, kui countdown = 0, siis lõpetab testi ja salvestab olemasoleva info andmebaasi
             $interval(function () {
               $scope.questionnaireLeftTime = $scope.questionnaireEndTime - Date.now();
+              if($scope.questionnaireLeftTime <= 0){
+                //siia tuleb panna andmebaasi salvestamise käsklus
+                //ja testi lõpetamise käsklus
+              }
             }, 100);
 
             //http://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
@@ -81,30 +76,13 @@
 
             $scope.view = function(item){
               $scope.questionEndTime = Date.now();
-              $scope.measureTime($scope.activeQuestion, $scope.questionStartTime, $scope.questionEndTime);
+              $scope.measureTime($scope.activeQuestion.title, $scope.questionStartTime, $scope.questionEndTime);
               $scope.activeQuestion = item;
               $scope.questionStartTime = Date.now();
               $scope.arrayOfItems = [];
             };
-			
-			$scope.submit = function(answer, question){
-				var index = $scope.questionnaire.questions.indexOf(question);
-				var len = $scope.questionnaire.questions.length;
-				//$scope.filledQuestion[index].variants = [];
-				
-				$scope.filledQuestion[index].variants = answer;
-				$scope.filledQuestion[index].id = index;
-				$('.listItem')[index].className += " passedLi";				
-				//console.log($scope.filledQuestion);
-				if(len!=index+1){
-					$scope.view($scope.questionnaire.questions[index+1]);
-				}else{
-					$scope.allQuestionsFilled = true;
-				}			
-				//console.log(index);
-			}
-			//vana submit funktsioon
-            /*$scope.submit = function(answer, question){
+
+            $scope.submit = function(answer, question){
               var totalTime = "";
               var points = 0;
               var correct = true;
@@ -123,24 +101,26 @@
               }
               //siin kohas tuleb see info lükata andmebaasi
               console.log(correct);
-            };*/
-
-            $scope.measureTime = function(question, start, end){
-              //siin lisada ühele küsimusele kulunud aeg olemasolevale ajale juurde, andmebaasi siis
-              $scope.questionTotalTime = end - start;
-              console.log($scope.questionTotalTime);
-			  console.log($scope.arrayOfItems);
-			  console.log($scope.filledQuestion);
             };
-			
-			$scope.save = function(){
-				//suhtleb serveriga
-				console.log($scope.filledQuestion);
-				var newStat = new StatisticsService({
-					
-				});
-				
-			}
+
+            //mõõdab üehele küsimusele kulunud aega ja lisab kõik massiivi
+            $scope.measureTime = function(question, start, end){
+              var questionTotalTime = {};
+              questionTotalTime.title = question;
+              questionTotalTime.time = end - start;
+              var check = false;
+              for(var i = 0; i < $scope.allQuestionsTime.length; i++){
+                if($scope.allQuestionsTime[i].title == questionTotalTime.title){
+                  $scope.allQuestionsTime[i].time += questionTotalTime.time;
+                  check = true;
+                  break;
+                }
+              }
+              if(check === false){
+                $scope.allQuestionsTime.push(questionTotalTime);
+              }
+              console.log($scope.allQuestionsTime);
+            };
 
             // WORKS
 
@@ -155,6 +135,8 @@
             //             console.log(error);
             //         }
             //     );
+
+
 
         }]);
 }());
