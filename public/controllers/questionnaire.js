@@ -103,10 +103,7 @@
                 question.variants.push(angular.copy(variant));
                 question.maxPoints += variant.points;
             };
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
+            
             $scope.remVariant = function(question, variant) {
                 question.maxPoints -= variant.points;
                 question.variants.splice(question.variants.indexOf(variant), 1);
