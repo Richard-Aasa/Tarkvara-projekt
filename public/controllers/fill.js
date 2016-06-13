@@ -28,23 +28,22 @@
                     type: "Tühi lünk",
                     variants: "mida asdf",
                     maxPoints: 122
+                }, {
+                    title: "kolmas",
+                    type: "Tühi lünk",
+                    variants: "mida asdf",
+                    maxPoints: 122
                 }],
                 totalTime: 30
             };
 
             $scope.loading = true;
             $scope.activeQuestion = {};
-            $scope.activeQuestion = $scope.questionnaire.questions[1];
+            $scope.activeQuestion = $scope.questionnaire.questions[0];
             $scope.arrayOfItems = [];
 			$scope.allQuestionsFilled = false;
-			$scope.filledQuestion = [{
-				id: 0,
-				type: "Valik",
-				variants: null},{
-				id: 0,
-				type: "Tühi lünk",
-				variants: null
-				}];
+			$scope.filledQuestion = [];
+			
             //tervet küsimustikku puudutav aeg
             $scope.questionnaireStartTime = Date.now();
             $scope.questionnaireEndTime = $scope.questionnaireStartTime + ($scope.questionnaire.totalTime * 60000);
@@ -85,27 +84,45 @@
 
             $scope.view = function(item){
               $scope.questionEndTime = Date.now();
-              $scope.measureTime($scope.activeQuestion.title, $scope.questionStartTime, $scope.questionEndTime);
               $scope.activeQuestion = item;
+              $scope.measureTime($scope.activeQuestion.title, $scope.questionStartTime, $scope.questionEndTime);
               $scope.questionStartTime = Date.now();
-              $scope.arrayOfItems = [];
+              if($scope.arrayOfItems == null){
+				  $scope.arrayOfItems = [];
+			  }
             };
 			
 			$scope.submit = function(answer, question){
 				var index = $scope.questionnaire.questions.indexOf(question);
 				var len = $scope.questionnaire.questions.length;
-				//$scope.filledQuestion[index].variants = [];
-				
-				$scope.filledQuestion[index].variants = answer;
-				$scope.filledQuestion[index].id = index;
-				$('.listItem')[index].className += " passedLi";				
-				//console.log($scope.filledQuestion);
+				var vastused = {
+					id: index,
+					type: $scope.questionnaire.questions[index].type,
+					variants: answer
+				};
+				console.log(answer);
+				var check = false;
+				for(var i = 0; i < $scope.filledQuestion.length; i++){
+					if($scope.filledQuestion[i].id == index){
+						$scope.filledQuestion[i] = vastused;
+						check = true;
+						break;
+					}
+					//console.log($scope.filledQuestion[i].id);
+					//console.log($scope.filledQuestion[$scope.questionnaire.questions.indexOf(question)]);
+				}
+				if(check == false){
+					$scope.filledQuestion.push(vastused);
+				}
+				//kontrolli veel kas sellisele küsimusele on juba vastatud.				
+				console.log($scope.filledQuestion);
+				console.log(answer);
+				$('.listItem')[index].className += " passedLi";
 				if(len!=index+1){
 					$scope.view($scope.questionnaire.questions[index+1]);
 				}else{
 					$scope.allQuestionsFilled = true;
-				}			
-				//console.log(index);
+				}
 			}
 
             /*$scope.submit = function(answer, question){
@@ -145,15 +162,15 @@
               if(check === false){
                 $scope.allQuestionsTime.push(questionTotalTime);
               }
-              console.log($scope.allQuestionsTime);
+              //console.log($scope.allQuestionsTime);
             };
 			
 			$scope.save = function(){
 				//suhtleb serveriga
 				console.log($scope.filledQuestion);
-				var newStat = new StatisticsService({
+				/*var newStat = new StatisticsService({
 					
-				});
+				});*/
 				
 			}
 
