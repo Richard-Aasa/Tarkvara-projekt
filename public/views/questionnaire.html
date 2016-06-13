@@ -42,16 +42,15 @@
 					<md-input-container class="md-block" flex-gt-sm>
 						<label>Küsimus:</label>
 						<input ng-click="x.active ? x.active=false : x.active=true" ng-model="x.title">
-						<md-select ng-model="x.type">
-							<md-option>
-								Valik
-							</md-option>
-							<md-option>
-								Tühi hulk
-							</md-option>
-						</md-select>
 					</md-input-container>
-
+					<md-select ng-init="x.type" ng-model="x.type">
+						<md-option>
+							Valik
+						</md-option>
+						<md-option>
+							Tühi lünk
+						</md-option>
+					</md-select>
 					<!--<input ng-model="x.type">
 								<span>{{x.type}}</span>
 								<span>{{x.maxPoints}}</span>
@@ -61,6 +60,7 @@
 								<label class="md-block" flex-gt-sm>Vastused:</label>-->
 					<div ng-if="x.active">
 						<div ng-if="x.type=='Valik'">
+
 							<md-list-item ng-repeat="y in x.variants track by $index">
 								<div layout="row">
 
@@ -71,6 +71,7 @@
 										<label>Vastus:</label>
 										<input ng-model="y.answer">
 									</md-input-container>
+									<md-checkbox ng-model="y.bool" aria-label="Õige/Vale"></md-checkbox>
 									<!-- See muudab kogu bloki klikitavaks
 									<md-input-container class="md-block" flex-gt-sm>
 										<md-checkbox ng-model="y.bool" aria-label="Õige/Vale"></md-checkbox>
@@ -83,13 +84,14 @@
 									<md-card-actions layout="row" layout-align="center">
 										<i ng-click="remVariant(activeQuestionnaire,x,y)" class="material-icons">clear</i>
 									</md-card-actions>
-									</md-input-container>
+
 									<!--<span>{{y.answer}}</span>
 												<md-button md-no-ink class="md-primary" ng-click="editQuestion(x, event)">Muuda</md-button>
 												<md-button class="md-warn" ng-click="remQuestion(x)">Eemalda</md-button>-->
 								</div>
 							</md-list-item>
-							<md-button class="md-primary" ng-click="addVariant(activeQuestionnaire,variant)">Lisa variant</md-button>
+
+							<md-button class="md-primary" ng-click="addVariant(x,variant)">Lisa variant</md-button>
 						</div>
 						<div ng-if="x.type=='Tühi lünk'">
 							<!--<input ng-model="x.type">-->
