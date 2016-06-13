@@ -42,8 +42,9 @@
 							<md-input-container class="md-block" flex-gt-sm>
 									<label>Küsimus:</label>
 									<input ng-click="x.active ? x.active=false : x.active=true" ng-model="x.title">
-									<input ng-model="x.type">
+									
 							</md-input-container>
+								<input ng-model="x.type">
 								<!--<span>{{x.type}}</span>
 								<span>{{x.maxPoints}}</span>
 								<md-button md-no-ink class="md-primary" ng-click="editQuestion(x, event)">Muuda</md-button>
@@ -52,7 +53,7 @@
 								<label class="md-block" flex-gt-sm>Vastused:</label>-->
 								<div ng-if="x.active">
 									<div ng-if="x.type=='Valik'">
-									<md-list-item class="secondary-button-padding" ng-repeat="y in x.variants track by $index">
+									<md-list-item ng-repeat="y in x.variants track by $index">
 										<div class="md-list-item-text">
 											<md-input-container class="md-block" flex-gt-sm>
 													<label>Vastus:</label>
