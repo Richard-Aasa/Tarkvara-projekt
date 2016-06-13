@@ -7,9 +7,11 @@
             $scope.questionnaire = {
                 title: "asd",
                 questions: [{
+					_id: 0,
                     title: "esimene",
                     type: "Valik",
                     variants: [{
+						
                         answer: "vasts",
                         points: 123,
                         bool: true
@@ -24,6 +26,7 @@
                     }],
                     maxPoints: 12
                 }, {
+					_id: 1,
                     title: "teine",
                     type: "Tühi lünk",
                     variants: "mida asdf",
@@ -33,8 +36,17 @@
             };
 
             $scope.loading = true;
+			$scope.allQuestionsFilled = false;
             $scope.activeQuestion = {};
             $scope.arrayOfItems = [];
+			$scope.filledQuestion = [{
+				id: 0,
+				type: "Valik",
+				variants: null},{
+				id: 0,
+				type: "Tühi lünk",
+				variants: null
+				}];
             //tervet küsimustikku puudutav aeg
             $scope.questionnaireStartTime = Date.now();
             $scope.questionnaireEndTime = $scope.questionnaireStartTime + ($scope.questionnaire.totalTime * 60000);
@@ -74,8 +86,25 @@
               $scope.questionStartTime = Date.now();
               $scope.arrayOfItems = [];
             };
-
-            $scope.submit = function(answer, question){
+			
+			$scope.submit = function(answer, question){
+				var index = $scope.questionnaire.questions.indexOf(question);
+				var len = $scope.questionnaire.questions.length;
+				//$scope.filledQuestion[index].variants = [];
+				
+				$scope.filledQuestion[index].variants = answer;
+				$scope.filledQuestion[index].id = index;
+				$('.listItem')[index].className += " passedLi";				
+				//console.log($scope.filledQuestion);
+				if(len!=index+1){
+					$scope.view($scope.questionnaire.questions[index+1]);
+				}else{
+					$scope.allQuestionsFilled = true;
+				}			
+				//console.log(index);
+			}
+			//vana submit funktsioon
+            /*$scope.submit = function(answer, question){
               var totalTime = "";
               var points = 0;
               var correct = true;
@@ -94,13 +123,24 @@
               }
               //siin kohas tuleb see info lükata andmebaasi
               console.log(correct);
-            };
+            };*/
 
             $scope.measureTime = function(question, start, end){
               //siin lisada ühele küsimusele kulunud aeg olemasolevale ajale juurde, andmebaasi siis
               $scope.questionTotalTime = end - start;
               console.log($scope.questionTotalTime);
+			  console.log($scope.arrayOfItems);
+			  console.log($scope.filledQuestion);
             };
+			
+			$scope.save = function(){
+				//suhtleb serveriga
+				console.log($scope.filledQuestion);
+				var newStat = new StatisticsService({
+					
+				});
+				
+			}
 
             // WORKS
 
@@ -115,8 +155,6 @@
             //             console.log(error);
             //         }
             //     );
-
-
 
         }]);
 }());

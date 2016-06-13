@@ -9,3 +9,6 @@ table, th, td {
     border-collapse: collapse;
     text-align: center;
 }
+.passedLi{
+	background-color: green;
+}
