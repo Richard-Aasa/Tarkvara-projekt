@@ -101,12 +101,10 @@
               var questionTotalTime = {};
               questionTotalTime.title = question;
               questionTotalTime.time = end - start;
-              //for(var i = 0; i < $scope.allQuestionsTime; i++){
-              //  if($scope.allQuestionsTime[i]. == )
-              //}
+              for(var i = 0; i < 100; i++){
+                console.log($scope.allQuestionsTime[i]);
+              }
               $scope.allQuestionsTime.push(questionTotalTime);
-              var asd = $scope.allQuestionsTime[3];
-              console.log(asd);
             };
 
             // WORKS
