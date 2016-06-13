@@ -167,10 +167,10 @@
                 }
             }
 
-            /*$scope.clear = function() {
+            $scope.clear = function() {
                 $scope.question.variants = [];
                 $scope.question.maxPoints = 0;
-            };*/
+            };
 
             var showToast = function(message) {
                 $mdToast.show(

@@ -42,7 +42,16 @@
 					<md-input-container class="md-block" flex-gt-sm>
 						<label>Küsimus:</label>
 						<input ng-click="x.active ? x.active=false : x.active=true" ng-model="x.title">
+						<md-select ng-model="x.type">
+							<md-option>
+								Valik
+							</md-option>
+							<md-option>
+								Tühi hulk
+							</md-option>
+						</md-select>
 					</md-input-container>
+
 					<!--<input ng-model="x.type">
 								<span>{{x.type}}</span>
 								<span>{{x.maxPoints}}</span>
@@ -54,38 +63,26 @@
 						<div ng-if="x.type=='Valik'">
 							<md-list-item ng-repeat="y in x.variants track by $index">
 								<div layout="row">
-									<!--<input ng-model="x.type">
-											<md-input-container style="margin-right: 10px;">
-      								  <label>Tüüp</label>
-      											  <md-select ng-model="x.type">
-        											  <md-option ng-repeat="size in sizes" value="{{type}}">{{type}}</md-option>
-        											</md-select>
-    								  </md-input-container>-->
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Tüüp</label>
-										<md-select ng-model="question.type" ng-change="clear()">
-											<!-- <md-option ng-repeat="item in questions | unique:'type' " value="{{item.type}}">
-			                            {{item.type}}
-			                        </md-option> -->
-											<md-option>
-												Valik
-											</md-option>
-											<md-option>
-												Tühi lünk
-											</md-option>
-										</md-select>
-									</md-input-container>
+
+									<!-- <md-input-container style="margin-right: 10px;">
+										<input ng-model="x.type">
+									</md-input-container> -->
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Vastus:</label>
 										<input ng-model="y.answer">
+									</md-input-container>
+									<!-- See muudab kogu bloki klikitavaks
+									<md-input-container class="md-block" flex-gt-sm>
 										<md-checkbox ng-model="y.bool" aria-label="Õige/Vale"></md-checkbox>
-										<md-input-container class="md-block" flex-gt-sm>
-											<label>Punktid:</label>
-											<input ng-model="y.points" type="number" step="0.5" min="-100" max="100">
-										</md-input-container>
-										<md-card-actions layout="row" layout-align="center">
-											<i ng-click="remVariant(activeQuestionnaire,x,y)" class="material-icons">clear</i>
-										</md-card-actions>
+									</md-input-container>
+								-->
+									<md-input-container class="md-block" flex-gt-sm>
+										<label>Punktid:</label>
+										<input ng-model="y.points" type="number" step="0.5" min="-100" max="100">
+									</md-input-container>
+									<md-card-actions layout="row" layout-align="center">
+										<i ng-click="remVariant(activeQuestionnaire,x,y)" class="material-icons">clear</i>
+									</md-card-actions>
 									</md-input-container>
 									<!--<span>{{y.answer}}</span>
 												<md-button md-no-ink class="md-primary" ng-click="editQuestion(x, event)">Muuda</md-button>
