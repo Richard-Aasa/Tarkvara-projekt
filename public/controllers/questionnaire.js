@@ -100,10 +100,10 @@
                 $scope.activeQuestionnaire.totalPoints -= question.maxPoints;
             }
             $scope.addVariant = function(question, variant) {
-                question.variants.push(angular.copy(variant));
+                question.variants.push(variant);
                 question.maxPoints += variant.points;
             }
-            $scope.remVariant = function(questionnaire, question, variant) {
+            $scope.remVariant = function(question, variant) {
                 question.maxPoints -= variant.points;
                 question.variants.splice(question.variants.indexOf(variant), 1);
             }
