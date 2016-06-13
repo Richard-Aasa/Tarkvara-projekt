@@ -103,14 +103,18 @@
                 question.variants.push(angular.copy(variant));
                 question.maxPoints += variant.points;
             };
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
             $scope.remVariant = function(question, variant) {
                 question.maxPoints -= variant.points;
                 question.variants.splice(question.variants.indexOf(variant), 1);
             };
             $scope.view = function(questionnaire) {
-                    // Teeme vasakust poolest koopia, kuna me tahame muudatused salvestada ainult nupu vajutusel
-                    $scope.currentIndex = $scope.questionnaires.indexOf(questionnaire);
-                    $scope.activeQuestionnaire = angular.copy(questionnaire);
+                // Teeme vasakust poolest koopia, kuna me tahame muudatused salvestada ainult nupu vajutusel
+                $scope.currentIndex = $scope.questionnaires.indexOf(questionnaire);
+                $scope.activeQuestionnaire = angular.copy(questionnaire);
             };
 
             //Korras! Uue küsimustiku loomise dialoog
