@@ -7,10 +7,11 @@
             $scope.questionnaires = [];
             $scope.questionnaire = {};
             $scope.activeQuestionnaire = {};
+            $scope.activeQuestion = {};
             $scope.currentIndex = 0;
+            $scope.currentQuestionIndex = 0;
             $scope.service = AuthenticateService;
             $scope.loading = true;
-            $scope.newQuestion = {};
 
             QuestionnaireService.query()
                 .$promise.then(
@@ -117,6 +118,10 @@
                 // Teeme vasakust poolest koopia, kuna me tahame muudatused salvestada ainult nupu vajutusel
                 $scope.currentIndex = $scope.questionnaires.indexOf(questionnaire);
                 $scope.activeQuestionnaire = angular.copy(questionnaire);
+            };
+            $scope.viewQuestion = function(question) {
+              $scope.currentQuestionIndex = $scope.activeQuestionnaire.questions.indexOf(question);
+              $scope.activeQuestion = angular.copy(question);
             };
 
             //Korras! Uue küsimustiku loomise dialoog
