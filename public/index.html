@@ -47,19 +47,19 @@
                         <md-icon class="material-icons">menu</md-icon>
                     </md-button>
                     <h2 class="md-title" flex>
-                      Mälumäng
+
                     </h2>
                     <div ng-show="!service.isAuthenticated()" layout-align="end center">
-                        <md-button ng-click="login($event)">
+                        <md-button class="loginbtn" ng-click="login($event)">
                             Login
                         </md-button>
-                        <md-button ng-click="register($event)">
+                        <md-button class="registerbtn" ng-click="register($event)">
                             Register
                         </md-button>
                     </div>
                     <div ng-show="service.isAuthenticated()" layout-align="end center">
                         <span>{{service.currentUser.name}}</span>
-                        <md-button ng-click="service.logout()">
+                        <md-button class="logoutbtn" ng-click="service.logout()">
                             Log out
                         </md-button>
                     </div>
