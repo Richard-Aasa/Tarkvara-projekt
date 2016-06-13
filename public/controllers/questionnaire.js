@@ -8,7 +8,9 @@
             $scope.questionnaire = {};
             $scope.questionnaire.totalPoints = 0;
             $scope.activeQuestionnaire = {};
+            $scope.currentIndex = 0;
             $scope.service = AuthenticateService;
+            $scope.loading = true;
 
             QuestionnaireService.query()
                 .$promise.then(
@@ -31,73 +33,68 @@
 
             // Korras!
             $scope.save = function(questionnaire) {
-                    pointCounter(questionnaire);
+                pointCounter(questionnaire);
 
-                    var newQuestionnaire = new QuestionnaireService({
-                        title: questionnaire.title,
-                        author: $scope.service.currentUser.name,
-                        questions: questionnaire.questions,
-                        totalTime: questionnaire.totalTime,
-                        totalPoints: questionnaire.totalPoints,
-                        saved: questionnaire.saved,
-                        published: questionnaire.published,
-                        archieved: questionnaire.archived
-                    });
+                var newQuestionnaire = new QuestionnaireService({
+                    title: questionnaire.title,
+                    author: $scope.service.currentUser.name,
+                    questions: questionnaire.questions,
+                    totalTime: questionnaire.totalTime,
+                    totalPoints: questionnaire.totalPoints,
+                    saved: questionnaire.saved,
+                    published: questionnaire.published,
+                    archieved: questionnaire.archived
+                });
 
-                    newQuestionnaire.$save()
-                        .then(
-                            function(data) {
-                                showToast('Küsimustik edukalt salvestatud: ' + questionnaire.title);
-                                $scope.questionnaires.push(questionnaire);
-                                $scope.questionnaire = {};
-                            },
-                            function(error) {
-                                showToast(error.status + ' ' + error.statusText);
-                            }
-                        );
-                }
-                // Korras!
+                newQuestionnaire.$save()
+                    .then(
+                        function(data) {
+                            showToast('Küsimustik edukalt salvestatud: ' + questionnaire.title);
+                            $scope.questionnaires.push(questionnaire);
+                            $scope.questionnaire = {};
+                        },
+                        function(error) {
+                            showToast(error.status + ' ' + error.statusText);
+                        }
+                    );
+            }
+
+            // Korras!
             $scope.update = function(questionnaire) {
-                    $mdDialog.hide();
-                    var index = $scope.questionnaires.indexOf(question);
-
-                    if (questionnaire.id) {
-                        return questionnaire.$update();
-                    } else {
-                        return questionnaire.$create();
+                questionnaire.$update().then(
+                    function(data) {
+                        showToast('Küsimustik edukalt salvestatud: ' + questionnaire.title);
+                        $scope.questionnaires[$scope.currentIndex] = angular.copy(questionnaire);
+                        console.log($scope.questionnaires[$scope.currentIndex]);
+                    },
+                    function(error) {
+                        showToast(error.status + ' ' + error.statusText);
                     }
-                }
-                // Korras!
+                );
+            }
+
+            // Korras!
             $scope.delete = function(questionnaire) {
-                    var index = $scope.questionnaires.indexOf(questionnaire);
-                    $scope.questionnaires.splice(index, 1);
-                    questionnaire.$delete()
-                        /*
-                          .then(succesFunction,errorFunction)
-                          Alternatiivselt võib kasutada kuju:
-                          .success(function(data){
+                $scope.questionnaires.splice($scope.currentIndex, 1);
+                questionnaire.$delete()
+                    .then(
+                        function(data) {
+                            showToast('Küsimustik edukalt kustutatud: ' + questionnaire.title);
+                        },
+                        function(error) {
+                            showToast(error.status + ' ' + error.statusText);
+                        }
+                    );
+            }
 
-                          })
-                          .error(function(error){
-
-                          });
-                        */
-                        .then(
-                            function(data) {
-                                showToast('Küsimustik edukalt kustutatud: ' + question.title);
-                            },
-                            function(error) {
-                                showToast(error.status + ' ' + error.statusText);
-                            }
-                        );
-                }
-                //Korras!
+            //Korras!
             $scope.addQuestion = function(question) {
-                    // Deep-copy on vajalik, vastasel juhul on kõik küsimused samad angular'i data-binding tõttu
-                    $scope.activeQuestionnaire.questions.push(angular.copy(question));
-                    $scope.activeQuestionnaire.totalPoints += question.maxPoints;
-                }
-                //Korras!
+                // Deep-copy on vajalik, vastasel juhul on kõik küsimused samad angular'i data-binding tõttu
+                $scope.activeQuestionnaire.questions.push(angular.copy(question));
+                $scope.activeQuestionnaire.totalPoints += question.maxPoints;
+            }
+
+            //Korras!
             $scope.remQuestion = function(question) {
                 $scope.activeQuestionnaire.questions.splice($scope.activeQuestionnaire.questions.indexOf(question), 1);
                 $scope.activeQuestionnaire.totalPoints -= question.maxPoints;
@@ -112,15 +109,11 @@
             }
             $scope.view = function(questionnaire) {
                     // Teeme vasakust poolest koopia, kuna me tahame muudatused salvestada ainult nupu vajutusel
+                    $scope.currentIndex = $scope.questionnaires.indexOf(questionnaire);
                     $scope.activeQuestionnaire = angular.copy(questionnaire);
+            }
 
-                    // $scope.editQuestionnaire = function(questionnaire) {
-                    //     var index = $scope.questionnaires.indexOf(questionnaire);
-                    //     $scope.questionnaires[index] = questionnaire;
-                    //     $scope.update($scope.questionnaires[index]);
-                    // };
-                }
-                //Korras! Uue küsimustiku loomise dialoog
+            //Korras! Uue küsimustiku loomise dialoog
             $scope.create = function($event) {
                 $mdDialog.show({
                     parent: angular.element(document.body),
@@ -147,32 +140,32 @@
                     $scope.addVariant = function(question, variant) {
                         $scope.question.variants.push(angular.copy(variant));
                         $scope.question.maxPoints += variant.points;
-                    };
+                    }
                     $scope.remVariant = function(question, variant) {
                         $scope.question.maxPoints -= variant.points;
                         $scope.question.variants.splice(question.variants.indexOf(variant), 1);
-                    };
+                    }
                     $scope.clear = function() {
                         $scope.question.variants = [];
                         $scope.question.maxPoints = 0;
-                    };
+                    }
                     $scope.addQuestion = function(question) {
                         $scope.questionnaire.questions.push(angular.copy(question));
                         $scope.questionnaire.totalPoints += question.maxPoints;
-                    };
+                    }
                     $scope.remQuestion = function(question) {
                         $scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
                         $scope.questionnaire.totalPoints -= question.maxPoints;
-                    };
+                    }
                     $scope.create = function(item) {
                         $mdDialog.hide();
                         save(item);
-                    };
+                    }
                     $scope.close = function() {
                         $mdDialog.hide();
-                    };
+                    }
                 }
-            };
+            }
 
             /*$scope.clear = function() {
                 $scope.question.variants = [];

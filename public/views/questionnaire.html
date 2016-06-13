@@ -1,4 +1,4 @@
-<md-content class="md-padding" layout="row" ng-init="service.isTeacher()">
+<md-content class="md-padding" layout="row" ng-init="service.isTeacher()" ng-show="!loading">
 	<md-button class="md-fab" ng-click="create()" aria-label="Lisa uus">
 		<md-icon  class="material-icons">create</md-icon>
 			<md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
@@ -92,7 +92,7 @@
 						<input ng-model="activeQuestionnaire.createdDate" readonly>
 				</md-input-container>
 	 				 	 <md-button class="md-raised md-warn" ng-click="delete(activeQuestionnaire)">Kustuta</md-button>
-						 <md-button class="md-raised md-primary" ng-click="editQuestionnaire(activeQuestionnaire)">Salvesta</md-button>
+						 <md-button class="md-raised md-primary" ng-click="update(activeQuestionnaire)">Salvesta</md-button>
 			</div>
 		</div>
 </md-content>
