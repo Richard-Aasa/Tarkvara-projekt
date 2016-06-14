@@ -16,7 +16,7 @@
             </md-input-container>
             <md-input-container flex="40">
                 <label>Aeg kogu küsimustiku täitmiseks (minutites)</label>
-                <input ng-model="questionnaire.totalTime" ng-init="questionnaire.totalTime=1" type="number" step="1" min="0" max="1888900">
+                <input ng-model="questionnaire.totalTime" ng-init="questionnaire.totalTime=0" type="number" step="1" min="1" max="1888900">
             </md-input-container>
         </div>
 
@@ -64,7 +64,7 @@
                             </md-option>
                         </md-select>
                     </md-input-container>
-                    <md-button class="md-raised md-primary" ng-disabled="!(question.type && question.variants.length > 0 && question.title && question.maxPoints)" ng-click="addQuestion(question)">Lisa küsimus</md-button>
+                    <md-button class="md-raised md-primary" ng-disabled="!(question.type && question.variants.length > 0 && question.title && question.maxPoints)" ng-click="addQuestion(question)" title="Tee enne valmis vastusevariandid ja siis lisa küsimus">Lisa küsimus</md-button>
                 </div>
             </div>
             <!-- Muutub vastavalt küsimuse tüübile -->
@@ -129,7 +129,7 @@
         <md-divider></md-divider>
         <div layout="row" layout-align="end center">
             <span>Punktid kokku: {{questionnaire.totalPoints}}</span>
-            <md-button class="md-raised md-primary" ng-disabled="!(questionnaire.title && questionnaire.questions.length > 0 && questionnaire.totalTime)" ng-click="create(questionnaire)">Salvesta küsimustik</md-button>
+            <md-button class="md-raised md-primary" ng-disabled="!(questionnaire.title && questionnaire.questions.length > 0 && questionnaire.totalTime>0)" ng-click="create(questionnaire)">Salvesta küsimustik</md-button>
         </div>
     </md-content>
 </md-content>
