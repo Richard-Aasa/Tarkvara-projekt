@@ -3,56 +3,38 @@
 
     angular
         .module('app')
-        .controller('FillController', ['$scope','$interval', '$mdDialog', function($scope, $interval, $mdDialog) {
-            $scope.questionnaire = {
-                title: "asd",
-                questions: [{
-                    title: "esimene",
-                    type: "Valik",
-                    variants: [{
-                        answer: "vasts",
-                        points: 123,
-                        bool: true
-                    }, {
-                        answer: "asd",
-                        points: 1234,
-                        bool: false
-                    }, {
-                        answer: "asdasdasd",
-                        points: 12343,
-                        bool: false
-                    }],
-                    maxPoints: 12
-                }, {
-                    title: "teine",
-                    type: "Tühi lünk",
-                    variants: "mida asdf",
-                    maxPoints: 122
-                }, {
-                    title: "kolmas",
-                    type: "Tühi lünk",
-                    variants: "mida asdf",
-                    maxPoints: 122
-                }],
-                totalTime: 30
-            };
-
+        .controller('FillController', ['$scope','$routeParams','QuestionnaireService','StatisticsService','AuthenticateService','$interval', '$mdDialog', function($scope, $routeParams, QuestionnaireService, StatisticsService, AuthenticateService, $interval, $mdDialog) {
+			$scope.questionnaire = {};
+			$scope.service = AuthenticateService;
+			var questionnaireId = $routeParams.id;
+			//serverist laeb sisse andmeid siin, kui tahad mõnda fill lehte näha siis hetkel on üks töötav lehekülg siuke http://localhost:3000/#/fill/575e6d7c27199c081c1e329e see pikk number on ühe questionnaire _id
+			QuestionnaireService.get({id: questionnaireId}, function() {
+				}).$promise.then(
+				function(response){
+					console.log(response);
+					$scope.questionnaire = response;
+					$scope.questionnaireStartTime = Date.now();
+					$scope.questionnaireEndTime = $scope.questionnaireStartTime + ($scope.questionnaire.totalTime * 60000);
+				},
+				function(error) {
+                        console.log(error);
+                }
+			);
             $scope.loading = true;
             $scope.activeQuestion = {};
-            $scope.activeQuestion = $scope.questionnaire.questions[0];
+            //$scope.activeQuestion = $scope.questionnaire.questions[0];
             $scope.arrayOfItems = [];
 			$scope.allQuestionsFilled = false;
 			$scope.filledQuestion = [];
-			
+
             //tervet küsimustikku puudutav aeg
-            $scope.questionnaireStartTime = Date.now();
-            $scope.questionnaireEndTime = $scope.questionnaireStartTime + ($scope.questionnaire.totalTime * 60000);
             $scope.questionnaireLeftTime = 0;
             //üht konkreetset küsimust puudutav aeg
             $scope.questionStartTime = Date.now();
             $scope.questionEndTime = 0;
             //küsimustele kulunud aja massiiv
             $scope.allQuestionsTime = [];
+			
 
             //mõõdab aega, mis tervele testile kulub, st countdown, kui countdown = 0, siis lõpetab testi ja salvestab olemasoleva info andmebaasi
             $interval(function () {
@@ -83,69 +65,68 @@
             };
 
             $scope.view = function(item){
-              $scope.questionEndTime = Date.now();
+				
+			  $scope.questionEndTime = Date.now();
               $scope.activeQuestion = item;
+			  
+			  if(!$scope.activeQuestion){
+				  return;
+			  }
+			  
               $scope.measureTime($scope.activeQuestion.title, $scope.questionStartTime, $scope.questionEndTime);
               $scope.questionStartTime = Date.now();
               if($scope.arrayOfItems == null){
 				  $scope.arrayOfItems = [];
 			  }
+	
             };
-			
+			//htmlis nupule järgmine vajutades läheb tööle submit funktsioon, mis paneb kirja kasutaja sisestatud andmed küsimustikus ja laeb järgmise küsimuse. lisaks ka see kontrollib kas kõik küsimused on täidetud.
 			$scope.submit = function(answer, question){
+				
+				
 				var index = $scope.questionnaire.questions.indexOf(question);
+				console.log(index);
+				
+				if($scope.questionnaire.questions[index].type == "Tühi lünk" && $scope.filledQuestion[$scope.questionnaire.questions.indexOf($scope.activeQuestion)]){
+					answer = $scope.filledQuestion[$scope.questionnaire.questions.indexOf($scope.activeQuestion)].variants;
+				}
+				
 				var len = $scope.questionnaire.questions.length;
 				var vastused = {
-					id: index,
+					id: index+"mongoID",
 					type: $scope.questionnaire.questions[index].type,
 					variants: answer
 				};
 				console.log(answer);
 				var check = false;
-				for(var i = 0; i < $scope.filledQuestion.length; i++){
-					if($scope.filledQuestion[i].id == index){
-						$scope.filledQuestion[i] = vastused;
-						check = true;
-						break;
-					}
-					//console.log($scope.filledQuestion[i].id);
-					//console.log($scope.filledQuestion[$scope.questionnaire.questions.indexOf(question)]);
+				
+				if($scope.filledQuestion[index]){
+					$scope.filledQuestion[index] = vastused;
+					check = true;
 				}
+				
 				if(check == false){
-					$scope.filledQuestion.push(vastused);
+					$scope.filledQuestion[index] = vastused;
 				}
 				//kontrolli veel kas sellisele küsimusele on juba vastatud.				
 				console.log($scope.filledQuestion);
 				console.log(answer);
 				$('.listItem')[index].className += " passedLi";
-				if(len!=index+1){
+				
+				var real_len = 0;
+				
+				for(var i = 0; i < $scope.filledQuestion.length; i++){
+					if($scope.filledQuestion[i]){
+						real_len++;
+					}
+				}
+				
+				if(real_len!=len){
 					$scope.view($scope.questionnaire.questions[index+1]);
 				}else{
 					$scope.allQuestionsFilled = true;
-				}
+				}				
 			}
-
-            /*$scope.submit = function(answer, question){
-              var totalTime = "";
-              var points = 0;
-              var correct = true;
-              if(question.type == "Valik"){
-                for(var i = 0; i < answer.length; i++){
-                  if(question.variants[i].bool != answer[i]){
-                    correct = false;
-                    points = 0;
-                    break;
-                  }
-                }
-              }else{
-                if(question.variants != answer){
-                  correct = false;
-                }
-              }
-              //siin kohas tuleb see info lükata andmebaasi
-              console.log(correct);
-            };*/
-
             //mõõdab üehele küsimusele kulunud aega ja lisab kõik massiivi
             $scope.measureTime = function(question, start, end){
               var questionTotalTime = {};
@@ -167,28 +148,25 @@
 			
 			$scope.save = function(){
 				//suhtleb serveriga
+				//oleks vaja lisada funktsioon mis arvutab kokku punktid, aja jms
 				console.log($scope.filledQuestion);
-				/*var newStat = new StatisticsService({
-					
-				});*/
-				
+				var newStat = new StatisticsService({
+                    questionnaire: questionnaireId,
+                    user: $scope.service.currentUser._id,
+					questions: [OneQuestionSchema],
+					userTime: {type: Number, required: true},
+					userPoints: {type: Number, required: true}
+                });
+
+                newStat.$save()
+                    .then(
+                        function(data) {
+                            showToast('Küsimustik täidetud: ' + questionnaire.title);
+                        },
+                        function(error) {
+                            showToast(error.status + ' ' + error.statusText);
+                        }
+                    );				
 			}
-
-            // WORKS
-
-            // QuestionnaireService.query()
-            //     .$promise.then(
-            //         function(data) {
-            //             console.log(data);
-            //             $scope.questionnaire = data;
-            //             $scope.loading = false;
-            //         },
-            //         function(error) {
-            //             console.log(error);
-            //         }
-            //     );
-
-
-
-        }]);
+		}]);
 }());

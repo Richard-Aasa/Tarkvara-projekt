@@ -1,51 +1,109 @@
 /**
  * Hide when Angular is not yet loaded and initialized
  */
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
 table, th, td {
-    border: 1px solid blue;
+    border: 1px solid #37474F;
     border-collapse: collapse;
     text-align: center;
 }
-.passedLi{
-	background-color: green;
+.passedLi {
+    background-color: green;
 }
 
-img.bg {
-  /* Set rules to fill background */
-  min-height: 100%;
-  min-width: 1024px;
-
-  /* Set up proportionate scaling */
-  width: 100%;
-  height: auto;
-
-  /* Set up positioning */
-  position: fixed;
-  top: 0;
-  left: 0;
+md-checkbox.md-checked.green .md-icon {
+ background-color: rgb(136, 196, 116);
 }
 
-@media screen and (max-width: 1024px) { /* Specific to this particular image */
-  img.bg {
-    left: 50%;
-    margin-left: -512px;   /* 50% */
-  }
+/*img.bg {
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+}*/
+@media screen and (max-width: 1024px) {
+    /* Specific to this particular image */
+    img.bg {
+        left: 50%;
+        margin-left: -512px;
+        /* 50% */
+    }
 }
-
 .loginbtn {
-  color : rgb(255, 255, 255);
-  background-color: rgb(136, 196, 116);
+    color: rgb(255, 255, 255);
+    background-color: rgb(136, 196, 116);
 }
-
 .registerbtn {
-  color : rgb(255, 255, 255);
-  background-color: rgb(201, 93, 93);
+    color: rgb(255, 255, 255);
+    background-color: rgb(201, 93, 93);
+}
+.logoutbtn {
+    color: rgb(255, 255, 255);
+    background-color: rgb(201, 93, 93);
 }
 
-.logoutbtn {
-  color : rgb(255, 255, 255);
-  background-color: rgb(201, 93, 93);
+.itemPadding{
+  margin: 8px 8px 8px 8px;
 }
+/*.Aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    margin: auto;
+    margin-top: 20%;
+    background-color: #444545;
+    border: 1px solid black;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+.Aligner-item {
+    max-width: 50%;
+    z-index: 300;
+}*/
+
+/*#hero{
+  background-image:url(https://chrisaam.files.wordpress.com/2015/03/wallpaper-2846361.jpg);
+  background-size:cover;
+  position:relative;
+  height:100vh;
+}*/
+
+/*.header1{
+  position:absolute;
+  top:50%;
+  text-align:center;
+  width:100%;
+  color:#fff;
+  font-size:36px;
+  -ms-transform: translate(0,-50%);
+    -webkit-transform: translate(0,-50%);
+    transform: translate(0,-50%);
+
+}*/
+
+/*#content1{
+  padding:100px 50px;
+  text-align:center;
+  width:80%;
+  margin:0px auto;
+}*/
+
+/*#content1 h2{
+  margin:0px 0px 30px 0px;
+}*/
+
+/*#footer1{
+  padding:30px 0px;
+  text-align:center;
+  background:#ddd;
+}*/

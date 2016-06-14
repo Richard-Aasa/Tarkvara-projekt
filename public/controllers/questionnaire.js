@@ -1,4 +1,4 @@
-(function() {
+﻿(function() {
     'use strict';
 
     angular
@@ -31,21 +31,17 @@
                 }
             };
 
-            // Korras!
+            // Korras! <--hahahaha - Nüüd ON!
             $scope.save = function(questionnaire) {
-                pointCounter(questionnaire);
-
                 var newQuestionnaire = new QuestionnaireService({
                     title: questionnaire.title,
                     author: $scope.service.currentUser.name,
                     questions: questionnaire.questions,
                     totalTime: questionnaire.totalTime,
                     totalPoints: questionnaire.totalPoints,
-                    saved: questionnaire.saved,
-                    published: questionnaire.published,
-                    archieved: questionnaire.archived
+                    createdDate: questionnaire.createdDate,
+                    saved: questionnaire.saved
                 });
-
                 newQuestionnaire.$save()
                     .then(
                         function(data) {
@@ -91,10 +87,8 @@
             //Korras!
             $scope.addQuestion = function(question) {
                 // Deep-copy on vajalik, vastasel juhul on kõik küsimused samad angular'i data-binding tõttu
-
                 $scope.activeQuestionnaire.questions.push(angular.copy(question));
                 $scope.activeQuestionnaire.totalPoints += question.maxPoints;
-                console.log($scope.activeQuestionnaire);
             };
 
             //Korras!
@@ -103,8 +97,6 @@
                 $scope.activeQuestionnaire.totalPoints -= question.maxPoints;
             };
             $scope.addVariant = function(question, variant) {
-                console.log(question.variants);
-                console.log(variant);
                 question.variants.push(angular.copy(variant));
                 question.maxPoints += variant.points;
             };
@@ -126,7 +118,6 @@
                     targetEvent: $event,
                     templateUrl: 'views/questionnaire_create.html',
                     locals: {
-                        questionnaire: $scope.questionnaire,
                         questionnaires: $scope.questionnaires,
                         save: $scope.save
                     },
@@ -136,11 +127,13 @@
 
                 //NB! Siin on defineeritud uus kontroller. Uusi funktsioone mis kasutavad $scope vms parameetrit luuakse uute kontrollerite sisse, mitte suvaliste funktsioonide sisse!
                 // Sisult on kontroller lihtsalt .js funktsioon, aga erinevus seisneb selles, et kontroller on otse seotud spetsiifiliste HTML elementide / vaadete külge
-                function DialogController($scope, $mdDialog, questionnaire, questionnaires, save) {
-                    $scope.questionnaire = questionnaire;
+                function DialogController($scope, $mdDialog, questionnaires, save) {
+                    $scope.questionnaire = {};
+                    $scope.questionnaire.questions = [];
                     $scope.questionnaires = questionnaires;
                     $scope.question = {};
                     $scope.questionnaire.questions = [];
+                    $scope.questionnaire.totalPoints = 0;
                     $scope.question.variants = [];
                     $scope.question.maxPoints = 0;
                     $scope.addVariant = function(question, variant) {
@@ -156,8 +149,8 @@
                         $scope.question.maxPoints = 0;
                     };
                     $scope.addQuestion = function(question) {
-                        $scope.questionnaire.questions.push(angular.copy(question));
                         $scope.questionnaire.totalPoints += question.maxPoints;
+                        $scope.questionnaire.questions.push(angular.copy(question));
                     };
                     $scope.remQuestion = function(question) {
                         $scope.questionnaire.questions.splice($scope.questionnaire.questions.indexOf(question), 1);
@@ -165,6 +158,8 @@
                     };
                     $scope.create = function(item) {
                         $mdDialog.hide();
+                        $scope.questionnaire.createdDate = Date.now();
+                        $scope.questionnaire.saved = Date.now();
                         save(item);
                     };
                     $scope.close = function() {

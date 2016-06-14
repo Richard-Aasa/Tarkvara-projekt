@@ -1,0 +1,65 @@
+<md-content class="md-padding" layout="row" ng-init="service.isTeacher()" ng-show="!loading">
+	<md-button class="md-fab" ng-click="create()" aria-label="Lisa uus">
+		<md-icon class="material-icons">create</md-icon>
+		<md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
+			Lisa uus!
+		</md-tooltip>
+	</md-button>
+	<div layout="column" flex="20">
+		<md-list>
+			<md-subheader class="md-no-sticky"></md-subheader>
+			<md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="view(item)">
+				<div class="md-list-item-text" layout="column">
+					<h4>
+										Pealkiri: {{item.title}}
+									</h4>
+					<p>
+						Aeg mis kulub: {{item.totalTime}}
+					</p>
+					<p>
+						Maksimum punktid: {{item.totalPoints}}
+					</p>
+					<p>
+						Loodud: {{item.createdDate | date:'MM/dd/yyyy @ h:mm'}}
+					</p>
+				</div>
+			</md-list-item>
+			<md-divider></md-divider>
+		</md-list>
+	</div>
+	<div layout="column" flex>
+		<div ng-if="activeQuestionnaire.title">
+			<div class="md-block" flex-gt-sm>
+				<md-input-container>
+					<label>Pealkiri</label>
+					<input ng-model="activeQuestionnaire.title">
+				</md-input-container>
+				<md-input-container>
+					<label>Aeg (minutites)</label>
+					<input ng-model="activeQuestionnaire.totalTime" type="number" step="1" min="0" max="1888900">
+				</md-input-container>
+				<md-button class="md-raised md-primary" ng-click="update(activeQuestionnaire)">Salvesta</md-button>
+				<md-button class="md-raised md-warn" ng-click="delete(activeQuestionnaire)">Kustuta</md-button>
+				<div layout="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Loodud:</label>
+						<input ng-model="activeQuestionnaire.createdDate | date:'MM/dd/yyyy @ h:mm'" readonly>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Salvestatud:</label>
+						<input ng-model="activeQuestionnaire.saved | date:'MM/dd/yyyy @ h:mm'" readonly>
+					</md-input-container>
+				</div>
+			</div>
+			<md-list-item class="secondary-button-padding" ng-repeat="x in activeQuestionnaire.questions track by $index">
+				<div class="md-list-item-text">
+					<div layout="row">
+						<md-input-container class="md-block" flex-gt-sm>
+							<label>Küsimus:</label>
+							<input ng-click="x.active ? x.active=false : x.active=true" ng-model="x.title">
+						</md-input-container>
+					</div>
+				</div>
+			</md-list-item>
+		</div>
+	</div>

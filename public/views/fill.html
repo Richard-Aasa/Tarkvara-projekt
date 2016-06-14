@@ -24,13 +24,11 @@
         </div>
         <!-- kui on tühja lüngaga küsimus -->
         <div ng-if="activeQuestion.type=='Tühi lünk'">
+
           <md-input-container>
-            <span>{{filledQuestion[0].variants}}</span>
-            <span>{{questionnaire.questions.indexOf(activeQuestion)}}</span>
             <label>Vastus</label>
-			<!--siin on mingi muna millest ma aru ei saa !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!--->
-            <input ng-if="filledQuestion[questionnaire.questions.indexOf(activeQuestion)] == null" ng-model="answer">
-            <input ng-if="filledQuestion[questionnaire.questions.indexOf(activeQuestion)] != null" ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants">
+            <input ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants">		
+			
             <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(answer, activeQuestion)">Järgmine</md-button>
 			<md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
           </md-input-container>
