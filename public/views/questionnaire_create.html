@@ -47,6 +47,10 @@
         <left class="md-subhead">Lisa uus küsimus:</left>
         <div layout="row" class="md-block">
             <div layout="column" flex="33" layout-align="start center">
+                <md-input-container>
+                    <label>Küsimus</label>
+                    <input ng-model="question.title">
+                </md-input-container>
                 <!-- Loogika küsimuse lisamiseks -->
                 <div class="md-block">
                     <md-input-container>
@@ -60,10 +64,6 @@
                             </md-option>
                         </md-select>
                     </md-input-container>
-                    <md-input-container>
-                        <label>Küsimus</label>
-                        <input ng-model="question.title">
-                    </md-input-container>
                     <md-button class="md-raised md-primary" ng-disabled="!(question.type && question.variants.length > 0 && question.title && question.maxPoints)" ng-click="addQuestion(question)" title="Tee enne valmis vastusevariandid ja siis lisa küsimus">Lisa küsimus</md-button>
                 </div>
             </div>
@@ -71,7 +71,7 @@
             <div layout="column" flex layout-align="center center">
                 <div ng-if="question.type=='Valik'" flex>
                     <div ng-if="question.variants.length > 0">
-                        <center class="md-headline">Vastuse variandid</center>
+                        <center class="md-headline">Vastusevariandid</center>
                         <md-divider></md-divider>
                         <table style="width:100%">
                             <tr>
