@@ -10,7 +10,8 @@
 			<md-subheader class="md-no-sticky"></md-subheader>
 			<md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="view(item)">
 				<div class="md-list-item-text" layout="column">
-					<h4>
+					<div class="itemPadding">
+						<h4>
 										{{item.title}}
 					</h4>
 					<p>
@@ -23,6 +24,19 @@
 					<p>
 						{{item.saved | date:'MM/dd/yyyy @ h:mm'}}
 					</p>
+						<p>
+							<md-icon class="material-icons">timer</md-icon>
+							{{item.totalTime}}
+						</p>
+						<p>
+							<md-icon class="material-icons">star_rate</md-icon>
+							{{item.totalPoints}}
+						</p>
+						<p>
+							<md-icon class="material-icons">date_range</md-icon>
+							{{item.saved | date:'MM/dd/yyyy @ h:mm'}}
+						</p>
+					</div>
 				</div>
 			</md-list-item>
 			<md-divider></md-divider>
@@ -53,13 +67,13 @@
 				</div>
 			</div>
 			<md-list-item class="secondary-button-padding" ng-repeat="x in activeQuestionnaire.questions track by $index">
-					<div layout="row">
+				<div layout="row">
 
-						<md-input-container class="md-block" flex-gt-sm>
-							<label>Küsimus:</label>
-							<input ng-click="x.active ? x.active=false : x.active=true" ng-model="x.title">
-						</md-input-container>
-					</div>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Küsimus:</label>
+						<input ng-click="x.active ? x.active=false : x.active=true" ng-model="x.title">
+					</md-input-container>
+				</div>
 			</md-list-item>
 		</div>
 	</div>

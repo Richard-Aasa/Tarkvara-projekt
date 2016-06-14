@@ -1,4 +1,4 @@
-(function() {
+﻿(function() {
     'use strict';
 
     angular
@@ -31,7 +31,7 @@
                 }
             };
 
-            // Korras!
+            // Korras! <--hahahaha - Nüüd ON!
             $scope.save = function(questionnaire) {
                 var newQuestionnaire = new QuestionnaireService({
                     title: questionnaire.title,

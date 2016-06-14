@@ -14,10 +14,7 @@
                 <label>Pealkiri</label>
                 <input ng-model="questionnaire.title">
             </md-input-container>
-            <md-input-container flex="40">
-                <label>Aeg kogu küsimustiku täitmiseks (minutites)</label>
-                <input ng-model="questionnaire.totalTime" ng-init="questionnaire.totalTime=0" type="number" step="1" min="1" max="1888900">
-            </md-input-container>
+
         </div>
 
         <!-- Küsimuste nimekiri -->
@@ -135,7 +132,11 @@
             </div>
         </div>
         <md-divider></md-divider>
-        <div layout="row" layout-align="end center">
+        <div layout="row" layout-align="end start">
+            <md-input-container flex width="10%">
+                <label>Aeg kogu küsimustiku täitmiseks (minutites)</label>
+                <input ng-model="questionnaire.totalTime" ng-init="questionnaire.totalTime=0" type="number" step="1" min="1" max="1888900">
+            </md-input-container>
             <span>Punktid kokku: {{questionnaire.totalPoints}}</span>
             <md-button class="md-raised md-primary" ng-disabled="!(questionnaire.title && questionnaire.questions.length > 0 && questionnaire.totalTime>0)" ng-click="create(questionnaire)">
                 <md-icon class="material-icons">save</md-icon>Salvesta küsimustik</md-button>

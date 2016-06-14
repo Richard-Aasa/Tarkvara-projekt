@@ -3,55 +3,12 @@
 
     angular
         .module('app')
-        .controller('FillController', ['$scope','$routeParams','QuestionnaireService','$interval', '$mdDialog', function($scope, $routeParams, QuestionnaireService, $interval, $mdDialog) {
+        .controller('FillController', ['$scope','$routeParams','QuestionnaireService','StatisticsService','AuthenticateService','$interval', '$mdDialog', function($scope, $routeParams, QuestionnaireService, StatisticsService, AuthenticateService, $interval, $mdDialog) {
 			$scope.questionnaire = {};
-			
-           /* $scope.questionnaire = {
-                title: "asd",
-                questions: [{
-                    title: "esimene",
-                    type: "Valik",
-                    variants: [{
-                        answer: "vasts",
-                        points: 123,
-                        bool: true
-                    }, {
-                        answer: "asd",
-                        points: 1234,
-                        bool: false
-                    }, {
-                        answer: "asdasdasd",
-                        points: 12343,
-                        bool: false
-                    }],
-                    maxPoints: 12
-                }, {
-                    title: "teine",
-                    type: "Tühi lünk",
-                    variants: "mida asdf",
-                    maxPoints: 122
-                }],
-                totalTime: 30
-            };*/
-
-            $scope.loading = true;
-            $scope.activeQuestion = {};
-            //$scope.activeQuestion = $scope.questionnaire[0].questions[0];
-            $scope.arrayOfItems = [];
-			$scope.allQuestionsFilled = false;
-			$scope.filledQuestion = [];
-			/*QuestionnaireService.get({_id: $routeParams.id}).$promise.then(
-                    function(data) {
-                        $scope.questionnaire = data;
-                        $scope.loading = false;
-						
-                    },
-                    function(error) {
-                        console.log(error);
-                    }
-                );*/
-				
-			QuestionnaireService.get({id: $routeParams.id}, function() {
+			$scope.service = AuthenticateService;
+			var questionnaireId = $routeParams.id;
+			//serverist laeb sisse andmeid siin, kui tahad mõnda fill lehte näha siis hetkel on üks töötav lehekülg siuke http://localhost:3000/#/fill/575e6d7c27199c081c1e329e see pikk number on ühe questionnaire _id
+			QuestionnaireService.get({id: questionnaireId}, function() {
 				}).$promise.then(
 				function(response){
 					console.log(response);
@@ -63,9 +20,12 @@
                         console.log(error);
                 }
 			);
-			console.log($scope.questionnaire);
-            //$scope.questionnaire = $scope.questionnaires[0];
-			//console.log($scope.questionnaire);
+            $scope.loading = true;
+            $scope.activeQuestion = {};
+            //$scope.activeQuestion = $scope.questionnaire.questions[0];
+            $scope.arrayOfItems = [];
+			$scope.allQuestionsFilled = false;
+			$scope.filledQuestion = [];
 
             //tervet küsimustikku puudutav aeg
             $scope.questionnaireLeftTime = 0;
@@ -188,11 +148,25 @@
 			
 			$scope.save = function(){
 				//suhtleb serveriga
+				//oleks vaja lisada funktsioon mis arvutab kokku punktid, aja jms
 				console.log($scope.filledQuestion);
-				/*var newStat = new StatisticsService({
-					
-				});*/
-				
+				var newStat = new StatisticsService({
+                    questionnaire: questionnaireId,
+                    user: $scope.service.currentUser._id,
+					questions: [OneQuestionSchema],
+					userTime: {type: Number, required: true},
+					userPoints: {type: Number, required: true}
+                });
+
+                newStat.$save()
+                    .then(
+                        function(data) {
+                            showToast('Küsimustik täidetud: ' + questionnaire.title);
+                        },
+                        function(error) {
+                            showToast(error.status + ' ' + error.statusText);
+                        }
+                    );				
 			}
 		}]);
 }());
