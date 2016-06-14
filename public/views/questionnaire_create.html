@@ -64,7 +64,10 @@
                             </md-option>
                         </md-select>
                     </md-input-container>
-                    <md-button class="md-raised md-primary" ng-disabled="!(question.type && question.variants.length > 0 && question.title && question.maxPoints)" ng-click="addQuestion(question)" title="Tee enne valmis vastusevariandid ja siis lisa küsimus">Lisa küsimus</md-button>
+                    <md-button class="md-raised md-primary" ng-disabled="!(question.type && question.variants.length > 0 && question.title && question.maxPoints)" ng-click="addQuestion(question)">Lisa küsimus</md-button>
+                    <md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
+                			Tee enne valmis vastusevariandid ja siis lisa küsimus
+                		</md-tooltip>
                 </div>
             </div>
             <!-- Muutub vastavalt küsimuse tüübile -->
