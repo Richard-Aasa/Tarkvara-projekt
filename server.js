@@ -317,26 +317,17 @@ app.post('/questionnaire', function(req, res) {
 app.get('/questionnaire/:id', function(req, res, next) {
     var params = req.params;
 
-    if (params.id) {
-
-        var query = Questionnaire.findOne({
-            '_id': 'params.id'
-        });
-
-        query.select("title author createdDate questions totalTime totalPoints saved published archieved");
-        query.exec(function(err, questionnaire) {
-            if (err) {
-                console.error(err);
+    if(params.id){
+        Questionnaire.findOne({'_id': params.id}, function (err, questionnaire) {
+			if(err){
+				console.error(err);
                 return res.json({
                     "error": "did not find matching questionnaire"
                 });
-            }
-            res.json(questionnaire);
-        });
-
-    } else {
-        res.sendStatus(400);
-    }
+			}
+		  res.json(questionnaire);
+		});
+	}
 
 });
 //parameetrite saatmine

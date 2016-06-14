@@ -46,12 +46,16 @@
                     <md-button ng-click="toggleLeft()" hide-gt-md md-no-ink class="md-icon-button md-secondary" aria-label="Settings">
                         <md-icon class="material-icons">menu</md-icon>
                     </md-button>
+                    <md-button ng-click="changeView('/home')" class="md-icon-button" aria-label="Home">
+                      <md-icon class="md-primary material-icons">home</md-icon>
+                    </md-button>
                     <h2 class="md-title" flex>
-
+                      Mälumäng
                     </h2>
+
                     <div ng-show="!service.isAuthenticated()" layout-align="end center">
-                      <md-button class="loginbtn" ng-click="login($event)">
-                        <md-icon class="md-primary material-icons">lock</md-icon>
+                        <md-button class="loginbtn" ng-click="login($event)">
+                            <md-icon class="md-primary material-icons">lock</md-icon>
                             Login
                         </md-button>
                         <md-button class="registerbtn" ng-click="register($event)">
@@ -62,6 +66,7 @@
                     <div ng-show="service.isAuthenticated()" layout-align="end center">
                         <span>{{service.currentUser.name}}</span>
                         <md-button class="logoutbtn" ng-click="service.logout()">
+                            <md-icon class="md-primary material-icons">exit_to_app</md-icon>
                             Log out
                         </md-button>
                     </div>
@@ -82,7 +87,7 @@
     <script src="/lib/angular-material/angular-material.min.js"></script>
     <script src="/lib/angular-messages/angular-messages.min.js"></script>
 
-    <script src="/lib/Chart.js/dist/Chart.min.js"></script>
+    <script src="/lib/highcharts/highcharts.js"></script>
 
     <script src="/client.js"></script>
     <script src="/controllers/main.js"></script>
@@ -95,7 +100,7 @@
     <script src="/services/questionnaire.js"></script>
     <script src="/services/authenticate.js"></script>
 
-	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 </body>
 
 </html>
