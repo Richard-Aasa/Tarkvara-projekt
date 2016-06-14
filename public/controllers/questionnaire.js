@@ -31,7 +31,7 @@
                 }
             };
 
-            // Korras!
+            // Korras! <--hahahaha
             $scope.save = function(questionnaire) {
                 var newQuestionnaire = new QuestionnaireService({
                     title: questionnaire.title,

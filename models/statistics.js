@@ -9,7 +9,7 @@ var OneQuestionSchema = new Schema({
 });
 
 var StatisticsSchema = new Schema({
-    questionnaire: { type: Number, required: true },
+    questionnaire: { type: String, required: true },
     user: { type: Number, required: true},
 	//küsimustiku täitmise algusaeg
 	fillDate: { type: Date, default: Date.now},
