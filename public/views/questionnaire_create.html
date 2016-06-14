@@ -63,12 +63,14 @@
                                 Tühi lünk
                             </md-option>
                         </md-select>
+
                     </md-input-container>
+
                     <md-button class="md-raised md-primary" ng-disabled="!(question.type && question.variants.length > 0 && question.title && question.maxPoints)" ng-click="addQuestion(question)">
                         <md-icon class="material-icons">add</md-icon>Lisa küsimus
-                        <md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
+                        <!-- <md-tooltip md-direction="left">
                             Tee enne valmis vastusevariandid ja siis lisa küsimus
-                        </md-tooltip>
+                        </md-tooltip> -->
                     </md-button>
                 </div>
             </div>
