@@ -290,8 +290,8 @@ app.post('/questionnaire', function(req, res) {
             questions: postData.questions,
             totalTime: postData.totalTime,
             totalPoints: postData.totalPoints,
-            createdDate: Date.now(),
-            saved: Date.now(),
+            createdDate: postData.createdDate,
+            saved: postData.saved,
             published: postData.published,
             archieved: postData.archieved
 
@@ -346,7 +346,7 @@ app.put('/questionnaire/:id', function(req, res) {
             questionnaire.questions = postData.questions;
             questionnaire.totalTime = postData.totalTime;
             questionnaire.totalPoints = postData.totalPoints;
-            questionnaire.saved = Date.now();
+            questionnaire.saved = postData.saved;
             questionnaire.published = postData.published;
             questionnaire.archieved = postData.archieved;
 
