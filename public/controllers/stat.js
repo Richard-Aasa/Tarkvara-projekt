@@ -3,49 +3,21 @@
 
     angular
         .module('app')
+        .directive('hcChart', function() {
+            return {
+                restrict: 'E',
+                template: '<div></div>',
+                scope: {
+                    options: '='
+                },
+                link: function(scope, element) {
+                    Highcharts.chart(element[0], scope.options);
+                }
+            };
+        })
         .controller('StatController', ['$scope', '$mdDialog', function($scope, $mdDialog) {
 
-            $scope.loading = true;
-            var ctx = $("#chart");
-
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
-                }
-            });
-
-
+            $scope.loading = false;
 
             // WORKS
 
@@ -60,6 +32,48 @@
             //             console.log(error);
             //         }
             //     );
+
+
+
+
+            //näiteandmed
+            $scope.questionnaires = [{
+                questionnaire: 1,
+                user: 2,
+                fillDate: "14-06-2016",
+                questions: [{
+                    totalTime: 20,
+                    points: 3,
+                    correct: true
+                }, {
+                    totalTime: 10,
+                    points: 5,
+                    correct: false
+                }, {
+                    totalTime: 30,
+                    points: 7,
+                    correct: true
+                }],
+                userTime: 60,
+                userPoints: 40
+            }];
+
+            $scope.chartOptions = {
+                title: {
+                    text: $scope.questionnaires[0].questionnaire
+                },
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                    ]
+                },
+
+                series: [{
+                    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                }]
+            };
+
+
 
 
 
