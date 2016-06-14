@@ -1,5 +1,24 @@
-<md-content class="md-padding" layout="row">
-    <div layout="column" flex>
-      <canvas id="line" class="chart chart-line" chart-data="data"chart-labels="labels" chart-legend="true" chart-series="series"></canvas>
-    </div>
+<md-content class="md-padding" layout="row" ng-init="service.isTeacher()" ng-show="!loading">
+	<div layout="column" flex="20">
+		<md-list>
+			<md-subheader class="md-no-sticky"></md-subheader>
+			<md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="view(item)">
+				<div class="md-list-item-text" layout="column">
+					<h4>
+										Pealkiri: {{item.title}}
+									</h4>
+					<p>
+						Aeg mis kulub: {{item.totalTime}}
+					</p>
+					<p>
+						Maksimum punktid: {{item.totalPoints}}
+					</p>
+					<p>
+						Loodud: {{item.createdDate | date:'MM/dd/yyyy @ h:mm'}}
+					</p>
+				</div>
+			</md-list-item>
+			<md-divider></md-divider>
+		</md-list>
+	</div>
 </md-content>
