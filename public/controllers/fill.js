@@ -3,12 +3,10 @@
 
     angular
         .module('app')
-        .controller('FillController', ['$scope','QuestionnaireService','$interval', '$mdDialog', function($scope, QuestionnaireService, $interval, $mdDialog) {
-			
-			$scope.questionnaires = [];
+        .controller('FillController', ['$scope','$routeParams','QuestionnaireService','$interval', '$mdDialog', function($scope, $routeParams, QuestionnaireService, $interval, $mdDialog) {
 			$scope.questionnaire = {};
 			
-            $scope.questionnaire = {
+           /* $scope.questionnaire = {
                 title: "asd",
                 questions: [{
                     title: "esimene",
@@ -32,39 +30,9 @@
                     type: "Tühi lünk",
                     variants: "mida asdf",
                     maxPoints: 122
-                }, {
-                    title: "kolmas",
-                    type: "Tühi lünk",
-                    variants: "mida asdf",
-                    maxPoints: 122
-                }, {
-                    title: "ssd",
-                    type: "Tühi lünk",
-                    variants: "mida asdf",
-                    maxPoints: 122
-                }, {
-                    title: "hgfh",
-                    type: "Tühi lünk",
-                    variants: "mida asdf",
-                    maxPoints: 122
-                }, {
-                    title: "khj",
-                    type: "Tühi lünk",
-                    variants: "mida asdf",
-                    maxPoints: 122
-                }, {
-                    title: "kollöklömas",
-                    type: "Tühi lünk",
-                    variants: "mida asdf",
-                    maxPoints: 122
-                }, {
-                    title: "u8",
-                    type: "Tühi lünk",
-                    variants: "mida asdf",
-                    maxPoints: 122
                 }],
                 totalTime: 30
-            };
+            };*/
 
             $scope.loading = true;
             $scope.activeQuestion = {};
@@ -72,23 +40,34 @@
             $scope.arrayOfItems = [];
 			$scope.allQuestionsFilled = false;
 			$scope.filledQuestion = [];
-						
-			QuestionnaireService.query()
-			/*	.$promise.then(
-					function(data) {
-                        $scope.questionnaires = data;
+			/*QuestionnaireService.get({_id: $routeParams.id}).$promise.then(
+                    function(data) {
+                        $scope.questionnaire = data;
                         $scope.loading = false;
+						
                     },
                     function(error) {
                         console.log(error);
                     }
-                );
-            $scope.questionnaire = $scope.questionnaires[0];
-			console.log($scope.questionnaire);*/
+                );*/
+				
+			QuestionnaireService.get({id: $routeParams.id}, function() {
+				}).$promise.then(
+				function(response){
+					console.log(response);
+					$scope.questionnaire = response;
+					$scope.questionnaireStartTime = Date.now();
+					$scope.questionnaireEndTime = $scope.questionnaireStartTime + ($scope.questionnaire.totalTime * 60000);
+				},
+				function(error) {
+                        console.log(error);
+                }
+			);
+			console.log($scope.questionnaire);
+            //$scope.questionnaire = $scope.questionnaires[0];
+			//console.log($scope.questionnaire);
 
             //tervet küsimustikku puudutav aeg
-            $scope.questionnaireStartTime = Date.now();
-            $scope.questionnaireEndTime = $scope.questionnaireStartTime + ($scope.questionnaire.totalTime * 60000);
             $scope.questionnaireLeftTime = 0;
             //üht konkreetset küsimust puudutav aeg
             $scope.questionStartTime = Date.now();

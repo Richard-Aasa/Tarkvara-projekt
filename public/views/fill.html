@@ -26,8 +26,6 @@
         <div ng-if="activeQuestion.type=='Tühi lünk'">
 
           <md-input-container>
-            <span>{{filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants}}</span>
-            <span>{{questionnaire.questions.indexOf(activeQuestion)}}</span>
             <label>Vastus</label>
             <input ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants">		
 			

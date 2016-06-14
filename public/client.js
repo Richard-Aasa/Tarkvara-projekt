@@ -19,7 +19,7 @@
             templateUrl: '/views/questionnaire.html',
             controller: 'QuestionnaireController'
           })
-          .when('/fill', {
+          .when('/fill/:id', {
             templateUrl: '/views/fill.html',
             controller: 'FillController'
           })
