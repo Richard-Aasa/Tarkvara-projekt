@@ -1,51 +1,63 @@
 /**
  * Hide when Angular is not yet loaded and initialized
  */
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
 table, th, td {
-    border: 1px solid blue;
+    border: 1px solid #37474F;
     border-collapse: collapse;
     text-align: center;
 }
-.passedLi{
-	background-color: green;
+.passedLi {
+    background-color: green;
 }
-
 img.bg {
-  /* Set rules to fill background */
-  min-height: 100%;
-  min-width: 1024px;
-
-  /* Set up proportionate scaling */
-  width: 100%;
-  height: auto;
-
-  /* Set up positioning */
-  position: fixed;
-  top: 0;
-  left: 0;
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
 }
-
-@media screen and (max-width: 1024px) { /* Specific to this particular image */
-  img.bg {
-    left: 50%;
-    margin-left: -512px;   /* 50% */
-  }
+@media screen and (max-width: 1024px) {
+    /* Specific to this particular image */
+    img.bg {
+        left: 50%;
+        margin-left: -512px;
+        /* 50% */
+    }
 }
-
 .loginbtn {
-  color : rgb(255, 255, 255);
-  background-color: rgb(136, 196, 116);
+    color: rgb(255, 255, 255);
+    background-color: rgb(136, 196, 116);
 }
-
 .registerbtn {
-  color : rgb(255, 255, 255);
-  background-color: rgb(201, 93, 93);
+    color: rgb(255, 255, 255);
+    background-color: rgb(201, 93, 93);
 }
-
 .logoutbtn {
-  color : rgb(255, 255, 255);
-  background-color: rgb(201, 93, 93);
+    color: rgb(255, 255, 255);
+    background-color: rgb(201, 93, 93);
+}
+.Aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    margin: auto;
+    margin-top: 20%;
+    background-color: #444545;
+    border: 1px solid black;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+.Aligner-item {
+    max-width: 50%;
+    z-index: 300;
 }
