@@ -11,16 +11,17 @@
 			<md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="view(item)">
 				<div class="md-list-item-text" layout="column">
 					<h4>
-										Pealkiri: {{item.title}}
+										{{item.title}}
 									</h4>
 					<p>
-						Aeg mis kulub: {{item.totalTime}}
+						<md-icon class="material-icons">close</md-icon>
+						{{item.totalTime}}
 					</p>
 					<p>
-						Maksimum punktid: {{item.totalPoints}}
+						{{item.totalPoints}}
 					</p>
 					<p>
-						Loodud: {{item.createdDate | date:'MM/dd/yyyy @ h:mm'}}
+						{{item.saved | date:'MM/dd/yyyy @ h:mm'}}
 					</p>
 				</div>
 			</md-list-item>
@@ -52,14 +53,13 @@
 				</div>
 			</div>
 			<md-list-item class="secondary-button-padding" ng-repeat="x in activeQuestionnaire.questions track by $index">
-				<div class="md-list-item-text">
 					<div layout="row">
+
 						<md-input-container class="md-block" flex-gt-sm>
 							<label>Küsimus:</label>
 							<input ng-click="x.active ? x.active=false : x.active=true" ng-model="x.title">
 						</md-input-container>
 					</div>
-				</div>
 			</md-list-item>
 		</div>
 	</div>
