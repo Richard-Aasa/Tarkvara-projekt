@@ -64,7 +64,7 @@
 		</div>
 	</div>
 	<div layout="column" flex="40">
-		<div layout="row" class="md-block">
+		<div layout="row" class="md-block" ng-if="activeQuestionnaire.title">
 			<md-input-container>
 				<label>Küsimus</label>
 				<input ng-model="newQuestion.title">
