@@ -29,10 +29,7 @@
             <span>{{filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants}}</span>
             <span>{{questionnaire.questions.indexOf(activeQuestion)}}</span>
             <label>Vastus</label>
-			<!--siin on mingi muna millest ma aru ei saa !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!--->
-            <!--<input ng-model="answer">-->
-            <input ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants">
-			
+            <input ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants">		
 			
             <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(answer, activeQuestion)">Järgmine</md-button>
 			<md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
