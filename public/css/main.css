@@ -13,6 +13,11 @@ table, th, td {
 .passedLi {
     background-color: green;
 }
+
+md-checkbox.md-checked.green .md-icon {
+ background-color: rgb(136, 196, 116);
+}
+
 img.bg {
     /* Set rules to fill background */
     min-height: 100%;
