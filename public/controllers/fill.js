@@ -91,7 +91,7 @@
 				  $scope.arrayOfItems = [];
 			  }
             };
-			
+			//htmlis nupule järgmine vajutades läheb tööle submit funktsioon, mis paneb kirja kasutaja sisestatud andmed küsimustikus ja laeb järgmise küsimuse. lisaks ka see kontrollib kas kõik küsimused on täidetud.
 			$scope.submit = function(answer, question){
 				var index = $scope.questionnaire.questions.indexOf(question);
 				var len = $scope.questionnaire.questions.length;

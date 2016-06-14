@@ -5,7 +5,7 @@
   'use strict';
 
   angular
-    .module('app', ['ngRoute', 'ngResource', 'ngMaterial', 'ngMessages','chart.js'])
+    .module('app', ['ngRoute', 'ngResource', 'ngMaterial', 'ngMessages'])
     .config(['$routeProvider', '$locationProvider', '$resourceProvider', '$mdThemingProvider',
       function($routeProvider, $locationProvider, $resourceProvider, $mdThemingProvider) {
 
