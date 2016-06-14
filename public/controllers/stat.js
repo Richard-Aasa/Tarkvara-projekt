@@ -33,9 +33,6 @@
             //         }
             //     );
 
-
-
-
             //näiteandmed
             $scope.questionnaires = [{
                 questionnaire: 1,
@@ -60,7 +57,7 @@
 
             $scope.chartOptions = {
                 title: {
-                    text: $scope.questionnaires[0].questionnaire
+                    text: ""
                 },
                 xAxis: {
                     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
