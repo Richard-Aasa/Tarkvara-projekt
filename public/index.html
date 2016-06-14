@@ -51,10 +51,12 @@
 
                     </h2>
                     <div ng-show="!service.isAuthenticated()" layout-align="end center">
-                        <md-button class="loginbtn" ng-click="login($event)">
+                      <md-button class="loginbtn" ng-click="login($event)">
+                        <md-icon class="md-primary material-icons">lock</md-icon>
                             Login
                         </md-button>
                         <md-button class="registerbtn" ng-click="register($event)">
+                            <md-icon class="md-primary material-icons">edit</md-icon>
                             Register
                         </md-button>
                     </div>
