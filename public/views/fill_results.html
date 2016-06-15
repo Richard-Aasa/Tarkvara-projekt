@@ -10,7 +10,7 @@
 <md-content class="md-padding" layout="row" flex>
 		<md-list flex style="overflow-y: scroll">
 			<!-- kui on tõene siis roheline -->
-			<md-list-item ng-if="item.correct" ng-repeat="item in resultObject.questions track by $index" class="md-3-line" style="background-color: green" ng-click="view(item)">
+			<md-list-item ng-if="item.correct" ng-repeat="item in resultObject.questions track by $index" class="md-3-line" style="background-color: #88C474" ng-click="view(item)">
 
 						<h4 class="md-title">
         			{{questionnaire.questions[$index].title}}
@@ -35,7 +35,7 @@
 					</div> -->
 
 			</md-list-item>
-			<md-list-item ng-if="!item.correct" ng-repeat="item in resultObject.questions track by $index" class="md-3-line" style="background-color: red" ng-click="view(item)">
+			<md-list-item ng-if="!item.correct" ng-repeat="item in resultObject.questions track by $index" class="md-3-line" style="background-color: #C95D5D" ng-click="view(item)">
 
 						<h4 class="md-title">
         			{{questionnaire.questions[$index].title}}
@@ -69,8 +69,8 @@
 			<md-list-item>
 				<h4>Küsimustik: </h4>{{questionnaire.title}}
 			</md-list-item>
-			<md-list-item>
-				<h4>Kulunud aeg: </h4>{{resultObject.userTime/1000/60}}
+			<md-list-item flex>
+				<h4>Kulunud aeg: </h4>{{Math.round(resultObject.userTime/1000/60)}}
 			</md-list-item>
 			<md-list-item>
 				<h4>Saadud punktid: </h4>{{resultObject.userPoints}}
