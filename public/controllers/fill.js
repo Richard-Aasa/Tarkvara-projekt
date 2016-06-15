@@ -7,7 +7,7 @@
 			$scope.questionnaire = {};
 			$scope.service = AuthenticateService;
 			var questionnaireId = $routeParams.id;
-			//serverist laeb sisse andmeid siin, kui tahad mõnda fill lehte näha siis hetkel on üks töötav lehekülg siuke http://localhost:3000/#/fill/575e6d7c27199c081c1e329e see pikk number on ühe questionnaire _id
+			//serverist laeb sisse andmeid siin, kui tahad mõnda fill lehte näha siis hetkel on üks töötav lehekülg siuke http://localhost:3000/#/fill/5760fe03770de90984b36410 see pikk number on ühe questionnaire _id
 			QuestionnaireService.get({id: questionnaireId}, function() {
 				}).$promise.then(
 				function(response){
@@ -26,6 +26,7 @@
             $scope.arrayOfItems = [];
 			$scope.allQuestionsFilled = false;
 			$scope.filledQuestion = [];
+			var insertedServerQuestions = []
 
             //tervet küsimustikku puudutav aeg
             $scope.questionnaireLeftTime = 0;
@@ -73,7 +74,7 @@
 				  return;
 			  }
 			  
-              $scope.measureTime($scope.activeQuestion.title, $scope.questionStartTime, $scope.questionEndTime);
+              $scope.measureTime($scope.activeQuestion._id, $scope.questionStartTime, $scope.questionEndTime);
               $scope.questionStartTime = Date.now();
               if($scope.arrayOfItems == null){
 				  $scope.arrayOfItems = [];
@@ -85,19 +86,38 @@
 				
 				
 				var index = $scope.questionnaire.questions.indexOf(question);
-				console.log(index);
+				console.log(question);
+				var len = $scope.questionnaire.questions.length;
+				var varLen = $scope.questionnaire.questions[index].variants.length;
+				var isAnswerCorrect = false;
 				
 				if($scope.questionnaire.questions[index].type == "Tühi lünk" && $scope.filledQuestion[$scope.questionnaire.questions.indexOf($scope.activeQuestion)]){
 					answer = $scope.filledQuestion[$scope.questionnaire.questions.indexOf($scope.activeQuestion)].variants;
 				}
+				//see jupp siis kontrollib kas sisestatud vastused on õiged
+				for(var i=0; i<varLen; i++){
+					if(varLen > 1){
+						if($scope.questionnaire.questions[index].variants[i].bool == answer[i]){
+							isAnswerCorrect = true;
+						}else{
+							isAnswerCorrect = false;
+							break;
+						}
+					}else{
+						if(typeof answer != "undefined"){
+							if($scope.questionnaire.questions[index].variants[0].toLowerCase() == answer.toLowerCase()){
+								isAnswerCorrect = true;
+							}							
+						}
+					}
+				}
 				
-				var len = $scope.questionnaire.questions.length;
 				var vastused = {
 					id: index+"mongoID",
 					type: $scope.questionnaire.questions[index].type,
-					variants: answer
+					variants: answer,
+					correct: isAnswerCorrect
 				};
-				console.log(answer);
 				var check = false;
 				
 				if($scope.filledQuestion[index]){
@@ -110,7 +130,6 @@
 				}
 				//kontrolli veel kas sellisele küsimusele on juba vastatud.				
 				console.log($scope.filledQuestion);
-				console.log(answer);
 				$('.listItem')[index].className += " passedLi";
 				
 				var real_len = 0;
@@ -125,17 +144,17 @@
 					$scope.view($scope.questionnaire.questions[index+1]);
 				}else{
 					$scope.allQuestionsFilled = true;
-				}				
+				}
 			}
             //mõõdab üehele küsimusele kulunud aega ja lisab kõik massiivi
-            $scope.measureTime = function(question, start, end){
+            $scope.measureTime = function(questionId, start, end){
               var questionTotalTime = {};
-              questionTotalTime.title = question;
+              questionTotalTime._id = questionId;
               questionTotalTime.time = end - start;
               var check = false;
               for(var i = 0; i < $scope.allQuestionsTime.length; i++){
-                if($scope.allQuestionsTime[i].title == questionTotalTime.title){
-                  $scope.allQuestionsTime[i].time += questionTotalTime.time;
+                if($scope.allQuestionsTime[i]._id == questionTotalTime._id){
+                  $scope.allQuestionsTime[i].totalTime += questionTotalTime.time;
                   check = true;
                   break;
                 }
@@ -143,17 +162,28 @@
               if(check === false){
                 $scope.allQuestionsTime.push(questionTotalTime);
               }
-              //console.log($scope.allQuestionsTime);
+              console.log($scope.allQuestionsTime);
             };
 			
 			$scope.save = function(){
 				//suhtleb serveriga
 				//oleks vaja lisada funktsioon mis arvutab kokku punktid, aja jms
+				for(var i = 0; i < $scope.allQuestionsTime.length; i++){
+					var questionVars = {
+						_id: 0,
+						totalTime: { type: Number, required: true },
+						points: { type: Number, required: true },
+						correct: Boolean
+					};
+					
+					insertedServerQuestions.push(questionVars);
+				}
+				
 				console.log($scope.filledQuestion);
 				var newStat = new StatisticsService({
                     questionnaire: questionnaireId,
                     user: $scope.service.currentUser._id,
-					questions: [OneQuestionSchema],
+					questions: insertedServerQuestions,
 					userTime: {type: Number, required: true},
 					userPoints: {type: Number, required: true}
                 });
