@@ -26,7 +26,7 @@
             $scope.arrayOfItems = [];
 			$scope.allQuestionsFilled = false;
 			$scope.filledQuestion = [];
-			var insertedServerQuestions = []
+			var insertedServerQuestions = [];
 
             //tervet küsimustikku puudutav aeg
             $scope.questionnaireLeftTime = 0;
