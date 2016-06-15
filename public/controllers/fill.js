@@ -8,6 +8,8 @@
 			$scope.resultObject = {};
             $scope.activeQuestion = {};
 			$scope.service = AuthenticateService;
+			$scope.loading = true;
+
 			var questionnaireId = $routeParams.id;
 			//serverist laeb sisse andmeid siin, kui tahad mõnda fill lehte näha siis hetkel on üks töötav lehekülg siuke http://localhost:3000/#/fill/5760fe03770de90984b36410 see pikk number on ühe questionnaire _id
 			QuestionnaireService.get({id: questionnaireId}, function() {
@@ -18,19 +20,20 @@
 					$scope.questionnaireStartTime = Date.now();
 					$scope.questionnaireEndTime = $scope.questionnaireStartTime + ($scope.questionnaire.totalTime * 60000);
 					$scope.activeQuestion = $scope.questionnaire.questions[0];
+					$scope.loading = false;
 				},
 				function(error) {
                         console.log(error);
                 }
 			);
-            $scope.loading = true;
+            
             $scope.arrayOfItems = [];
 			$scope.allQuestionsFilled = false;
 			$scope.filledQuestion = [];
 			var insertedServerQuestions = [];
 
             //tervet küsimustikku puudutav aeg
-            $scope.questionnaireLeftTime = 0;
+            $scope.questionnaireLeftTime = 9000000000000;
             //üht konkreetset küsimust puudutav aeg
             $scope.questionStartTime = Date.now();
             $scope.questionEndTime = 0;
@@ -50,8 +53,7 @@
 						$scope.save();
 					}else{
 						$interval.cancel(stop);
-						$location.path('/fill_questionnaire');
-						
+						$location.path('/fill_questionnaire');						
 					}
 				}
             }, 100);

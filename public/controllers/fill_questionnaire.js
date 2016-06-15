@@ -5,6 +5,7 @@
         .module('app')
         .controller('FillQuestionnaireController', ['$scope','QuestionnaireService','AuthenticateService','$interval', '$mdDialog', function($scope, QuestionnaireService, AuthenticateService, $interval, $mdDialog) {
 			$scope.questionnaires = [];
+			$scope.loading = true;
 			
 			QuestionnaireService.query()
                 .$promise.then(
