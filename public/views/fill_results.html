@@ -1,33 +1,81 @@
-<md-content layout="column">
+<div flex>
 	<md-toolbar class="md-hue-2">
-        <div flex class="md-toolbar-tools">
-            <h4 class="md-title">
-                 Küsimustiku: {{questionnaire.title}} tulemused
-            </h4>
-        </div>
-    </md-toolbar>
-	<md-list>
-		<md-list-item>
-			<strong>Kasutaja: </strong>{{resultObject.user}}
-		</md-list-item>
-		<md-list-item class="md-3-line">
-			{{}}
-		</md-list-item>
-		<md-list-item class="md-3-line">
-			{{}}
-		</md-list-item>
-        <md-list-item ng-repeat="item in resultObject.questions" class="md-3-line" ng-click="view(item)">
-            <div class="md-list-item-text" layout="column">
-                <h4 class="md-title">
-        			{{item.title}}
-        		</h4>
-                <p>
-					{{item.correct}}
-                </p>
-                <md-divider></md-divider>
-            </div>
-        </md-list-item>
-				<md-button class="md-raised md-primary" href="#/fill_questionnaire">Järgmine</md-button>
-    </md-list>
+		<div flex class="md-toolbar-tools">
+			<h4 class="md-title">
+			Sinu tulemused:
+			</h4>
+		</div>
+	</md-toolbar>
+</div>
+<md-content class="md-padding" layout="row" flex>
+		<md-list flex style="overflow-y: scroll">
+			<!-- kui on tõene siis roheline -->
+			<md-list-item ng-if="item.correct" ng-repeat="item in resultObject.questions track by $index" class="md-3-line" style="background-color: green" ng-click="view(item)">
 
-<md-content>
+						<h4 class="md-title">
+        			{{questionnaire.questions[$index].title}}
+        	</h4>
+						<p>
+							{{questionnaire.questions[$index].answer}}
+						</p>
+						<p>
+							{{item.correct}}
+						</p>
+						<md-divider></md-divider>
+<!--
+					<div class="md-list-item-text" layout="column"ng-if="item.correct==false" bgcolor="#C95D5D">
+
+						<h4 class="md-title">
+        			{{questionnaire.questions[$index].title}}
+        	</h4>
+						<p>
+							{{item.correct}}
+						</p>
+						<md-divider></md-divider>
+					</div> -->
+
+			</md-list-item>
+			<md-list-item ng-if="!item.correct" ng-repeat="item in resultObject.questions track by $index" class="md-3-line" style="background-color: red" ng-click="view(item)">
+
+						<h4 class="md-title">
+        			{{questionnaire.questions[$index].title}}
+        	</h4>
+						<p>
+							{{questionnaire.questions[$index].answer}}
+						</p>
+						<p>
+							{{item.correct}}
+						</p>
+						<md-divider></md-divider>
+<!--
+					<div class="md-list-item-text" layout="column"ng-if="item.correct==false" bgcolor="#C95D5D">
+
+						<h4 class="md-title">
+        			{{questionnaire.questions[$index].title}}
+        	</h4>
+						<p>
+							{{item.correct}}
+						</p>
+						<md-divider></md-divider>
+					</div> -->
+
+			</md-list-item>
+		</md-list>
+		<div layout="column" flex>
+		<md-list>
+			<md-list-item>
+				<h4>Kasutaja: </h4>{{resultObject.user}}
+			</md-list-item>
+			<md-list-item>
+				<h4>Küsimustik: </h4>{{questionnaire.title}}
+			</md-list-item>
+			<md-list-item>
+				<h4>Kulunud aeg: </h4>{{resultObject.userTime/1000/60}}
+			</md-list-item>
+			<md-list-item>
+				<h4>Saadud punktid: </h4>{{resultObject.userPoints}}
+			</md-list-item>
+			<md-button class="md-raised md-primary" href="#/fill_questionnaire" ng-click="return()">Sulge</md-button>
+		</md-list>
+	</div>
+</md-content>
