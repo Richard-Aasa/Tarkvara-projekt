@@ -71,3 +71,8 @@ img.bg {
     max-width: 50%;
     z-index: 300;
 }
+.kysimustik {
+  border: none;
+  border-collapse: collapse;
+  text-align: center;
+}

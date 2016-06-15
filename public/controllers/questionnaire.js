@@ -63,7 +63,6 @@
 
             // Korras!
             $scope.update = function(questionnaire) {
-                pointCounter(questionnaire);
 
                 questionnaire.$update().then(
                     function(data) {
@@ -93,10 +92,14 @@
             //Korras!
             $scope.addQuestion = function(question) {
                 // Deep-copy on vajalik, vastasel juhul on kõik küsimused samad angular'i data-binding tõttu
-
                 $scope.activeQuestionnaire.questions.push(angular.copy(question));
                 $scope.activeQuestionnaire.totalPoints += question.maxPoints;
-                console.log($scope.activeQuestionnaire);
+            };
+
+            $scope.editQuestion = function(question) {
+                $scope.activeQuestionnaire.totalPoints -= $scope.activeQuestionnaire.questions[$scope.currentQuestionIndex].maxPoints;
+                $scope.activeQuestionnaire.questions[$scope.currentQuestionIndex] = angular.copy(question);
+                $scope.activeQuestionnaire.totalPoints += question.maxPoints;
             };
 
             //Korras!
@@ -117,6 +120,7 @@
             };
             $scope.view = function(questionnaire) {
                 // Teeme vasakust poolest koopia, kuna me tahame muudatused salvestada ainult nupu vajutusel
+                $scope.activeQuestion = {};
                 $scope.currentIndex = $scope.questionnaires.indexOf(questionnaire);
                 $scope.activeQuestionnaire = angular.copy(questionnaire);
             };
