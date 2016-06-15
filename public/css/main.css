@@ -18,7 +18,7 @@ md-checkbox.md-checked.green .md-icon {
  background-color: rgb(136, 196, 116);
 }
 
-/*img.bg {
+img.bg {
     /* Set rules to fill background */
     min-height: 100%;
     min-width: 1024px;
@@ -29,7 +29,7 @@ md-checkbox.md-checked.green .md-icon {
     position: fixed;
     top: 0;
     left: 0;
-}*/
+}
 @media screen and (max-width: 1024px) {
     /* Specific to this particular image */
     img.bg {
@@ -54,7 +54,7 @@ md-checkbox.md-checked.green .md-icon {
 .itemPadding{
   margin: 8px 8px 8px 8px;
 }
-/*.Aligner {
+.Aligner {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,41 +69,4 @@ md-checkbox.md-checked.green .md-icon {
 .Aligner-item {
     max-width: 50%;
     z-index: 300;
-}*/
-
-/*#hero{
-  background-image:url(https://chrisaam.files.wordpress.com/2015/03/wallpaper-2846361.jpg);
-  background-size:cover;
-  position:relative;
-  height:100vh;
-}*/
-
-/*.header1{
-  position:absolute;
-  top:50%;
-  text-align:center;
-  width:100%;
-  color:#fff;
-  font-size:36px;
-  -ms-transform: translate(0,-50%);
-    -webkit-transform: translate(0,-50%);
-    transform: translate(0,-50%);
-
-}*/
-
-/*#content1{
-  padding:100px 50px;
-  text-align:center;
-  width:80%;
-  margin:0px auto;
-}*/
-
-/*#content1 h2{
-  margin:0px 0px 30px 0px;
-}*/
-
-/*#footer1{
-  padding:30px 0px;
-  text-align:center;
-  background:#ddd;
-}*/
+}
