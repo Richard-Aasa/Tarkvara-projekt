@@ -36,19 +36,19 @@
             //statistika ühe küsimuse kohta, nt küsimuse id on 1
             $scope.statistics = [{
                 questionnaire: 1,
-                user: 2,
+                user: 8,
                 fillDate: "14-06-2016",
                 questions: [{
                     totalTime: 20,
-                    points: 2,
+                    points: 1,
                     correct: true
                 }, {
                     totalTime: 10,
-                    points: 5,
+                    points: 1,
                     correct: false
                 }, {
                     totalTime: 30,
-                    points: 5,
+                    points: 1,
                     correct: true
                 }],
                 userTime: 60,
@@ -56,11 +56,11 @@
             },
             {
                 questionnaire: 1,
-                user: 3,
+                user: 7,
                 fillDate: "14-06-2016",
                 questions: [{
                     totalTime: 20,
-                    points: 1,
+                    points: 10,
                     correct: true
                 }, {
                     totalTime: 10,
@@ -76,7 +76,7 @@
             },
             {
                 questionnaire: 1,
-                user: 4,
+                user: 8,
                 fillDate: "14-06-2016",
                 questions: [{
                     totalTime: 20,
@@ -114,26 +114,37 @@
                 totalPoints: 30
             };
 
-            //funktsioon, mis paneb kõik kasutajad ühte massiivi
-            $scope.addNames = function(statistics){
-              var allNames = [];
-              for(var i = 0; i < statistics.length; i++){
-                allNames.push(statistics[i].user);
+            //abifunktsioon punktide kokkulisamiseks
+            $scope.sumPoints = function(statistics, i){
+              var tempResult = 0;
+              for(var k = 0; k < statistics[i].questions.length; k++){
+                tempResult += statistics[i].questions[k].points;
               }
-              return allNames;
+              return tempResult;
             };
 
-            //funktsioon, mis paneb kõik tulemused ühte massiivi
-            $scope.addResults = function(statistics){
+            //funktsioon, mis paneb kõik kasutajad ühte massiivi ja mis paneb kõik nende tulemused ühte massiivi
+            //kui üks kasutaja on teinud testi mitu korda, siis pannakse massivi ta ainult üks kord
+            //ja sellisel juhul pannakse massiivi samuti kasutaja viimane tulemus
+            $scope.addNamesAndResults = function(statistics){
+              var allNames = [];
               var allResults = [];
               for(var i = 0; i < statistics.length; i++){
-                var tempResult = 0;
-                for(var j = 0; j < statistics[i].questions.length; j++){
-                  tempResult += statistics[i].questions[j].points;
+                var check = false;
+                for(var j = 0; j <allNames.length; j++){
+                  if(allNames[j] === statistics[i].user){
+                    allResults[j] = $scope.sumPoints(statistics, i);
+                    check = true;
+                    break;
+                  }
                 }
-                allResults.push(tempResult);
+                if(check === false){
+                  allNames.push(statistics[i].user);
+                  allResults.push($scope.sumPoints(statistics, i));
+                }
               }
-              return allResults;
+              var both = [allNames, allResults];
+              return both;
             };
 
             //diagramm, mis kuvab kõikide kasutajate punktid, mis nad said terve küsimustiku eest
@@ -145,7 +156,7 @@
                     text: "Punktid kokku"
                 },
                 xAxis: {
-                    categories: $scope.addNames($scope.statistics)
+                    categories: $scope.addNamesAndResults($scope.statistics)[0]
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -156,14 +167,9 @@
                     max: $scope.questionnaire.totalPoints
                 },
                 series: [{
-                    data: $scope.addResults($scope.statistics)
+                    data: $scope.addNamesAndResults($scope.statistics)[1]
                 }]
             };
-
-
-
-
-
 
         }]);
 }());
