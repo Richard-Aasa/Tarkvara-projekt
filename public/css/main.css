@@ -11,7 +11,8 @@ table, th, td {
     text-align: center;
 }
 .passedLi {
-    background-color: green;
+    background-color: #88C474;
+    /*background-color: rgb(255, 255, 255);*/
 }
 
 md-checkbox.md-checked.green .md-icon {
