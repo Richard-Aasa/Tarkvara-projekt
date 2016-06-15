@@ -1,13 +1,20 @@
 <md-content class="md-padding" layout="row">
     <div layout="column" flex>
         <md-card>
-            <div class="itemPadding textStuff">
+          <md-toolbar class="md-hue-2">
+              <div flex class="md-toolbar-tools">
+                <h4 class="md-title">
+                  {{questionnaire.title}}
+              </h4>
+              </div>
+          </md-toolbar>
+            <!-- <div class="itemPadding textStuff">
                 <md-card-header-text>
                     <h4 class="md-title">
                       {{questionnaire.title}}
                   </h4>
                 </md-card-header-text>
-            </div>
+            </div> -->
             <md-list>
                 <md-list-item ng-repeat="item in questionnaire.questions" class="listItem md-3-line" ng-click="view(item)">
                     <div class="md-list-item-text" layout="column">
@@ -25,17 +32,13 @@
         </md-card>
     </div>
     <div layout="column" flex>
-        <md-card>
-            <md-card flex="20">
-                <div class="itemPadding">
-                    <md-card-header-text>
-                        <span class="md-subhead">Aega jäänud:</span>
-                    </md-card-header-text>
-                </div>
-                <md-card-content>
+      <md-card>
+            <md-toolbar class="md-hue-2">
+                <div flex class="md-toolbar-tools">
+                    <h2 flex>Aega jäänud:</h2>
                     <md-icon class="material-icons">timer</md-icon>{{displayRemainingTime(questionnaireLeftTime)}}
-                </md-card-content>
-            </md-card>
+                </div>
+            </md-toolbar>
             <div class="itemPadding">
                 <md-card-header-text>
                     <span class="md-subhead">Vastamine:</span>
@@ -73,6 +76,7 @@
                         </md-input-container>
                     </div>
             </md-card-content>
+            </md-card>
             </div>
-        </md-card>
+
 </md-content>
