@@ -1,0 +1,31 @@
+<md-content layout="column">
+	<md-toolbar class="md-hue-2">
+        <div flex class="md-toolbar-tools">
+            <h4 class="md-title">
+                 Küsimustiku: {{questionnaire.title}} tulemused
+            </h4>
+        </div>
+    </md-toolbar>
+	<md-list>
+		<md-list-item>
+			<strong>Kasutaja: </strong>{{resultObject.user}}
+		</md-list-item>
+		<md-list-item class="md-3-line">
+			{{}}
+		</md-list-item>
+		<md-list-item class="md-3-line">
+			{{}}
+		</md-list-item>
+        <md-list-item ng-repeat="item in resultObject.questions" class="md-3-line" ng-click="view(item)">
+            <div class="md-list-item-text" layout="column">
+                <h4 class="md-title">
+        			{{item.title}}
+        		</h4>
+                <p>
+					{{item.correct}}
+                </p>
+                <md-divider></md-divider>
+            </div>
+        </md-list-item>
+    </md-list>
+<md-content>
