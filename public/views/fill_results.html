@@ -8,60 +8,34 @@
 	</md-toolbar>
 </div>
 <md-content class="md-padding" layout="row" flex>
-		<md-list flex style="overflow-y: scroll">
-			<!-- kui on tõene siis roheline -->
-			<md-list-item ng-if="item.correct" ng-repeat="item in resultObject.questions track by $index" class="md-3-line" style="background-color: #88C474" ng-click="view(item)">
-
-						<h4 class="md-title">
+	<md-list flex style="overflow-y: scroll">
+		<!-- kui on tõene siis roheline -->
+		<md-list-item ng-if="item.correct" ng-repeat="item in resultObject.questions track by $index" class="md-3-line" style="background-color: #88C474" ng-click="view(item)">
+			<h4 class="md-title">
         			{{questionnaire.questions[$index].title}}
         	</h4>
-						<p>
-							{{questionnaire.questions[$index].answer}}
-						</p>
-						<p>
-							{{item.correct}}
-						</p>
-						<md-divider></md-divider>
-<!--
-					<div class="md-list-item-text" layout="column"ng-if="item.correct==false" bgcolor="#C95D5D">
-
-						<h4 class="md-title">
+			<p>
+				{{questionnaire.questions[$index].answer}}
+			</p>
+			<p>
+				{{item.correct}}
+			</p>
+			<md-divider></md-divider>
+		</md-list-item>
+		<md-list-item ng-if="!item.correct" ng-repeat="item in resultObject.questions track by $index" class="md-3-line" style="background-color: #C95D5D" ng-click="view(item)">
+			<h4 class="md-title">
         			{{questionnaire.questions[$index].title}}
         	</h4>
-						<p>
-							{{item.correct}}
-						</p>
-						<md-divider></md-divider>
-					</div> -->
-
-			</md-list-item>
-			<md-list-item ng-if="!item.correct" ng-repeat="item in resultObject.questions track by $index" class="md-3-line" style="background-color: #C95D5D" ng-click="view(item)">
-
-						<h4 class="md-title">
-        			{{questionnaire.questions[$index].title}}
-        	</h4>
-						<p>
-							{{questionnaire.questions[$index].answer}}
-						</p>
-						<p>
-							{{item.correct}}
-						</p>
-						<md-divider></md-divider>
-<!--
-					<div class="md-list-item-text" layout="column"ng-if="item.correct==false" bgcolor="#C95D5D">
-
-						<h4 class="md-title">
-        			{{questionnaire.questions[$index].title}}
-        	</h4>
-						<p>
-							{{item.correct}}
-						</p>
-						<md-divider></md-divider>
-					</div> -->
-
-			</md-list-item>
-		</md-list>
-		<div layout="column" flex>
+			<p>
+				{{questionnaire.questions[$index].answer}}
+			</p>
+			<p>
+				{{item.correct}}
+			</p>
+			<md-divider></md-divider>
+		</md-list-item>
+	</md-list>
+	<div layout="column" flex>
 		<md-list>
 			<md-list-item>
 				<h4>Kasutaja: </h4>{{resultObject.user}}
