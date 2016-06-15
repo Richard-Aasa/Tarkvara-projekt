@@ -78,6 +78,7 @@
       // Korras!
       $scope.delete = function(questionnaire) {
         $scope.questionnaires.splice($scope.currentIndex, 1);
+        $scope.activeQuestionnaire = {};
         questionnaire.$delete()
           .then(
             function(data) {
