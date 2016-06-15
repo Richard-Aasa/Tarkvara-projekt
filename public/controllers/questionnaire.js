@@ -90,6 +90,22 @@
           );
       };
 
+      $scope.remove = function($event) {
+        var confirm = $mdDialog.confirm()
+          .title('Kas olete kindel?')
+          .textContent('Kas kustutame küsimustiku ära? Seda enam tagasi ei saa.')
+          .ariaLabel('Kas olete kindel')
+          .targetEvent($event)
+          .ok('Jah, kustuta')
+          .cancel('Ei, mõtlesin ümber');
+        $mdDialog.show(confirm).then(function() {
+          $scope.delete($scope.activeQuestionnaire);
+          $scope.activeQuestion = {};
+        }, function() {
+
+        });
+      };
+
       //Korras!
       $scope.addQuestion = function(question) {
         // Deep-copy on vajalik, vastasel juhul on kõik küsimused samad angular'i data-binding tõttu
@@ -134,9 +150,6 @@
         }, function() {
 
         });
-
-
-
       };
 
       $scope.viewQuestion = function(question) {
@@ -151,7 +164,6 @@
           targetEvent: $event,
           templateUrl: 'views/questionnaire_create.html',
           locals: {
-            questionnaire: $scope.questionnaire,
             questionnaires: $scope.questionnaires,
             save: $scope.save
           },
@@ -161,12 +173,13 @@
 
         //NB! Siin on defineeritud uus kontroller. Uusi funktsioone mis kasutavad $scope vms parameetrit luuakse uute kontrollerite sisse, mitte suvaliste funktsioonide sisse!
         // Sisult on kontroller lihtsalt .js funktsioon, aga erinevus seisneb selles, et kontroller on otse seotud spetsiifiliste HTML elementide / vaadete külge
-        function DialogController($scope, $mdDialog, questionnaire, questionnaires, save) {
-          $scope.questionnaire = questionnaire;
+        function DialogController($scope, $mdDialog, questionnaires, save) {
+          $scope.questionnaire = {};
           $scope.questionnaires = questionnaires;
           $scope.question = {};
           $scope.questionnaire.questions = [];
           $scope.question.variants = [];
+          $scope.questionnaire.totalPoints = 0;
           $scope.question.maxPoints = 0;
           $scope.addVariant = function(question, variant) {
             $scope.question.variants.push(angular.copy(variant));
