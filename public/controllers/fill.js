@@ -3,9 +3,10 @@
 
     angular
         .module('app')
-        .controller('FillController', ['$scope','$routeParams','QuestionnaireService','StatisticsService','AuthenticateService','$interval', '$mdToast', '$mdDialog', function($scope, $routeParams, QuestionnaireService, StatisticsService, AuthenticateService, $interval, $mdToast, $mdDialog) {
+        .controller('FillController', ['$scope','$routeParams','QuestionnaireService','StatisticsService','AuthenticateService','$interval', '$mdToast', '$mdDialog', '$location', function($scope, $routeParams, QuestionnaireService, StatisticsService, AuthenticateService, $interval, $mdToast, $mdDialog, $location) {
 			$scope.questionnaire = {};
 			$scope.resultObject = {};
+            $scope.activeQuestion = {};
 			$scope.service = AuthenticateService;
 			var questionnaireId = $routeParams.id;
 			//serverist laeb sisse andmeid siin, kui tahad mõnda fill lehte näha siis hetkel on üks töötav lehekülg siuke http://localhost:3000/#/fill/5760fe03770de90984b36410 see pikk number on ühe questionnaire _id
@@ -16,14 +17,13 @@
 					$scope.questionnaire = response;
 					$scope.questionnaireStartTime = Date.now();
 					$scope.questionnaireEndTime = $scope.questionnaireStartTime + ($scope.questionnaire.totalTime * 60000);
+					$scope.activeQuestion = $scope.questionnaire.questions[0];
 				},
 				function(error) {
                         console.log(error);
                 }
 			);
             $scope.loading = true;
-            $scope.activeQuestion = {};
-            //$scope.activeQuestion = $scope.questionnaire.questions[0];
             $scope.arrayOfItems = [];
 			$scope.allQuestionsFilled = false;
 			$scope.filledQuestion = [];
@@ -39,13 +39,21 @@
 			
 
             //mõõdab aega, mis tervele testile kulub, st countdown, kui countdown = 0, siis lõpetab testi ja salvestab olemasoleva info andmebaasi
-            $interval(function () {
-              $scope.questionnaireLeftTime = $scope.questionnaireEndTime - Date.now();
-              if($scope.questionnaireLeftTime <= 0){
-                //siia tuleb panna andmebaasi salvestamise käsklus
-                //ja testi lõpetamise käsklus
-				console.log("kana");
-              }
+            var stop = $interval(function(){
+				$scope.questionnaireLeftTime = $scope.questionnaireEndTime - Date.now();
+				if($scope.questionnaireLeftTime <= 0){
+					//siia tuleb panna andmebaasi salvestamise käsklus
+					//ja testi lõpetamise käsklus
+					console.log("kana");
+					if($scope.filledQuestion.length > 0){
+						$interval.cancel(stop);
+						$scope.save();
+					}else{
+						$interval.cancel(stop);
+						$location.path('/fill_questionnaire');
+						
+					}
+				}
             }, 100);
 
             //http://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
@@ -181,7 +189,7 @@
 				var totalPoints = 0;
 				var allTime = 0;
 				
-				for(var i = 0; i < $scope.allQuestionsTime.length; i++){
+				for(var i = 0; i < $scope.filledQuestion.length; i++){
 					
 					var questionVars = {
 						//_id: $scope.allQuestionsTime[i]._id,

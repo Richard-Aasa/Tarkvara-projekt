@@ -44,7 +44,7 @@
                     <span class="md-subhead">Vastamine:</span>
                 </md-card-header-text>
             </div>
-            <md-card-content>
+            <md-card-content ng-init="activeQuestion = questionnaire.questions[0]">
                     <span>{{activeQuestion.title}}</span>
                     <!-- kui on valikvastusega küsimus -->
                     <div ng-if="activeQuestion.type=='Valik'">
