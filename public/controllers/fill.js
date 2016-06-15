@@ -237,7 +237,10 @@
 				
                 function DialogController($scope, $mdDialog, results, questionnaire) {
                     $scope.resultObject = results;                    
-                    $scope.questionnaire = questionnaire;                    
+                    $scope.questionnaire = questionnaire;
+					$scope.return = function(){
+                        $mdDialog.hide();
+                    };
                 }
 			};
 			
