@@ -1,5 +1,5 @@
 <md-content class="md-padding" layout="row" ng-init="service.isAuthenticated()" ng-show="!loading">	
-	<div layout="column" flex="35">
+	<div layout="column" flex>
 		<md-toolbar class="md-hue-2">
         <div flex class="md-toolbar-tools">
             <h4 class="md-title">
@@ -9,9 +9,8 @@
 		</md-toolbar>
 		<md-list>
 			<md-list-item class="md-3-line" ng-repeat="item in questionnaires">
-				<button href="#/fill/{{item._id}}"></button>
 				<div class="md-list-item-text" layout="column">
-					<h4 class="md-title">
+					<h4 class="md-title" style="word-wrap: break-word">
 							{{item.title}}
 					</h4>
 					<div class="itemPadding">
@@ -28,6 +27,7 @@
 						<md-divider></md-divider>
 					</div>
 				</div>				
+				<md-button class="md-raised md-primary" ng-href="#/fill/{{item._id}}">Hakka täitma</md-button>
 			</md-list-item>
 		</md-list>
 	</div>
