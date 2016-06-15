@@ -31,6 +31,10 @@
             templateUrl: '/views/stat.html',
             controller: 'StatController'
           })
+          .when('/fill_questionnaire', {
+            templateUrl: '/views/fill_questionnaire.html',
+            controller: 'FillQuestionnaireController'
+          })
           .otherwise({
             redirectTo: '/'
           });
