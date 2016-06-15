@@ -1,8 +1,15 @@
-<md-content class="md-padding" layout="row" ng-init="service.isTeacher()" ng-show="!loading">
+<md-content class="md-padding" layout="row" ng-init="service.isAuthenticated()" ng-show="!loading">	
 	<div layout="column" flex="35">
+		<md-toolbar class="md-hue-2">
+        <div flex class="md-toolbar-tools">
+            <h4 class="md-title">
+                 Küsimustikude nimistu:
+            </h4>
+        </div>
+		</md-toolbar>
 		<md-list>
-			<md-subheader class="md-no-sticky"></md-subheader>
-			<md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="view(item)">
+			<md-list-item class="md-3-line" ng-repeat="item in questionnaires">
+				<button href="#/fill/{{item._id}}"></button>
 				<div class="md-list-item-text" layout="column">
 					<h4 class="md-title">
 							{{item.title}}
@@ -20,7 +27,7 @@
 						</p>
 						<md-divider></md-divider>
 					</div>
-				</div>
+				</div>				
 			</md-list-item>
 		</md-list>
 	</div>

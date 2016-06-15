@@ -5,7 +5,6 @@
         .module('app')
         .controller('FillController', ['$scope','$routeParams','QuestionnaireService','StatisticsService','AuthenticateService','$interval', '$mdToast', '$mdDialog', function($scope, $routeParams, QuestionnaireService, StatisticsService, AuthenticateService, $interval, $mdToast, $mdDialog) {
 			$scope.questionnaire = {};
-			$scope.resultObject = {};
 			$scope.service = AuthenticateService;
 			var questionnaireId = $routeParams.id;
 			//serverist laeb sisse andmeid siin, kui tahad mõnda fill lehte näha siis hetkel on üks töötav lehekülg siuke http://localhost:3000/#/fill/5760fe03770de90984b36410 see pikk number on ühe questionnaire _id
@@ -194,14 +193,18 @@
 					insertedServerQuestions.push(questionVars);
 				}
 				
-				$scope.resultObject = {
+				/*var kontrollin = {
                     questionnaire: questionnaireId,
-                    user: $scope.service.currentUser.name,
+                    user: $scope.service.currentUser._id,
 					questions: insertedServerQuestions,
 					userTime: allTime,
 					userPoints: totalPoints
-                };
+                };*/
 				
+				//console.log(kontrollin);
+				
+				//console.log(insertedServerQuestions);
+				//console.log(totalPoints);
 				var newStat = new StatisticsService({
                     questionnaire: questionnaireId,
                     user: $scope.service.currentUser._id,
@@ -213,35 +216,12 @@
                 newStat.$save()
                     .then(
                         function(data) {
-                            //showToast('Küsimustik täidetud: ' + $scope.questionnaire.title);
-							$scope.resultsDialog();
+                            showToast('Küsimustik täidetud: ' + $scope.questionnaire.title);
                         },
                         function(error) {
-                            showToast('Midagi läks valesti.');
-                            console.log(error.status + ' ' + error.statusText);
+                            showToast(error.status + ' ' + error.statusText);
                         }
                     );		
-			};
-			
-			$scope.resultsDialog = function(){
-				$mdDialog.show({
-                    parent: angular.element(document.body),
-                    //targetEvent: $event,
-                    templateUrl: 'views/fill_results.html',
-                    locals: {
-                        results: $scope.resultObject,
-						questionnaire: $scope.questionnaire
-                    },
-                    controller: DialogController
-                });
-				
-                function DialogController($scope, $mdDialog, results, questionnaire) {
-                    $scope.resultObject = results;                    
-                    $scope.questionnaire = questionnaire;
-					$scope.return = function(){
-                        $mdDialog.hide();
-                    };
-                }
 			};
 			
 			var showToast = function(message) {

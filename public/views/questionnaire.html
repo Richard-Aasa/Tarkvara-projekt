@@ -1,18 +1,20 @@
 <md-content class="md-padding" layout="row" ng-init="service.isTeacher()" ng-show="!loading">
 	<md-button class="md-fab" ng-click="create()" aria-label="Lisa uus">
 		<md-icon class="material-icons">create</md-icon>
-		<md-tooltip md-visible="demo.showTooltip" md-direction="{{demo.tipDirection}}">
+		<md-tooltip>
 			Lisa uus!
 		</md-tooltip>
 	</md-button>
-	<div layout="column" flex="20">
-		<md-list>
+	<div layout="column" flex="25">
+				<md-list>
+
 			<md-subheader class="md-no-sticky"></md-subheader>
+				<h2>Küsimustikud</h2>
 			<md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="view(item)">
 				<div class="md-list-item-text" layout="column">
-					<h4 class="md-title">
-							{{item.title}}
-					</h4>
+					<p><b>{{item.title}}</b>
+
+					</p>
 					<div class="itemPadding">
 						<p>
 							<md-icon class="material-icons">timer</md-icon>
@@ -31,55 +33,62 @@
 
 		</md-list>
 	</div>
-	<div layout="column" flex>
-		<div ng-if="activeQuestionnaire.title">
-			<div class="md-block" flex-gt-sm>
-				<md-input-container>
-					<label>Pealkiri</label>
-					<input ng-model="activeQuestionnaire.title">
-				</md-input-container>
-				<md-input-container>
-					<label>Aeg</label>
-					<input ng-model="activeQuestionnaire.totalTime" type="number" step="1" min="0" max="1888900">
-					<md-tooltip md-direction="down">Minutites</md-tooltip>
-				</md-input-container>
+	<md-card layout-padding layout="column" ng-if="activeQuestionnaire.title">
+		<div class="md-block" flex-gt-sm>
+				<h2>Küsimustiku haldus</h2>
+			<md-input-container>
+				<label>Pealkiri</label>
+				<input ng-model="activeQuestionnaire.title">
+			</md-input-container>
+			<md-input-container>
+				<label>Aeg minutites</label>
+				<input ng-model="activeQuestionnaire.totalTime" type="number" step="1" min="0" max="1888900">
+			</md-input-container>
+			Küsimustiku punktid:{{activeQuestionnaire.totalPoints}}
+			<div layout="row" layout-align="center center">
+				<div layout="column">
+					<div class="md-block md-body-2">Loodud: {{activeQuestionnaire.createdDate | date:'MM/dd/yyyy @ h:mm'}}</div>
+					<md-divider></md-divider>
+					<div class="md-block md-body-2">Salvestatud: {{activeQuestionnaire.saved | date:'MM/dd/yyyy @ h:mm'}}</div>
+				</div>
 				<md-button class="md-raised md-primary" ng-click="update(activeQuestionnaire)">Salvesta</md-button>
 				<md-button class="md-raised md-warn" ng-click="delete(activeQuestionnaire)">Kustuta</md-button>
-				<div layout="row">
-					<md-input-container class="md-block" flex-gt-sm>
-						<label>Loodud:</label>
-						<input ng-model="activeQuestionnaire.createdDate | date:'MM/dd/yyyy @ h:mm'" readonly>
-					</md-input-container>
-					<md-input-container class="md-block" flex-gt-sm>
-						<label>Viimati salvestatud:</label>
-						<input ng-model="activeQuestionnaire.saved | date:'MM/dd/yyyy @ h:mm'" readonly>
-					</md-input-container>
-				</div>
 			</div>
-			<center class="md-title">Küsimused</center><br>
+			<br><br><br>
+			<center class="md-title">Küsimused</center>
+			<br>
 			<md-divider></md-divider>
-			<div ng-repeat="x in activeQuestionnaire.questions track by $index" layout="row">
-				<md-list-item ng-click="viewQuestion(x)">
-					<div flex>
-						<span flex="40">{{x.title}}</span>
-						<span flex=>{{x.type}}</span>
-						<span>{{x.maxPoints}}</span>
-					</div>
-				<md-list-item>
-				<md-button class="md-icon md-raised md-warn"><md-icon>close</md-icon></md-button>
-			</div>
-
-
+			<table class="kysimustik" width="100%">
+					<tr style="border-top: 1px solid rgba(0, 0, 0, 0.12)" ng-repeat="x in activeQuestionnaire.questions track by $index">
+						<td class="kysimustik">
+							<md-list-item ng-click="viewQuestion(x)">
+									<span flex="40">{{x.title}}</span>
+									<span flex>{{x.type}}</span>
+									<span>{{x.maxPoints}}</span>
+							<md-list-item>
+						</td>
+						<td class="kysimustik">
+							<md-button ng-click="remQuestion(x)" class="md-icon md-warn">
+								<md-icon>close</md-icon>
+							</md-button>
+						</td>
+					</tr>
+			</table>
+			<md-divider></md-divider>
 		</div>
-	</div>
-	<div layout="column" flex="40" ng-show="activeQuestion.title" layout-align="start start">
+	</md-card>
+
+	<md-card layout-padding layout="column" ng-if="activeQuestion.title" layout-align="start left" flex>
+<h2>Küsimuse haldus</h2>
 		<div layout="row" class="md-block">
+
 			<md-input-container>
 				<label>Küsimus</label>
 				<input ng-model="activeQuestion.title">
 			</md-input-container>
 			<!-- Loogika küsimuse lisamiseks -->
 			<div>
+
 				<md-input-container>
 					<label>Tüüp</label>
 					<md-select ng-model="activeQuestion.type" ng-change="clear(activeQuestion)">
@@ -152,9 +161,10 @@
 			</div>
 
 		</div>
-		<div layout="row">
+		<div layout="row" layout-align="center center">
 			<md-button class="md-raised md-primary" ng-disabled="!(activeQuestion.type && activeQuestion.variants.length > 0 && activeQuestion.title && activeQuestion.maxPoints)" ng-click="addQuestion(activeQuestion)">Lisa küsimus</md-button>
-			<md-button class="md-raised md-accent" ng-disabled="!(activeQuestion.type && activeQuestion.variants.length > 0 && activeQuestion.title && activeQuestion.maxPoints)" ng-click="addQuestion(activeQuestion)">Muuda</md-button>
+			<md-button class="md-raised md-accent" ng-disabled="!(activeQuestion.type && activeQuestion.variants.length > 0 && activeQuestion.title && activeQuestion.maxPoints)" ng-click="editQuestion(activeQuestion)">Muuda</md-button>
+			<span>Max punktid: {{activeQuestion.maxPoints}}</span>
 		</div>
-	</div>
+	</md-card>
 </md-content>

@@ -38,8 +38,13 @@ md-checkbox.md-checked.green .md-icon {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    padding-bottom: 25%;
+    clip: auto;
+    position: absolute;
+    overflow: hidden;
+
     height: 100%;
-    width: 100%;
+    width: 100%; 
 }
 .Aligner {
     display: flex;
