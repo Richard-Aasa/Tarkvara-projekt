@@ -1,63 +1,82 @@
 <md-content class="md-padding" layout="row">
-  <div layout="column" flex>
-    <md-card>
-      <md-card-content>
-        <span>{{activeQuestion.title}}</span>
-        <!-- kui on valikvastusega küsimus -->
-        <div ng-if="activeQuestion.type=='Valik'">
-          <md-list>
-            <md-list-item ng-if="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants[$index] == null" ng-repeat="item in activeQuestion.variants track by $index" ng-click="null">
-              <span>
+    <div layout="column" flex>
+        <md-card>
+          <md-toolbar class="md-hue-2">
+              <div flex class="md-toolbar-tools">
+                <h4 class="md-title">
+                  {{questionnaire.title}}
+              </h4>
+              </div>
+          </md-toolbar>
+            <!-- <div class="itemPadding textStuff">
+                <md-card-header-text>
+                    <h4 class="md-title">
+                      {{questionnaire.title}}
+                  </h4>
+                </md-card-header-text>
+            </div> -->
+            <md-list>
+                <md-list-item ng-repeat="item in questionnaire.questions" class="listItem md-3-line" ng-click="view(item)">
+                    <div class="md-list-item-text" layout="column">
+                        <h4 class="md-title">
+        							{{item.title}}
+        					</h4>
+                        <p>
+                            <md-icon class="material-icons">star_rate</md-icon>
+                            {{item.maxPoints}} punkti
+                        </p>
+                        <md-divider></md-divider>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-card>
+    </div>
+    <div layout="column" flex>
+      <md-card>
+            <md-toolbar class="md-hue-2">
+                <div flex class="md-toolbar-tools">
+                    <h2 flex>Aega jäänud:</h2>
+                    <md-icon class="material-icons">timer</md-icon>{{displayRemainingTime(questionnaireLeftTime)}}
+                </div>
+            </md-toolbar>
+            <div class="itemPadding">
+                <md-card-header-text>
+                    <span class="md-subhead">Vastamine:</span>
+                </md-card-header-text>
+            </div>
+            <md-card-content>
+                    <span>{{activeQuestion.title}}</span>
+                    <!-- kui on valikvastusega küsimus -->
+                    <div ng-if="activeQuestion.type=='Valik'">
+                        <md-list>
+                            <md-list-item ng-if="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants[$index] == null" ng-repeat="item in activeQuestion.variants track by $index" ng-click="null">
+                                <span>
                 {{item.answer}}
               </span>
-              <md-checkbox ng-model="arrayOfItems[$index]" aria-label="Õige/Vale" ng-init="arrayOfItems[$index] = false"></md-checkbox>
-            </md-list-item>
-			<md-list-item ng-if="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants[$index] != null" ng-repeat="item in activeQuestion.variants track by $index" ng-click="null">
-              <span>
+                                <md-checkbox class="green" ng-model="arrayOfItems[$index]" aria-label="Õige/Vale" ng-init="arrayOfItems[$index] = false"></md-checkbox>
+                            </md-list-item>
+                            <md-list-item ng-if="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants[$index] != null" ng-repeat="item in activeQuestion.variants track by $index" ng-click="null">
+                                <span>
                 {{item.answer}}
               </span>
-              <md-checkbox aria-label="Õige/Vale" ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants[$index]"></md-checkbox>
-            </md-list-item>
-          </md-list>
-          <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(arrayOfItems, activeQuestion)">Järgmine</md-button>
-          <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
-        </div>
-        <!-- kui on tühja lüngaga küsimus -->
-        <div ng-if="activeQuestion.type=='Tühi lünk'">
+                                <md-checkbox class="green" aria-label="Õige/Vale" ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants[$index]"></md-checkbox>
+                            </md-list-item>
+                        </md-list>
+                        <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(arrayOfItems, activeQuestion)">Järgmine</md-button>
+                        <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
+                    </div>
+                    <!-- kui on tühja lüngaga küsimus -->
+                    <div ng-if="activeQuestion.type=='Tühi lünk'">
 
-          <md-input-container>
-            <label>Vastus</label>
-            <input ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants">
+                        <md-input-container>
+                            <label>Vastus</label>
+                            <input ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants">
+                            <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(answer, activeQuestion)">Järgmine</md-button>
+                            <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
+                        </md-input-container>
+                    </div>
+            </md-card-content>
+            </md-card>
+            </div>
 
-            <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(answer, activeQuestion)">Järgmine</md-button>
-			<md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
-          </md-input-container>
-        </div>
-      </md-card-content>
-    </md-card>
-  </div>
-  <md-divider></md-divider>
-  <div layout="column" flex>
-		<md-list>
-		  <md-list-item ng-repeat="item in questionnaire.questions" class="listItem" ng-click="view(item)">
-        <div class="md-list-item-text" layout="column">
-          <span>
-  					{{item.title}}
-  				</span>
-  				<span>
-  					{{item.maxPoints}} punkti
-  				</span>
-        </div>
-      </md-list-item>
-		  <md-divider ></md-divider>
-		</md-list>
-  </div>
-  <md-divider></md-divider>
-  <div layout="column" flex>
-    <md-card>
-      <md-card-content>
-          <label>Aega jäänud:</label>{{displayRemainingTime(questionnaireLeftTime)}}
-      </md-card-content>
-    </md-card>
-  </div>
 </md-content>

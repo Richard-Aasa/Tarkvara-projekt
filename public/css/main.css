@@ -39,6 +39,10 @@ md-checkbox.md-checked.green .md-icon {
     background-attachment: fixed;
     background-size: cover;
     padding-bottom: 25%;
+    clip: auto;
+    position: absolute;
+    overflow: hidden;
+
 }
 
 .Aligner {
@@ -56,4 +60,9 @@ md-checkbox.md-checked.green .md-icon {
 .Aligner-item {
     max-width: 50%;
     z-index: 300;
+}
+
+.fadeIn.ng-enter,{
+  transition: all 0.5s linear;
+  opacity: 0;
 }
