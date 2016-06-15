@@ -9,7 +9,7 @@ var Schema = mongoose.Schema;
 
 var StatisticsSchema = new Schema({
     questionnaire: { type: String, required: true },
-    user: { type: Number, required: true},
+    user: { type: String, required: true},
 	//küsimustiku täitmise algusaeg
 	fillDate: { type: Date, default: Date.now},
     //iga küsimuse peale kulunud aeg ja iga küsimuse eest saadud punktid, objektidena massiivis

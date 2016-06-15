@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('FillController', ['$scope','$routeParams','QuestionnaireService','StatisticsService','AuthenticateService','$interval', '$mdDialog', function($scope, $routeParams, QuestionnaireService, StatisticsService, AuthenticateService, $interval, $mdDialog) {
+        .controller('FillController', ['$scope','$routeParams','QuestionnaireService','StatisticsService','AuthenticateService','$interval', '$mdToast', '$mdDialog', function($scope, $routeParams, QuestionnaireService, StatisticsService, AuthenticateService, $interval, $mdToast, $mdDialog) {
 			$scope.questionnaire = {};
 			$scope.service = AuthenticateService;
 			var questionnaireId = $routeParams.id;
@@ -43,6 +43,7 @@
               if($scope.questionnaireLeftTime <= 0){
                 //siia tuleb panna andmebaasi salvestamise käsklus
                 //ja testi lõpetamise käsklus
+				console.log("kana");
               }
             }, 100);
 
@@ -90,6 +91,7 @@
 				var len = $scope.questionnaire.questions.length;
 				var varLen = $scope.questionnaire.questions[index].variants.length;
 				var isAnswerCorrect = false;
+				var aqPoints;
 				
 				if($scope.questionnaire.questions[index].type == "Tühi lünk" && $scope.filledQuestion[$scope.questionnaire.questions.indexOf($scope.activeQuestion)]){
 					answer = $scope.filledQuestion[$scope.questionnaire.questions.indexOf($scope.activeQuestion)].variants;
@@ -111,12 +113,19 @@
 						}
 					}
 				}
+				console.log($scope.questionnaire.questions[index].maxPoints);
+				if(isAnswerCorrect == true){
+					aqPoints = $scope.questionnaire.questions[index].maxPoints;
+				}else{
+					aqPoints = 0;
+				}
 				
 				var vastused = {
-					id: index+"mongoID",
+					id: $scope.questionnaire.questions[index]._id,
 					type: $scope.questionnaire.questions[index].type,
 					variants: answer,
-					correct: isAnswerCorrect
+					correct: isAnswerCorrect,
+					points: aqPoints
 				};
 				var check = false;
 				
@@ -150,11 +159,11 @@
             $scope.measureTime = function(questionId, start, end){
               var questionTotalTime = {};
               questionTotalTime._id = questionId;
-              questionTotalTime.time = end - start;
+              questionTotalTime.totalTime = end - start;
               var check = false;
               for(var i = 0; i < $scope.allQuestionsTime.length; i++){
                 if($scope.allQuestionsTime[i]._id == questionTotalTime._id){
-                  $scope.allQuestionsTime[i].totalTime += questionTotalTime.time;
+                  $scope.allQuestionsTime[i].totalTime += questionTotalTime.totalTime;
                   check = true;
                   break;
                 }
@@ -168,35 +177,60 @@
 			$scope.save = function(){
 				//suhtleb serveriga
 				//oleks vaja lisada funktsioon mis arvutab kokku punktid, aja jms
+				var totalPoints = 0;
+				var allTime = 0;
+				
 				for(var i = 0; i < $scope.allQuestionsTime.length; i++){
-					var questionVars = {
-						_id: 0,
-						totalTime: { type: Number, required: true },
-						points: { type: Number, required: true },
-						correct: Boolean
-					};
 					
+					var questionVars = {
+						//_id: $scope.allQuestionsTime[i]._id,
+						totalTime: $scope.allQuestionsTime[i].totalTime,
+						points: $scope.filledQuestion[i].points,
+						correct: $scope.filledQuestion[i].correct
+					};
+					totalPoints += $scope.filledQuestion[i].points;
+					allTime += $scope.allQuestionsTime[i].totalTime;
 					insertedServerQuestions.push(questionVars);
 				}
 				
-				console.log($scope.filledQuestion);
+				/*var kontrollin = {
+                    questionnaire: questionnaireId,
+                    user: $scope.service.currentUser._id,
+					questions: insertedServerQuestions,
+					userTime: allTime,
+					userPoints: totalPoints
+                };*/
+				
+				//console.log(kontrollin);
+				
+				//console.log(insertedServerQuestions);
+				//console.log(totalPoints);
 				var newStat = new StatisticsService({
                     questionnaire: questionnaireId,
                     user: $scope.service.currentUser._id,
 					questions: insertedServerQuestions,
-					userTime: {type: Number, required: true},
-					userPoints: {type: Number, required: true}
+					userTime: allTime,
+					userPoints: totalPoints
                 });
 
                 newStat.$save()
                     .then(
                         function(data) {
-                            showToast('Küsimustik täidetud: ' + questionnaire.title);
+                            showToast('Küsimustik täidetud: ' + $scope.questionnaire.title);
                         },
                         function(error) {
                             showToast(error.status + ' ' + error.statusText);
                         }
-                    );				
-			}
+                    );		
+			};
+			
+			var showToast = function(message) {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent(message)
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            };
 		}]);
 }());
