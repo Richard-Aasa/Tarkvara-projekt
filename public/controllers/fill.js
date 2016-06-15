@@ -5,6 +5,7 @@
         .module('app')
         .controller('FillController', ['$scope','$routeParams','QuestionnaireService','StatisticsService','AuthenticateService','$interval', '$mdToast', '$mdDialog', function($scope, $routeParams, QuestionnaireService, StatisticsService, AuthenticateService, $interval, $mdToast, $mdDialog) {
 			$scope.questionnaire = {};
+			$scope.resultObject = {};
 			$scope.service = AuthenticateService;
 			var questionnaireId = $routeParams.id;
 			//serverist laeb sisse andmeid siin, kui tahad mõnda fill lehte näha siis hetkel on üks töötav lehekülg siuke http://localhost:3000/#/fill/5760fe03770de90984b36410 see pikk number on ühe questionnaire _id
@@ -35,7 +36,7 @@
             $scope.questionEndTime = 0;
             //küsimustele kulunud aja massiiv
             $scope.allQuestionsTime = [];
-			
+
 
             //mõõdab aega, mis tervele testile kulub, st countdown, kui countdown = 0, siis lõpetab testi ja salvestab olemasoleva info andmebaasi
             $interval(function () {
@@ -67,32 +68,32 @@
             };
 
             $scope.view = function(item){
-				
+
 			  $scope.questionEndTime = Date.now();
               $scope.activeQuestion = item;
-			  
+
 			  if(!$scope.activeQuestion){
 				  return;
 			  }
-			  
+
               $scope.measureTime($scope.activeQuestion._id, $scope.questionStartTime, $scope.questionEndTime);
               $scope.questionStartTime = Date.now();
               if($scope.arrayOfItems == null){
 				  $scope.arrayOfItems = [];
 			  }
-	
+
             };
 			//htmlis nupule järgmine vajutades läheb tööle submit funktsioon, mis paneb kirja kasutaja sisestatud andmed küsimustikus ja laeb järgmise küsimuse. lisaks ka see kontrollib kas kõik küsimused on täidetud.
 			$scope.submit = function(answer, question){
-				
-				
+
+
 				var index = $scope.questionnaire.questions.indexOf(question);
 				console.log(question);
 				var len = $scope.questionnaire.questions.length;
 				var varLen = $scope.questionnaire.questions[index].variants.length;
 				var isAnswerCorrect = false;
 				var aqPoints;
-				
+
 				if($scope.questionnaire.questions[index].type == "Tühi lünk" && $scope.filledQuestion[$scope.questionnaire.questions.indexOf($scope.activeQuestion)]){
 					answer = $scope.filledQuestion[$scope.questionnaire.questions.indexOf($scope.activeQuestion)].variants;
 				}
@@ -109,7 +110,7 @@
 						if(typeof answer != "undefined"){
 							if($scope.questionnaire.questions[index].variants[0].toLowerCase() == answer.toLowerCase()){
 								isAnswerCorrect = true;
-							}							
+							}
 						}
 					}
 				}
@@ -119,7 +120,7 @@
 				}else{
 					aqPoints = 0;
 				}
-				
+
 				var vastused = {
 					id: $scope.questionnaire.questions[index]._id,
 					type: $scope.questionnaire.questions[index].type,
@@ -128,27 +129,27 @@
 					points: aqPoints
 				};
 				var check = false;
-				
+
 				if($scope.filledQuestion[index]){
 					$scope.filledQuestion[index] = vastused;
 					check = true;
 				}
-				
+
 				if(check == false){
 					$scope.filledQuestion[index] = vastused;
 				}
-				//kontrolli veel kas sellisele küsimusele on juba vastatud.				
+				//kontrolli veel kas sellisele küsimusele on juba vastatud.
 				console.log($scope.filledQuestion);
 				$('.listItem')[index].className += " passedLi";
-				
+
 				var real_len = 0;
-				
+
 				for(var i = 0; i < $scope.filledQuestion.length; i++){
 					if($scope.filledQuestion[i]){
 						real_len++;
 					}
 				}
-				
+
 				if(real_len!=len){
 					$scope.view($scope.questionnaire.questions[index+1]);
 				}else{
@@ -173,15 +174,15 @@
               }
               console.log($scope.allQuestionsTime);
             };
-			
+
 			$scope.save = function(){
 				//suhtleb serveriga
 				//oleks vaja lisada funktsioon mis arvutab kokku punktid, aja jms
 				var totalPoints = 0;
 				var allTime = 0;
-				
+
 				for(var i = 0; i < $scope.allQuestionsTime.length; i++){
-					
+
 					var questionVars = {
 						//_id: $scope.allQuestionsTime[i]._id,
 						totalTime: $scope.allQuestionsTime[i].totalTime,
@@ -192,19 +193,15 @@
 					allTime += $scope.allQuestionsTime[i].totalTime;
 					insertedServerQuestions.push(questionVars);
 				}
-				
-				/*var kontrollin = {
+
+				$scope.resultObject = {
                     questionnaire: questionnaireId,
-                    user: $scope.service.currentUser._id,
+                    user: $scope.service.currentUser.name,
 					questions: insertedServerQuestions,
 					userTime: allTime,
 					userPoints: totalPoints
-                };*/
-				
-				//console.log(kontrollin);
-				
-				//console.log(insertedServerQuestions);
-				//console.log(totalPoints);
+                };
+
 				var newStat = new StatisticsService({
                     questionnaire: questionnaireId,
                     user: $scope.service.currentUser._id,
@@ -216,14 +213,34 @@
                 newStat.$save()
                     .then(
                         function(data) {
-                            showToast('Küsimustik täidetud: ' + $scope.questionnaire.title);
+                            //showToast('Küsimustik täidetud: ' + $scope.questionnaire.title);
+							$scope.resultsDialog();
                         },
                         function(error) {
-                            showToast(error.status + ' ' + error.statusText);
+                            showToast('Midagi läks valesti.');
+                            console.log(error.status + ' ' + error.statusText);
                         }
-                    );		
+                    );
 			};
-			
+
+			$scope.resultsDialog = function(){
+				$mdDialog.show({
+                    parent: angular.element(document.body),
+                    //targetEvent: $event,
+                    templateUrl: 'views/fill_results.html',
+                    locals: {
+                        results: $scope.resultObject,
+						questionnaire: $scope.questionnaire
+                    },
+                    controller: DialogController
+                });
+
+                function DialogController($scope, $mdDialog, results, questionnaire) {
+                    $scope.resultObject = results;
+                    $scope.questionnaire = questionnaire;
+                }
+			};
+
 			var showToast = function(message) {
                 $mdToast.show(
                     $mdToast.simple()

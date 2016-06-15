@@ -134,10 +134,29 @@
         }, function() {
 
         });
+      };
+
+
+      $scope.remove = function($event) {
+        var confirm = $mdDialog.confirm()
+          .title('Kas olete kindel?')
+          .textContent('Kas kustutame küsimustiku ära? Seda enam tagasi ei saa.')
+          .ariaLabel('Kas olete kindel')
+          .targetEvent($event)
+          .ok('Jah, kustuta')
+          .cancel('Ei, mõtlesin ümber');
+        $mdDialog.show(confirm).then(function() {
+          $scope.delete($scope.activeQuestionnaire);
+          $scope.activeQuestion = {};
+        }, function() {
+
+        });
 
 
 
       };
+
+
 
       $scope.viewQuestion = function(question) {
         $scope.currentQuestionIndex = $scope.activeQuestionnaire.questions.indexOf(question);
