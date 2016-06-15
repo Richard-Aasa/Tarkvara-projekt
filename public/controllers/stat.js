@@ -17,15 +17,6 @@
         })
         .controller('StatController', ['$scope', '$mdDialog', function($scope, $mdDialog) {
 
-            $scope.loading = true;
-            $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-            $scope.series = ['Series A', 'Series B'];
-            $scope.data = [
-              [65, 59, 80, 81, 56, 55, 40],
-              [28, 48, 40, 19, 86, 27, 90]
-            ];
-
-
             $scope.loading = false;
 
             // WORKS
@@ -42,10 +33,50 @@
             //         }
             //     );
 
-            //näiteandmed
-            $scope.questionnaires = [{
+            //statistika ühe küsimuse kohta, nt küsimuse id on 1
+            $scope.statistics = [{
                 questionnaire: 1,
-                user: 2,
+                user: 8,
+                fillDate: "14-06-2016",
+                questions: [{
+                    totalTime: 20,
+                    points: 1,
+                    correct: true
+                }, {
+                    totalTime: 10,
+                    points: 1,
+                    correct: false
+                }, {
+                    totalTime: 30,
+                    points: 1,
+                    correct: true
+                }],
+                userTime: 60,
+                userPoints: 40
+            },
+            {
+                questionnaire: 1,
+                user: 7,
+                fillDate: "14-06-2016",
+                questions: [{
+                    totalTime: 20,
+                    points: 10,
+                    correct: true
+                }, {
+                    totalTime: 10,
+                    points: 5,
+                    correct: false
+                }, {
+                    totalTime: 30,
+                    points: 7,
+                    correct: true
+                }],
+                userTime: 60,
+                userPoints: 40
+            },
+            {
+                questionnaire: 1,
+                user: 8,
                 fillDate: "14-06-2016",
                 questions: [{
                     totalTime: 20,
@@ -64,18 +95,79 @@
                 userPoints: 40
             }];
 
+            $scope.questionnaire = {
+                title: "Ajalugu",
+                questions: [{
+                    title: "Kes on kass?",
+                    type: "Tühi lünk",
+                    maxPoints: 10
+                }, {
+                    title: "Kes on koer?",
+                    type: "Tühi lünk",
+                    maxPoints: 10
+                }, {
+                    title: "Kes on kana?",
+                    type: "Tühi lünk",
+                    maxPoints: 10
+                }],
+                totalTime: 30,
+                totalPoints: 30
+            };
+
+            //abifunktsioon punktide kokkulisamiseks
+            $scope.sumPoints = function(statistics, i){
+              var tempResult = 0;
+              for(var k = 0; k < statistics[i].questions.length; k++){
+                tempResult += statistics[i].questions[k].points;
+              }
+              return tempResult;
+            };
+
+            //funktsioon, mis paneb kõik kasutajad ühte massiivi ja mis paneb kõik nende tulemused ühte massiivi
+            //kui üks kasutaja on teinud testi mitu korda, siis pannakse massivi ta ainult üks kord
+            //ja sellisel juhul pannakse massiivi samuti kasutaja viimane tulemus
+            $scope.addNamesAndResults = function(statistics){
+              var allNames = [];
+              var allResults = [];
+              for(var i = 0; i < statistics.length; i++){
+                var check = false;
+                for(var j = 0; j <allNames.length; j++){
+                  if(allNames[j] === statistics[i].user){
+                    allResults[j] = $scope.sumPoints(statistics, i);
+                    check = true;
+                    break;
+                  }
+                }
+                if(check === false){
+                  allNames.push(statistics[i].user);
+                  allResults.push($scope.sumPoints(statistics, i));
+                }
+              }
+              var both = [allNames, allResults];
+              return both;
+            };
+
+            //diagramm, mis kuvab kõikide kasutajate punktid, mis nad said terve küsimustiku eest
             $scope.chartOptions = {
+                chart: {
+                    type: 'bar'
+                },
                 title: {
-                    text: $scope.questionnaires[0].questionnaire
+                    text: "Punktid kokku"
                 },
                 xAxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-                    ]
+                    categories: $scope.addNamesAndResults($scope.statistics)[0]
                 },
-
+                yAxis: {
+                    allowDecimals: false,
+                    title: {
+                        text: null
+                    },
+                    min: 0,
+                    max: $scope.questionnaire.totalPoints
+                },
                 series: [{
-                    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                    data: $scope.addNamesAndResults($scope.statistics)[1]
                 }]
             };
 
