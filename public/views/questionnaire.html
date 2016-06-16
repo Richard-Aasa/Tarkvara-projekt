@@ -1,8 +1,8 @@
 <md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading">
 	<div layout="column">
-		<md-list>
-			<center><h2>Küsimustikud</h2></center>
-			<md-list-item class="md-3-line" ng-class="active-effect" ng-repeat="item in questionnaires" ng-click="view(item)">
+		<center><h2>Küsimustikud</h2></center>
+		<md-list >
+			<md-list-item  ng-repeat="item in questionnaires" class="md-3-line" ng-click="view(item)" ng-class="{'active-effect' : currentIndex == $index}">
 				<div class="md-list-item-text" layout="column">
 					<p>
 						<b>{{item.title}}</b>

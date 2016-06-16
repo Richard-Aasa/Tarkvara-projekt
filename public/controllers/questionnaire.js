@@ -25,7 +25,6 @@
                         console.log(error);
                     }
                 );
-
             $scope.save = function(questionnaire) {
                 var newQuestionnaire = new QuestionnaireService({
                     title: questionnaire.title,
