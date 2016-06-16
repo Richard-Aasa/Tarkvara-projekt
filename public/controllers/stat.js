@@ -15,14 +15,14 @@
                 }
             };
         })
-        .controller('StatController', ['$scope','QuestionnaireService','StatisticsService','UserService', '$mdDialog', function($scope, QuestionnaireService, StatisticsService, UserService,$mdDialog) {
+        .controller('StatController', ['$scope', 'QuestionnaireService', 'StatisticsService', 'UserService', '$mdDialog', function($scope, QuestionnaireService, StatisticsService, UserService, $mdDialog) {
 
             $scope.loading = true;
-			$scope.questionnaires = [];
-			$scope.questionnaire = {};
-			$scope.allStatistics = [];
-			$scope.users = [];
-			$scope.statistics = [];
+            $scope.questionnaires = [];
+            $scope.questionnaire = {};
+            $scope.allStatistics = [];
+            $scope.users = [];
+            $scope.statistics = [];
             QuestionnaireService.query()
                 .$promise.then(
                     function(data) {
@@ -34,7 +34,7 @@
                         console.log(error);
                     }
                 );
-			StatisticsService.query()
+            StatisticsService.query()
                 .$promise.then(
                     function(data) {
                         console.log(data);
@@ -45,8 +45,8 @@
                         console.log(error);
                     }
                 );
-			
-			UserService.query()
+
+            UserService.query()
                 .$promise.then(
                     function(data) {
                         console.log(data);
@@ -57,10 +57,10 @@
                         console.log(error);
                     }
                 );
-			
-			
+
+
             //statistika ühe küsimuse kohta, nt küsimuse id on 1
-            $scope.statistics = [{
+            $scope.statistics1 = [{
                 questionnaire: 1,
                 user: 8,
                 fillDate: "14-06-2016",
@@ -153,11 +153,12 @@
             //kui üks kasutaja on teinud testi mitu korda, siis pannakse massivi ta ainult üks kord
             //ja sellisel juhul pannakse massiivi samuti kasutaja viimane tulemus
             $scope.addResultsChartOne = function(statistics) {
+              console.log(statistics[0].user);
                 var allNames = [];
-                var allResults = [];				
+                var allResults = [];
                 for (var i = 0; i < statistics.length; i++) {
-					var userIndex = $scope.users.indexOf(statistics[i].user);
-					console.log(userIndex);
+                    //var userIndex = $scope.users.indexOf(statistics[i].user);
+                    //console.log(userIndex);
                     var check = false;
                     for (var j = 0; j < allNames.length; j++) {
                         if (allNames[j] === statistics[i].user) {
@@ -173,6 +174,7 @@
                 }
                 var both = [allNames, allResults];
                 return both;
+
             };
 
             $scope.addResultsChartTwo = function(statistics) {
@@ -201,8 +203,6 @@
                 return allTimes;
             };
 
-            
-
             $scope.addResultsChartThree = function(data) {
                 var allTimes = [];
                 var allNames = [];
@@ -226,31 +226,52 @@
                 var allResults = [sortedTimes, allNames];
                 return allResults;
             };
-			
-			$scope.one = [];
-			$scope.two = [];
-			$scope.three = [];
-			
-			$scope.view = function(index){
-				$scope.statistics = [];
-				//var index = $scope.questionnaires.indexOf(item);
-				$scope.questionnaire = $scope.questionnaires[index];
-				console.log($scope.questionnaire);
-				for(var i = 0; i < $scope.allStatistics.length; i++){
-					if($scope.allStatistics[i].questionnaire == $scope.questionnaire._id){
-						$scope.statistics.push($scope.allStatistics[i]);
-					}
-				}
-				console.log($scope.statistics);		
-				
-				
-				$scope.one = $scope.addResultsChartOne($scope.statistics);
-				$scope.two = $scope.addResultsChartTwo($scope.statistics);
-				$scope.three = $scope.addResultsChartThree($scope.statistics);
-			};
+
+            $scope.one = [];
+            $scope.two = [];
+            $scope.three = [];
+
+            $scope.view = function(index) {
+                $scope.statistics = [];
+                //var index = $scope.questionnaires.indexOf(item);
+                $scope.questionnaire = $scope.questionnaires[index];
+                //console.log($scope.questionnaire);
+                for (var i = 0; i < $scope.allStatistics.length; i++) {
+                    if ($scope.allStatistics[i].questionnaire === $scope.questionnaire._id) {
+                        $scope.statistics.push($scope.allStatistics[i]);
+                    }
+                }
+                console.log($scope.statistics);
+                $scope.one = $scope.addResultsChartOne($scope.statistics);
+                //$scope.two = $scope.addResultsChartTwo($scope.statistics);
+                //$scope.three = $scope.addResultsChartThree($scope.statistics);
+                $scope.chartUserPoints = {
+                    chart: {
+                        type: 'bar'
+                    },
+                    title: {
+                        text: 'Punktid kokku'
+                    },
+                    xAxis: {
+                        categories: [1,2,3]
+                    },
+                    yAxis: {
+                        allowDecimals: false,
+                        title: {
+                            text: null
+                        },
+                        min: 0,
+                        max: 1000
+                    },
+                    series: [{
+                        showInLegend: false,
+                        data: $scope.statistics1
+                    }]
+                };
+            };
 
             //diagramm, mis kuvab kõikide kasutajate punktid, mis nad said terve küsimustiku eest
-            $scope.chartUserPoints = {
+            /*$scope.chartUserPoints = {
                 chart: {
                     type: 'bar'
                 },
@@ -258,7 +279,7 @@
                     text: 'Punktid kokku'
                 },
                 xAxis: {
-                    categories: $scope.one[0]
+                    categories: $scope.one
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -270,12 +291,10 @@
                 },
                 series: [{
                     showInLegend: false,
-                    data: $scope.one($scope.statistics)[1]
+                    data: $scope.one
                 }]
             };
-			
-			$scope.dataOfUserTimes = $scope.two($scope.statistics);
-
+/*
             //diagramm, mis näitab iga kasutaja puhul, kui palju aega kulus tal iga küsimuse peale
             $scope.chartUserTime = {
                 chart: {
@@ -285,7 +304,7 @@
                     text: 'Aeg kokku'
                 },
                 xAxis: {
-                    categories: $scope.one($scope.statistics)[0]
+                    categories: $scope.one[0]
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -301,10 +320,8 @@
                         stacking: 'normal'
                     }
                 },
-                series: $scope.dataOfUserTimes
+                series: $scope.two
             };
-
-            $scope.dataChartThree = $scope.addResultsChartThree($scope.dataOfUserTimes);
 
             //diagramm, mis näitab küsimustele kulunud aega
             $scope.chartQuestionTime = {
@@ -329,12 +346,12 @@
                 },
                 series: [{
                     showInLegend: false,
-                    data: $scope.dataChartThree[0],
+                    data: $scope.three[0],
                     tooltip: {
                         headerFormat: '<b>Küsimus nr {point.key}</b><br/>'
                     }
                 }]
             };
-
+*/
         }]);
 }());

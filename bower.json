@@ -21,6 +21,7 @@
     "angular-material": "^1.0.7",
     "angular-resource": "^1.5.5",
     "Chart.js": "^2.1.5",
-    "simple-statistics": "^2.0.0"
+    "simple-statistics": "^2.0.0",
+    "highcharts": "^4.2.5"
   }
 }

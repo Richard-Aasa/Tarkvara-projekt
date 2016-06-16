@@ -494,7 +494,31 @@ app.get('/statistics/:id', function(req, res, next) {
     }
 
 });
+app.get('/statistics/:user', function(req, res, next) {
+    var params = req.params;
 
+    if (params.user) {
+
+        var query = Statistics.findOne({
+            'user': params.user
+        });
+
+        query.select("questionnaire user fillDate questions userTime userPoints");
+        query.exec(function(err, userStatistics) {
+            if (err) {
+                console.error(err);
+                return res.json({
+                    "error": "did not find matching result object"
+                });
+            }
+            res.json(userStatistics);
+        });
+
+    } else {
+        res.sendStatus(400);
+    }
+
+});
 app.delete('/statistics/:id', function(req, res, next) {
 
     var params = req.params;

@@ -12,11 +12,11 @@
             login: function(user) {
                 return $http.post('/auth/login', user).
                 success(function(data) {
-                  service.currentUser = data;
-                  service.errors = data.alert;
+                    service.currentUser = data;
+                    service.errors = data.alert;
                 }).
                 error(function() {
-                  service.errors = "Vale kasutaja või parool!"
+                    service.errors = "Vale kasutaja või parool!"
                 });
                 return login
             },
@@ -50,15 +50,15 @@
             // Is the current user teacher?
             isTeacher: function() {
                 service.requestCurrentUser();
-                if(!(service.isAuthenticated() && service.currentUser.teacher)){
-                  $location.path('/');
+                if (!(service.isAuthenticated() && service.currentUser.teacher)) {
+                    $location.path('/');
                 }
             },
-			
-			isStudent: function() {
+
+            isStudent: function() {
                 service.requestCurrentUser();
-                if(!(service.isAuthenticated() && !service.currentUser.teacher)){
-                  $location.path('/');
+                if (!(service.isAuthenticated() && !service.currentUser.teacher)) {
+                    $location.path('/');
                 }
             }
 
