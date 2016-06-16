@@ -74,7 +74,7 @@
                 userPoints: 40
             }, {
                 questionnaire: 1,
-                user: 7,
+                user: 5,
                 fillDate: "14-06-2016",
                 questions: [{
                     totalTime: 20,
@@ -111,6 +111,8 @@
                 totalTime: 200,
                 totalPoints: 30
             };
+
+            $scope.dataOfUserTimes = [];
 
             //abifunktsioon punktide kokkulisamiseks
             $scope.sumPoints = function(statistics, i) {
@@ -165,11 +167,33 @@
                             temp.data.push(statistics[j].questions[i].totalTime);
                         }
                         tempNames.push(statistics[j].user);
-                        //if (statistics[j].questions[i] !== undefined)
                     }
                     allTimes.push(temp);
                 }
                 return allTimes;
+            };
+
+            $scope.dataOfUserTimes = $scope.addResultsChartTwo($scope.statistics);
+
+            $scope.addResultsChartThree = function(data) {
+                var allTimes = [];
+                for (var i = 0; i < data.length; i++) {
+                    allTimes.push(data[i].data);
+                }
+                var sortedTimes = [];
+                for (var j = 0; j < allTimes.length; j++) {
+                    var temp = [];
+                    allTimes[j].sort(function(a, b) {
+                        return a - b;
+                    });
+                    temp.push(Math.min.apply(null, allTimes[j]));
+                    temp.push(ss.quantile(allTimes[j], 0.25));
+                    temp.push(ss.quantile(allTimes[j], 0.5));
+                    temp.push(ss.quantile(allTimes[j], 0.75));
+                    temp.push(Math.max.apply(null, allTimes[j]));
+                    sortedTimes.push(temp);
+                }
+                return sortedTimes;
             };
 
             //diagramm, mis kuvab kõikide kasutajate punktid, mis nad said terve küsimustiku eest
@@ -178,7 +202,7 @@
                     type: 'bar'
                 },
                 title: {
-                    text: "Punktid kokku"
+                    text: 'Punktid kokku'
                 },
                 xAxis: {
                     categories: $scope.addResultsChartOne($scope.statistics)[0]
@@ -202,7 +226,7 @@
                     type: 'bar'
                 },
                 title: {
-                    text: "Aeg kokku"
+                    text: 'Aeg kokku'
                 },
                 xAxis: {
                     categories: $scope.addResultsChartOne($scope.statistics)[0]
@@ -221,82 +245,34 @@
                         stacking: 'normal'
                     }
                 },
-                series: $scope.addResultsChartTwo($scope.statistics)
+                series: $scope.dataOfUserTimes
             };
 
+            //diagramm, mis näitab küsimustele kulunud aega
             $scope.chartQuestionTime = {
-
                 chart: {
                     type: 'boxplot'
                 },
-
                 title: {
-                    text: 'Highcharts Box Plot Example'
+                    text: 'Küsimustele kulunud aeg'
                 },
-
-                legend: {
-                    enabled: false
-                },
-
                 xAxis: {
                     categories: ['1', '2', '3', '4', '5'],
                     title: {
-                        text: 'Experiment No.'
+                        text: null
                     }
                 },
-
                 yAxis: {
                     title: {
-                        text: 'Observations'
-                    },
-                    plotLines: [{
-                        value: 932,
-                        color: 'red',
-                        width: 1,
-                        label: {
-                            text: 'Theoretical mean: 932',
-                            align: 'center',
-                            style: {
-                                color: 'gray'
-                            }
-                        }
-                    }]
-                },
-
-                series: [{
-                    name: 'Observations',
-                    data: [
-                        [760, 801, 848, 895, 965],
-                        [733, 853, 939, 980, 1080],
-                        [714, 762, 817, 870, 918],
-                        [724, 802, 806, 871, 950],
-                        [834, 836, 864, 882, 910]
-                    ],
-                    tooltip: {
-                        headerFormat: '<em>Experiment No {point.key}</em><br/>'
+                        text: null
                     }
-                }, {
-                    name: 'Outlier',
-                    color: Highcharts.getOptions().colors[0],
-                    type: 'scatter',
-                    data: [ // x, y positions where 0 is the first category
-                        [0, 644],
-                        [4, 718],
-                        [4, 951],
-                        [4, 969]
-                    ],
-                    marker: {
-                        fillColor: 'white',
-                        lineWidth: 1,
-                        lineColor: Highcharts.getOptions().colors[0]
-                    },
+                },
+                series: [{
+                    data: $scope.addResultsChartThree($scope.dataOfUserTimes),
                     tooltip: {
-                        pointFormat: 'Observation: {point.y}'
+                        headerFormat: '<b>Küsimus nr {point.key}</b><br/>'
                     }
                 }]
-
-
-
             };
 
         }]);
