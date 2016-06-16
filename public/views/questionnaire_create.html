@@ -114,6 +114,7 @@
                         <label>Punktid</label>
                         <input ng-model="variant.points" ng-init="variant.points=0" type="number" step="0.5" min="-100" max="100">
                     </md-input-container>
+                        <label>Õige/Vale</label>
                     <md-checkbox class="green" ng-model="variant.bool" aria-label="Õige/Vale" ng-init="variant.bool=true"></md-checkbox>
                     <md-card-action>
                         <md-button class="md-raised md-accent" ng-disabled="!(variant.answer && variant.points >= -100 && variant.points <= 100)" ng-click="addVariant(question, variant)">Lisa vastus</md-button>
@@ -133,11 +134,18 @@
         </div>
         <md-divider></md-divider>
         <div layout="row" layout-align="end start">
-            <md-input-container flex width="10%">
+            <md-input-container flex="40">
                 <label>Aeg kogu küsimustiku täitmiseks (minutites)</label>
                 <input ng-model="questionnaire.totalTime" ng-init="questionnaire.totalTime=0" type="number" step="1" min="1" max="1888900">
             </md-input-container>
-            <span>Punktid kokku: {{questionnaire.totalPoints}}</span>
+            <!-- <md-input-container flex width="10%">
+                <label>Punktid kokku:</label>
+                <input ng-model="questionnaire.totalPoints" type="number" ng-disabled="">
+            </md-input-container> -->
+            <!-- <span>Punktid kokku: {{questionnaire.totalPoints}}</span> -->
+            <md-input-container flex="35">
+            <div class="md-block md-body-2 itemPadding">Punktid kokku: {{questionnaire.totalPoints}}</div>
+            </md-input-container>
             <md-button class="md-raised md-primary" ng-disabled="!(questionnaire.title && questionnaire.questions.length > 0 && questionnaire.totalTime>0)" ng-click="create(questionnaire)">
                 <md-icon class="material-icons">save</md-icon>Salvesta küsimustik</md-button>
         </div>
