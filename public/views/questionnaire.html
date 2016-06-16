@@ -3,7 +3,7 @@
 		<center><h2>Küsimustikud</h2></center>
 		<md-list >
 			<md-list-item ng-repeat="item in questionnaires track by $index" class="md-3-line" ng-click="view(item)" ng-class="{'active-effect' : currentIndex == $index}">
-				<div class="md-list-item-text" layout="column">
+				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
 					<p>
 						<b>{{item.title}}</b>
 					</p>
@@ -55,7 +55,7 @@
 				<table class="no-table-border" width="100%">
 					<tr ng-repeat="x in activeQuestionnaire.questions track by $index">
 						<td class="no-table-border" style="border-bottom: 1px solid rgba(0, 0, 0, 0.12)" ng-class="{'active-effect' : currentQuestionIndex == $index}">
-							<md-list-item ng-click="viewQuestion(x)">
+							<md-list-item ng-click="viewQuestion(x)" md-ink-ripple="#88C474">
 								<div style="text-align:right" class="md-list-item-text">
 									<span>{{x.title}}</span>
 									<span>{{x.type}}</span>
