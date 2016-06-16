@@ -43,7 +43,7 @@
         <!-- Uue küsimuse lisamine nimekirja -->
         <left class="md-subhead">Lisa uus küsimus:</left>
         <div layout="row" class="md-block">
-            <div layout="column" flex="33" layout-align="start center">
+            <div layout="column" flex="33" layout-align="start">
                 <md-input-container>
                     <label>Küsimus</label>
                     <input ng-model="question.title">
@@ -133,8 +133,8 @@
             </div>
         </div>
         <md-divider></md-divider>
-        <div layout="row" layout-align="end start">
-            <md-input-container flex="40">
+        <div layout="row" layout-align="start">
+            <md-input-container flex="30">
                 <label>Aeg kogu küsimustiku täitmiseks (minutites)</label>
                 <input ng-model="questionnaire.totalTime" ng-init="questionnaire.totalTime=0" type="number" step="1" min="1" max="1888900">
             </md-input-container>
@@ -146,8 +146,10 @@
             <md-input-container flex="35">
             <div class="md-block md-body-2 itemPadding">Punktid kokku: {{questionnaire.totalPoints}}</div>
             </md-input-container>
+            <div flex="20">
             <md-button class="md-raised md-primary" ng-disabled="!(questionnaire.title && questionnaire.questions.length > 0 && questionnaire.totalTime>0)" ng-click="create(questionnaire)">
                 <md-icon class="material-icons">save</md-icon>Salvesta küsimustik</md-button>
+            </div>
         </div>
     </md-content>
 </md-content>
