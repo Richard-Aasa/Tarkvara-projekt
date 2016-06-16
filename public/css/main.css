@@ -13,6 +13,9 @@ table, th, td {
 .passedLi {
     background-color: #88C474;
 }
+.activeLi {
+	background-color: #E6D557;
+}
 md-checkbox.md-checked.green .md-icon {
     background-color: rgb(136, 196, 116);
 }
@@ -33,32 +36,27 @@ md-checkbox.md-checked.green .md-icon {
     margin: 8px 8px 8px 8px;
 }
 .background {
-    background-image: url(/img/back1.jpg);
+    background-image: url(/img/logotest.png);
     background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    padding-bottom: 25%;
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
+    background-attachment: scroll;
+    background-size: 800px 800px;
+
 }
+
 .Aligner {
     display: flex;
     align-items: center;
     justify-content: center;
 
     margin: auto;
-    margin-top: 20%;
+    margin-top: 40%;
     background-color: #444545;
     border: 1px solid black;
-    opacity: 0.6;
+    opacity: 0;
     filter: alpha(opacity=60);
 }
-.Aligner-item {
-    max-width: 50%;
-    z-index: 300;
-}
+
 
 .fadeIn.ng-enter,{
   transition: all 0.5s linear;
@@ -66,4 +64,8 @@ md-checkbox.md-checked.green .md-icon {
 }
 .no-table-border {
   border: none;
+}
+
+.active-effect {
+  background-color: #E6D557;
 }

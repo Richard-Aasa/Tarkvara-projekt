@@ -1,9 +1,9 @@
-<md-content class="md-padding" layout="row" ng-init="service.isStudent()" ng-show="!loading">	
+<md-content class="md-padding" layout="row" ng-init="service.isStudent()" ng-show="!loading">
 	<div layout="column" flex>
 		<md-toolbar class="md-hue-2">
         <div flex class="md-toolbar-tools">
             <h4 class="md-title">
-                 Küsimustikude nimistu:
+                 Küsimustikud:
             </h4>
         </div>
 		</md-toolbar>
@@ -26,8 +26,8 @@
 						</p>
 						<md-divider></md-divider>
 					</div>
-				</div>				
-				<md-button class="md-raised md-primary" ng-href="#/fill/{{item._id}}">Hakka täitma</md-button>
+				</div>
+				<md-button class="md-raised md-primary" ng-href="#/fill/{{item._id}}">Alusta</md-button>
 			</md-list-item>
 		</md-list>
 	</div>

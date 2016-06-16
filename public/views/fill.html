@@ -1,7 +1,7 @@
 <md-content class="md-padding" layout="row" ng-init="service.isStudent()" ng-show="!loading">
     <div layout="column" flex>
         <md-card>
-          <md-toolbar class="md-hue-2">
+          <md-toolbar class="md-hue-1">
               <div flex class="md-toolbar-tools">
                 <h4 class="md-title">
                   {{questionnaire.title}}
@@ -33,17 +33,12 @@
     </div>
     <div layout="column" flex>
       <md-card>
-            <md-toolbar class="md-hue-2">
+            <md-toolbar class="md-hue-1">
                 <div flex class="md-toolbar-tools">
                     <h2 flex>Aega jäänud:</h2>
                     <md-icon class="material-icons">timer</md-icon>{{displayRemainingTime(questionnaireLeftTime)}}
                 </div>
             </md-toolbar>
-            <div class="itemPadding">
-                <md-card-header-text>
-                    <span class="md-subhead">Vastamine:</span>
-                </md-card-header-text>
-            </div>
             <md-card-content ng-init="activeQuestion = questionnaire.questions[0]">
                     <span>{{activeQuestion.title}}</span>
                     <!-- kui on valikvastusega küsimus -->
