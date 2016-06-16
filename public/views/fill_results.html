@@ -41,17 +41,17 @@
 	</md-list>
 	<div layout="column" flex>
 		<md-list>
-			<md-list-item>
+			<md-list-item flex>
 				<h4>Kasutaja: </h4>{{resultObject.user}}
 			</md-list-item>
-			<md-list-item>
+			<md-list-item flex>
 				<h4>Küsimustik: </h4>{{questionnaire.title}}
 			</md-list-item>
 			<md-list-item flex>
 				<h4>Kulunud aeg: </h4>{{Math.floor(resultObject.userTime / 60000)}}
 				{{((resultObject.userTime % 60000) / 1000).toFixed(0)}}
 			</md-list-item>
-			<md-list-item>
+			<md-list-item flex>
 				<h4>Saadud punktid: </h4>{{resultObject.userPoints}}
 			</md-list-item>
 			<md-button class="md-raised md-primary" ng-click="return()">Sulge</md-button>
