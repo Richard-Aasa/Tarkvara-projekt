@@ -24,19 +24,15 @@
             </md-toolbar>
 
             <md-list ng-controller="LeftNavCtrl">
-                <md-list-item ng-click="changeView('/question')">
-                    Üksik küsimus
-                </md-list-item>
-                <md-divider></md-divider>
-                <md-list-item ng-click="changeView('/questionnaire')">
+                <md-list-item ng-if="service.currentUser.teacher" ng-click="changeView('/questionnaire')">
                     Küsimustiku loomine
                 </md-list-item>
                 <md-divider></md-divider>
-                <md-list-item ng-click="changeView('/fill_questionnaire')">
+                <md-list-item  ng-if="!service.currentUser.teacher" ng-click="changeView('/fill_questionnaire')">
                     Küsimustiku täitmine
                 </md-list-item>
                 <md-divider></md-divider>
-                <md-list-item ng-click="changeView('/stat')">
+                <md-list-item ng-if="service.currentUser.teacher" ng-click="changeView('/stat')">
                     Statistika
                 </md-list-item>
                 <md-divider></md-divider>
