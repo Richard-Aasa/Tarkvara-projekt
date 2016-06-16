@@ -5,7 +5,7 @@
   'use strict';
 
   angular
-    .module('app', ['ngRoute', 'ngResource', 'ngMaterial', 'ngMessages', 'ngAnimate'])
+    .module('app', ['ngRoute', 'ngResource', 'ngMaterial', 'ngMessages', 'ngAnimate', 'highcharts-ng'])
     .config(['$routeProvider', '$locationProvider', '$resourceProvider', '$mdThemingProvider',
       function($routeProvider, $locationProvider, $resourceProvider, $mdThemingProvider) {
 

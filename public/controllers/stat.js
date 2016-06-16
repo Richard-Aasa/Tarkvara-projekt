@@ -3,18 +3,6 @@
 
     angular
         .module('app')
-        .directive('hcChart', function() {
-            return {
-                restrict: 'E',
-                template: '<div></div>',
-                scope: {
-                    options: '='
-                },
-                link: function(scope, element) {
-                    Highcharts.chart(element[0], scope.options);
-                }
-            };
-        })
         .controller('StatController', ['$scope','QuestionnaireService','StatisticsService','UserService', '$mdDialog', function($scope, QuestionnaireService, StatisticsService, UserService,$mdDialog) {
 
             $scope.loading = true;
@@ -23,6 +11,7 @@
 			$scope.allStatistics = [];
 			$scope.users = [];
 			$scope.statistics = [];
+			$scope.dataOfUserTimes = [];
             QuestionnaireService.query()
                 .$promise.then(
                     function(data) {
@@ -117,28 +106,7 @@
                 }],
                 userTime: 60,
                 userPoints: 40
-            }];
-
-            /*$scope.questionnaire = {
-                title: "Ajalugu",
-                questions: [{
-                    title: "Kes on kass?",
-                    type: "Tühi lünk",
-                    maxPoints: 10
-                }, {
-                    title: "Kes on koer?",
-                    type: "Tühi lünk",
-                    maxPoints: 10
-                }, {
-                    title: "Kes on kana?",
-                    type: "Tühi lünk",
-                    maxPoints: 10
-                }],
-                totalTime: 200,
-                totalPoints: 30
-            };*/
-
-            $scope.dataOfUserTimes = [];
+            }];        
 
             //abifunktsioon punktide kokkulisamiseks
             $scope.sumPoints = function(statistics, i) {
@@ -175,7 +143,7 @@
                 return both;
             };
 
-            $scope.addResultsChartTwo = function(statistics) {
+           /* $scope.addResultsChartTwo = function(statistics) {
                 var allTimes = [];
                 for (var i = 0; i < statistics[0].questions.length; i++) {
                     var temp = {};
@@ -200,8 +168,8 @@
                 }
                 return allTimes;
             };
-
             
+			$scope.dataOfUserTimes = $scope.addResultsChartTwo($scope.statistics);
 
             $scope.addResultsChartThree = function(data) {
                 var allTimes = [];
@@ -225,11 +193,7 @@
                 }
                 var allResults = [sortedTimes, allNames];
                 return allResults;
-            };
-			
-			$scope.one = [];
-			$scope.two = [];
-			$scope.three = [];
+            };*/
 			
 			$scope.view = function(index){
 				$scope.statistics = [];
@@ -243,41 +207,26 @@
 				}
 				console.log($scope.statistics);		
 				
-				
-				$scope.one = $scope.addResultsChartOne($scope.statistics);
-				$scope.two = $scope.addResultsChartTwo($scope.statistics);
-				$scope.three = $scope.addResultsChartThree($scope.statistics);
+				//$scope.addResultsChartOne($scope.statistics);
+				//$scope.addResultsChartTwo($scope.statistics);
+				//$scope.addResultsChartThree($scope.statistics);
 			};
 
             //diagramm, mis kuvab kõikide kasutajate punktid, mis nad said terve küsimustiku eest
             $scope.chartUserPoints = {
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'Punktid kokku'
-                },
-                xAxis: {
-                    categories: $scope.one[0]
-                },
-                yAxis: {
-                    allowDecimals: false,
-                    title: {
-                        text: null
-                    },
-                    min: 0,
-                    max: $scope.questionnaire.totalPoints
-                },
+                chart: {type: 'bar'},
+                title: {text: 'Punktid kokku'},
+                xAxis: {categories: $scope.addResultsChartOne($scope.statistics)[0]},
+                yAxis: {allowDecimals: false,title: {text: null}, min: 0, max: $scope.questionnaire.totalPoints},
                 series: [{
                     showInLegend: false,
-                    data: $scope.one($scope.statistics)[1]
+                    data: $scope.addResultsChartOne($scope.statistics)[1]
                 }]
             };
 			
-			$scope.dataOfUserTimes = $scope.two($scope.statistics);
 
             //diagramm, mis näitab iga kasutaja puhul, kui palju aega kulus tal iga küsimuse peale
-            $scope.chartUserTime = {
+           /* $scope.chartUserTime = {
                 chart: {
                     type: 'bar'
                 },
@@ -285,7 +234,7 @@
                     text: 'Aeg kokku'
                 },
                 xAxis: {
-                    categories: $scope.one($scope.statistics)[0]
+                    categories: $scope.addResultsChartOne($scope.statistics)[0]
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -317,7 +266,7 @@
                     text: 'Küsimustele kulunud aeg'
                 },
                 xAxis: {
-                    categories: $scope.three[1],
+                    categories: $scope.addResultsChartThree($scope.statistics)[1],
                     title: {
                         text: null
                     }
@@ -334,7 +283,7 @@
                         headerFormat: '<b>Küsimus nr {point.key}</b><br/>'
                     }
                 }]
-            };
+            };*/
 
         }]);
 }());
