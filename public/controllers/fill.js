@@ -77,15 +77,11 @@
       $scope.view = function(item) {
 
         $scope.questionEndTime = Date.now();
-        $scope.activeQuestion = angular.copy(item);
-
-        if (!$scope.activeQuestion) {
-          return;
-        }
+        $scope.activeQuestion = item;
 
         $scope.measureTime($scope.activeQuestion._id, $scope.questionStartTime, $scope.questionEndTime);
         $scope.questionStartTime = Date.now();
-        if ($scope.arrayOfItems == null) {
+        if ($scope.arrayOfItems !== null) {
           $scope.arrayOfItems = [];
         }
 
