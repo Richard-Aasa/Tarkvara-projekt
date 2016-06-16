@@ -54,17 +54,17 @@
                     </h2>
 
                     <div ng-show="!service.isAuthenticated()" layout-align="end center">
-                        <md-button class="loginbtn" ng-click="login($event)">
+                        <md-button class="loginbtn" ng-click="login($event)" md-ink-ripple="#88C474">
                             <md-icon class="md-primary material-icons">lock</md-icon>
                             Login
                         </md-button>
-                        <md-button class="registerbtn" ng-click="register($event)">
+                        <md-button class="registerbtn" ng-click="register($event)" md-ink-ripple="#88C474">
                             <md-icon class="md-primary material-icons">person_add</md-icon>
                             Register
                         </md-button>
                     </div>
                     <div ng-show="service.isAuthenticated()" layout-align="end center">
-                        <md-button class="logoutbtn" ng-click="service.logout()">
+                        <md-button class="logoutbtn" ng-click="service.logout()" md-ink-ripple="#88C474">
                             <md-icon class="md-primary material-icons">exit_to_app</md-icon>
                             Log out
                         </md-button>
