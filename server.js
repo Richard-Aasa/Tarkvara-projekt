@@ -125,6 +125,42 @@ app.get('/auth/user', isAuthenticated,
         res.json(req.user);
     });
 
+app.get('/users/:id', isAuthenticated, function(req, res, next) {
+    var params = req.params;
+
+    if (params.id) {
+
+        var query = User.findOne({
+            '_id': params.id
+        });
+
+        query.select("username name teacher");
+        query.exec(function(err, users) {
+            if (err) {
+                console.error(err);
+                return res.json({
+                    "error": "did not find matching result object"
+                });
+            }
+            res.json(users);
+        });
+
+    } else {
+        res.sendStatus(400);
+    }
+
+});
+
+app.get('/users', isAuthenticated, function(req, res) {
+    User.find(function(err, users) {
+        if (err) {
+            console.error(err);
+            return res.json(err);
+        }
+        res.json(users);
+    });
+});
+
 app.post('/auth/register', function(req, res) {
     var newUser = new User({
         username: req.body.username,
@@ -439,7 +475,7 @@ app.get('/statistics/:id', function(req, res, next) {
     if (params.id) {
 
         var query = Statistics.findOne({
-            '_id': 'params.id'
+            '_id': params.id
         });
 
         query.select("questionnaire user fillDate questions userTime userPoints");
