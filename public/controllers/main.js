@@ -118,7 +118,7 @@
                        if(service.currentUser.teacher){
                          $location.path('/questionnaire');
                        } else {
-                         $location.path('/fill');
+                         $location.path('/fill_questionnaire');
                        }
 
                      }

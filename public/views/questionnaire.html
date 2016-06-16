@@ -2,8 +2,8 @@
 	<div layout="column">
 		<center><h2>Küsimustikud</h2></center>
 		<md-list >
-			<md-list-item  ng-repeat="item in questionnaires" class="md-3-line" ng-click="view(item)" ng-class="{'active-effect' : currentIndex == $index}">
-				<div class="md-list-item-text" layout="column">
+			<md-list-item ng-repeat="item in questionnaires track by $index" class="md-3-line" ng-click="view(item)" ng-class="{'active-effect' : currentIndex == $index}">
+				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
 					<p>
 						<b>{{item.title}}</b>
 					</p>
@@ -24,7 +24,7 @@
 			</md-list-item>
 		</md-list>
 	</div>
-	<div layout="row" flex layout-align="center start">
+	<div layout="row" flex layout-align="start start">
 		<div ng-if="activeQuestionnaire.title">
 			<md-card layout-padding>
 				<center><h2>Küsimustiku haldus</h2></center>
@@ -54,8 +54,8 @@
 				<br>
 				<table class="no-table-border" width="100%">
 					<tr ng-repeat="x in activeQuestionnaire.questions track by $index">
-						<td class="no-table-border" style="border-bottom: 1px solid rgba(0, 0, 0, 0.12)">
-							<md-list-item ng-click="viewQuestion(x)">
+						<td class="no-table-border" style="border-bottom: 1px solid rgba(0, 0, 0, 0.12)" ng-class="{'active-effect' : currentQuestionIndex == $index}">
+							<md-list-item ng-click="viewQuestion(x)" md-ink-ripple="#88C474">
 								<div style="text-align:right" class="md-list-item-text">
 									<span>{{x.title}}</span>
 									<span>{{x.type}}</span>

@@ -2,7 +2,7 @@
     <md-toolbar class="md-hue-2">
         <div flex class="md-toolbar-tools">
             <h2 flex>Logi sisse</h2>
-            <md-button ng-click="close()" class="md-icon-button md-secondary" aria-label="Close">
+            <md-button ng-click="close()" class="md-icon-button md-secondary" aria-label="Close" md-ink-ripple="#88C474">
                 <md-icon class="material-icons">close</md-icon>
             </md-button>
         </div>
@@ -31,7 +31,7 @@
                 </div>
             </md-input-container>
             <div layout="row" layout-align="end center">
-                <md-button class="md-raised md-primary" ng-disabled="!(user.username && user.password)" ng-click="login(user)">Logi sisse</md-button>
+                <md-button class="md-raised md-primary" ng-disabled="!(user.username && user.password)" ng-click="login(user)" md-ink-ripple="#88C474">Logi sisse</md-button>
             </div>
         </form>
     </md-content>
