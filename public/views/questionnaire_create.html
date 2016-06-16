@@ -114,6 +114,7 @@
                         <label>Punktid</label>
                         <input ng-model="variant.points" ng-init="variant.points=0" type="number" step="0.5" min="-100" max="100">
                     </md-input-container>
+                        <label>Õige/Vale</label>
                     <md-checkbox class="green" ng-model="variant.bool" aria-label="Õige/Vale" ng-init="variant.bool=true"></md-checkbox>
                     <md-card-action>
                         <md-button class="md-raised md-accent" ng-disabled="!(variant.answer && variant.points >= -100 && variant.points <= 100)" ng-click="addVariant(question, variant)">Lisa vastus</md-button>
