@@ -70,3 +70,9 @@ md-checkbox.md-checked.green .md-icon {
 .no-table-border {
   border: none;
 }
+.color-effect-remove {
+  background-color: none;
+}
+.yellow-effect-add {
+  background-color: red;
+}

@@ -2,7 +2,7 @@
 	<div layout="column">
 		<md-list>
 			<center><h2>Küsimustikud</h2></center>
-			<md-list-item class="md-3-line" ng-repeat="item in questionnaires" ng-click="view(item)">
+			<md-list-item class="md-3-line" ng-class="active-effect" ng-repeat="item in questionnaires" ng-click="view(item)">
 				<div class="md-list-item-text" layout="column">
 					<p>
 						<b>{{item.title}}</b>
@@ -24,7 +24,7 @@
 			</md-list-item>
 		</md-list>
 	</div>
-	<div layout="row" flex="60" layout-align="center start">
+	<div layout="row" flex layout-align="center start">
 		<div ng-if="activeQuestionnaire.title">
 			<md-card layout-padding>
 				<center><h2>Küsimustiku haldus</h2></center>
@@ -48,6 +48,7 @@
 					<md-button class="md-raised md-warn" ng-click="remove()">Kustuta</md-button>
 				</div>
 			</md-card>
+
 			<md-card layout-padding>
 				<center class="md-title">Küsimused</center>
 				<br>
@@ -55,10 +56,10 @@
 					<tr ng-repeat="x in activeQuestionnaire.questions track by $index">
 						<td class="no-table-border" style="border-bottom: 1px solid rgba(0, 0, 0, 0.12)">
 							<md-list-item ng-click="viewQuestion(x)">
-								<div class="md-list-item-text">
+								<div style="text-align:right" class="md-list-item-text">
 									<span>{{x.title}}</span>
 									<span>{{x.type}}</span>
-									<span>{{x.maxPoints}}</span>
+									<span >{{x.maxPoints}}</span>
 								</div>
 							<md-list-item>
 						</td>
@@ -158,6 +159,6 @@
 		<md-tooltip>
 			Lisa uus küsimustik
 		</md-tooltip>
-		<md-icon class="material-icons">create</md-icon>
+		<md-icon class="material-icons">add</md-icon>
 	</md-button>
 </md-content>
