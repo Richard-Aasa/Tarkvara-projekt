@@ -57,7 +57,7 @@
                                 <md-checkbox class="green" aria-label="Õige/Vale" ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants[$index]"></md-checkbox>
                             </md-list-item>
                         </md-list>
-                        <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(arrayOfItems, activeQuestion)">Järgmine</md-button>
+                        <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(arrayOfItems, activeQuestion)">Vasta küsimusele</md-button>
                         <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
                     </div>
                     <!-- kui on tühja lüngaga küsimus -->
@@ -66,7 +66,7 @@
                         <md-input-container>
                             <label>Vastus</label>
                             <input ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants">
-                            <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(answer, activeQuestion)">Järgmine</md-button>
+                            <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(answer, activeQuestion)">Vasta küsimusele</md-button>
                             <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
                         </md-input-container>
                     </div>

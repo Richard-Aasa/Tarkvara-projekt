@@ -77,7 +77,7 @@
       $scope.view = function(item) {
 
         $scope.questionEndTime = Date.now();
-        $scope.activeQuestion = item;
+        $scope.activeQuestion = angular.copy(item);
 
         if (!$scope.activeQuestion) {
           return;
@@ -92,10 +92,7 @@
       };
       //htmlis nupule järgmine vajutades läheb tööle submit funktsioon, mis paneb kirja kasutaja sisestatud andmed küsimustikus ja laeb järgmise küsimuse. lisaks ka see kontrollib kas kõik küsimused on täidetud.
       $scope.submit = function(answer, question) {
-
-
         var index = $scope.questionnaire.questions.indexOf(question);
-        console.log(question);
         var len = $scope.questionnaire.questions.length;
         var varLen = $scope.questionnaire.questions[index].variants.length;
         var isAnswerCorrect = false;
@@ -123,8 +120,7 @@
             }
           }
         }
-        console.log($scope.questionnaire.questions[index].maxPoints);
-        if (isAnswerCorrect == true) {
+        if (isAnswerCorrect === true) {
           aqPoints = $scope.questionnaire.questions[index].maxPoints;
         } else {
           aqPoints = 0;
@@ -148,7 +144,6 @@
           $scope.filledQuestion[index] = vastused;
         }
         //kontrolli veel kas sellisele küsimusele on juba vastatud.
-        console.log($scope.filledQuestion);
         $('.listItem')[index].className += " passedLi";
 
         var real_len = 0;
@@ -181,7 +176,6 @@
         if (check === false) {
           $scope.allQuestionsTime.push(questionTotalTime);
         }
-        console.log($scope.allQuestionsTime);
       };
 
       $scope.save = function() {
