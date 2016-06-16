@@ -58,6 +58,7 @@
                 var textB = b.title.toUpperCase();
                 return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
               });
+              commitViewChange(questionnaire);
             },
             function(error) {
               showToast(error.status + ' ' + error.statusText);
