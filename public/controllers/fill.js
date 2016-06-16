@@ -120,7 +120,9 @@
 						if(typeof answer != "undefined"){
 							if($scope.questionnaire.questions[index].variants[0].toLowerCase() == answer.toLowerCase()){
 								isAnswerCorrect = true;
-							}
+							} else {
+                isAnswerCorrect = false;
+              }
 						}
 					}
 				}
@@ -145,7 +147,7 @@
 					check = true;
 				}
 
-				if(check == false){
+				if(check === false){
 					$scope.filledQuestion[index] = vastused;
 				}
 				//kontrolli veel kas sellisele küsimusele on juba vastatud.
@@ -154,7 +156,7 @@
 
 				var real_len = 0;
 
-				for(var i = 0; i < $scope.filledQuestion.length; i++){
+				for(i = 0; i < $scope.filledQuestion.length; i++){
 					if($scope.filledQuestion[i]){
 						real_len++;
 					}
@@ -165,7 +167,7 @@
 				}else{
 					$scope.allQuestionsFilled = true;
 				}
-			}
+			};
             //mõõdab üehele küsimusele kulunud aega ja lisab kõik massiivi
             $scope.measureTime = function(questionId, start, end){
               var questionTotalTime = {};
@@ -251,6 +253,7 @@
                     $scope.questionnaire = questionnaire;
 					$scope.return = function(){
                         $mdDialog.hide();
+                        $location.path('/fill_questionnaire');
                     };
                 }
 			};
