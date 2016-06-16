@@ -177,8 +177,10 @@
 
             $scope.addResultsChartThree = function(data) {
                 var allTimes = [];
+                var allNames = [];
                 for (var i = 0; i < data.length; i++) {
                     allTimes.push(data[i].data);
+                    allNames.push(data[i].name);
                 }
                 var sortedTimes = [];
                 for (var j = 0; j < allTimes.length; j++) {
@@ -193,8 +195,10 @@
                     temp.push(Math.max.apply(null, allTimes[j]));
                     sortedTimes.push(temp);
                 }
-                return sortedTimes;
+                var allResults = [sortedTimes, allNames];
+                return allResults;
             };
+
 
             //diagramm, mis kuvab kõikide kasutajate punktid, mis nad said terve küsimustiku eest
             $scope.chartUserPoints = {
@@ -216,6 +220,7 @@
                     max: $scope.questionnaire.totalPoints
                 },
                 series: [{
+                    showInLegend: false,
                     data: $scope.addResultsChartOne($scope.statistics)[1]
                 }]
             };
@@ -248,16 +253,20 @@
                 series: $scope.dataOfUserTimes
             };
 
+            $scope.dataChartThree = $scope.addResultsChartThree($scope.dataOfUserTimes);
+
             //diagramm, mis näitab küsimustele kulunud aega
             $scope.chartQuestionTime = {
+
                 chart: {
-                    type: 'boxplot'
+                    type: 'boxplot',
+                    inverted: true
                 },
                 title: {
                     text: 'Küsimustele kulunud aeg'
                 },
                 xAxis: {
-                    categories: ['1', '2', '3', '4', '5'],
+                    categories: $scope.dataChartThree[1],
                     title: {
                         text: null
                     }
@@ -268,7 +277,8 @@
                     }
                 },
                 series: [{
-                    data: $scope.addResultsChartThree($scope.dataOfUserTimes),
+                    showInLegend: false,
+                    data: $scope.dataChartThree[0],
                     tooltip: {
                         headerFormat: '<b>Küsimus nr {point.key}</b><br/>'
                     }
