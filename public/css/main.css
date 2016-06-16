@@ -39,7 +39,7 @@ md-checkbox.md-checked.green .md-icon {
     background-image: url(/img/logotest.png);
     background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: scroll;
+    background-attachment: fixed;
     background-size: 800px 800px;
 
 }
