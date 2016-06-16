@@ -133,11 +133,18 @@
         </div>
         <md-divider></md-divider>
         <div layout="row" layout-align="end start">
-            <md-input-container flex width="10%">
+            <md-input-container flex="40">
                 <label>Aeg kogu küsimustiku täitmiseks (minutites)</label>
                 <input ng-model="questionnaire.totalTime" ng-init="questionnaire.totalTime=0" type="number" step="1" min="1" max="1888900">
             </md-input-container>
-            <span>Punktid kokku: {{questionnaire.totalPoints}}</span>
+            <!-- <md-input-container flex width="10%">
+                <label>Punktid kokku:</label>
+                <input ng-model="questionnaire.totalPoints" type="number" ng-disabled="">
+            </md-input-container> -->
+            <!-- <span>Punktid kokku: {{questionnaire.totalPoints}}</span> -->
+            <md-input-container flex="35">
+            <div class="md-block md-body-2 itemPadding">Punktid kokku: {{questionnaire.totalPoints}}</div>
+            </md-input-container>
             <md-button class="md-raised md-primary" ng-disabled="!(questionnaire.title && questionnaire.questions.length > 0 && questionnaire.totalTime>0)" ng-click="create(questionnaire)">
                 <md-icon class="material-icons">save</md-icon>Salvesta küsimustik</md-button>
         </div>
