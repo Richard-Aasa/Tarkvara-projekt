@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/lib/angular-material/angular-material.css">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
 </head>
 <!-- NB! ng-app="app" tähendab, et kui me loome controllerit/servicet vms,
   siis põhirakendusele viitame sõnaga "app". Näiteks angular.module('app').controller() -->
@@ -24,15 +24,15 @@
             </md-toolbar>
 
             <md-list ng-controller="LeftNavCtrl">
-                <md-list-item ng-if="service.currentUser.teacher" ng-click="changeView('/questionnaire')">
+                <md-list-item ng-if="service.currentUser.teacher" ng-click="changeView('/questionnaire')" md-ink-ripple="#88C474">
                     Küsimustiku loomine
                 </md-list-item>
                 <md-divider></md-divider>
-                <md-list-item ng-click="changeView('/fill_questionnaire')">
+                <md-list-item ng-click="changeView('/fill_questionnaire')" md-ink-ripple="#88C474">
                     Küsimustiku täitmine
                 </md-list-item>
                 <md-divider></md-divider>
-                <md-list-item ng-if="service.currentUser.teacher" ng-click="changeView('/stat')">
+                <md-list-item ng-if="service.currentUser.teacher" ng-click="changeView('/stat')" md-ink-ripple="#88C474">
                     Statistika
                 </md-list-item>
                 <md-divider></md-divider>
@@ -47,24 +47,24 @@
                         <md-icon class="material-icons">menu</md-icon>
                     </md-button>
                     <md-button ng-click="changeView('/home')" class="md-icon-button" aria-label="Home">
-                      <md-icon class="md-primary material-icons">home</md-icon>
+                        <md-icon class="md-primary material-icons">home</md-icon>
                     </md-button>
                     <h2 class="md-title" flex>
                       Mälumäng
                     </h2>
 
                     <div ng-show="!service.isAuthenticated()" layout-align="end center">
-                        <md-button class="loginbtn" ng-click="login($event)">
+                        <md-button class="loginbtn" ng-click="login($event)" md-ink-ripple="#88C474">
                             <md-icon class="md-primary material-icons">lock</md-icon>
                             Login
                         </md-button>
-                        <md-button class="registerbtn" ng-click="register($event)">
+                        <md-button class="registerbtn" ng-click="register($event)" md-ink-ripple="#88C474">
                             <md-icon class="md-primary material-icons">person_add</md-icon>
                             Register
                         </md-button>
                     </div>
                     <div ng-show="service.isAuthenticated()" layout-align="end center">
-                        <md-button class="logoutbtn" ng-click="service.logout()">
+                        <md-button class="logoutbtn" ng-click="service.logout()" md-ink-ripple="#88C474">
                             <md-icon class="md-primary material-icons">exit_to_app</md-icon>
                             Log out
                         </md-button>
@@ -102,8 +102,9 @@
     <script src="/services/question.js"></script>
     <script src="/services/questionnaire.js"></script>
     <script src="/services/authenticate.js"></script>
-	<script src="/services/statistics.js"></script>
-	<script src="/services/user.js"></script>
+    <script src="/services/statisticsUser.js"></script>
+  	<script src="/services/statistics.js"></script>
+  	<script src="/services/user.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 </body>
