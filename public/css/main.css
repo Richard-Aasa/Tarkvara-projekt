@@ -13,6 +13,9 @@ table, th, td {
 .passedLi {
     background-color: #88C474;
 }
+.activeLi {
+	background-color: #E6D557;
+}
 md-checkbox.md-checked.green .md-icon {
     background-color: rgb(136, 196, 116);
 }
