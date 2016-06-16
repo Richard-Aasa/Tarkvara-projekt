@@ -17,7 +17,8 @@
                 .$promise.then(
                     function(data) {
                         $scope.questionnaires = data;
-                        $scope.activeQuestionnaire = $scope.questionnaires[0];
+                        $scope.activeQuestionnaire = angular.copy($scope.questionnaires[0]);
+                        $scope.originalQuestionnaire = angular.copy($scope.questionnaires[0]);
                         $scope.loading = false;
                     },
                     function(error) {
