@@ -39,10 +39,7 @@ md-checkbox.md-checked.green .md-icon {
     background-attachment: fixed;
     background-size: cover;
     padding-bottom: 25%;
-    clip: auto;
-    position: absolute;
     overflow: hidden;
-
     height: 100%;
     width: 100%;
 }
@@ -69,10 +66,4 @@ md-checkbox.md-checked.green .md-icon {
 }
 .no-table-border {
   border: none;
-}
-.color-effect-remove {
-  background-color: none;
-}
-.yellow-effect-add {
-  background-color: red;
 }
