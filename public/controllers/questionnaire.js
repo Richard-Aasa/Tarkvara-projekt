@@ -17,6 +17,7 @@
                 .$promise.then(
                     function(data) {
                         $scope.questionnaires = data;
+                        $scope.activeQuestionnaire = $scope.questionnaires[0];
                         $scope.loading = false;
                     },
                     function(error) {
@@ -125,6 +126,7 @@
             }
 
             $scope.view = function(questionnaire, $event) {
+              if(JSON.stringify($scope.originalQuestionnaire) !== JSON.stringify(questionnaire)) {
                 if (JSON.stringify($scope.activeQuestionnaire) === JSON.stringify($scope.originalQuestionnaire)) {
                     commitViewChange(questionnaire);
 
@@ -142,6 +144,7 @@
                         commitViewChange(questionnaire);
                     });
                 }
+              }
             };
 
             $scope.viewQuestion = function(question) {

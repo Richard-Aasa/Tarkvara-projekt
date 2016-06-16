@@ -17,7 +17,10 @@
     <section layout="row" flex>
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
             <md-toolbar>
-                <h1 class="md-toolbar-tools">Menüü</h1>
+                <h1 ng-show="!service.isAuthenticated()" class="md-toolbar-tools">Menüü</h1>
+                <h1 ng-show="service.isAuthenticated()" class="md-toolbar-tools">
+                    Tere, {{service.currentUser.name}}
+                </h1>
             </md-toolbar>
 
             <md-list ng-controller="LeftNavCtrl">
@@ -65,7 +68,6 @@
                         </md-button>
                     </div>
                     <div ng-show="service.isAuthenticated()" layout-align="end center">
-                        <span>{{service.currentUser.name}}</span>
                         <md-button class="logoutbtn" ng-click="service.logout()">
                             <md-icon class="md-primary material-icons">exit_to_app</md-icon>
                             Log out
@@ -91,7 +93,7 @@
     <script src="/lib/highcharts/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    
+
     <script src="/client.js"></script>
     <script src="/controllers/main.js"></script>
     <script src="/controllers/question.js"></script>
