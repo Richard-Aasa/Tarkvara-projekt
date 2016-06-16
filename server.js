@@ -41,14 +41,18 @@ passport.use(new LocalStrategy(
                 return done(err);
             }
             if (!user) {
-                return done(null, false, {alert: 'Incorrect E-mail.'});
+                return done(null, false, {
+                    alert: 'Incorrect E-mail.'
+                });
             }
             User.comparePassword(password, user.password, function(err, isMatch) {
                 if (err) throw err;
                 if (isMatch) {
                     return done(null, user);
                 } else {
-                    return done(null, false, {alert: 'Incorrect password.'});
+                    return done(null, false, {
+                        alert: 'Incorrect password.'
+                    });
                 }
             })
         });
@@ -350,21 +354,64 @@ app.post('/questionnaire', function(req, res) {
         res.sendStatus(400);
     }
 });
+// app.get('/questionnaire/:id', function(req, res, next) {
+//     var params = req.params;
+//
+//     if (params.id) {
+//         Questionnaire.findOne({
+//             '_id': params.id
+//         }, function(err, questionnaire) {
+//             if (err) {
+//                 console.error(err);
+//                 return res.json({
+//                     "error": "did not find matching questionnaire"
+//                 });
+//             }
+//
+//             res.json(questionnaire);
+//         });
+//     }
+// });
 app.get('/questionnaire/:id', function(req, res, next) {
     var params = req.params;
 
-    if(params.id){
-        Questionnaire.findOne({'_id': params.id}, function (err, questionnaire) {
-			if(err){
-				console.error(err);
+    if (params.id) {
+        Questionnaire.findOne({
+            '_id': params.id
+        }, function(err, questionnaire) {
+            if (err) {
+                console.error(err);
                 return res.json({
-                    "error": "did not find matching questionnaire"
+                    "error": "Did not find matching questionnaire with ID"
                 });
-			}
-		  res.json(questionnaire);
-		});
-	}
+            }
 
+            res.json(questionnaire);
+        });
+    } else {
+      res.sendStatus(400);
+    }
+});
+// Otsimine autori järgi
+app.get('/questionnaire/author/:author', function(req, res, next) {
+    var params = req.params;
+
+    if (params.author) {
+        Questionnaire.find({
+            'author': params.author
+        }, function(err, questionnaire) {
+            if (err) {
+                console.error(err);
+                return res.json({
+                    "error": "Did not find matching questionnaire with author"
+                });
+            }
+
+            res.json(questionnaire);
+        });
+    } else {
+      res.sendStatus(400);
+    }
 });
 //parameetrite saatmine
 app.put('/questionnaire/:id', function(req, res) {
@@ -494,28 +541,48 @@ app.get('/statistics/:id', function(req, res, next) {
     }
 
 });
-app.get('/statistics/:user', function(req, res, next) {
+// Otsime testi täitja järgi
+app.get('/statistics/user/:user', function(req, res, next) {
     var params = req.params;
 
     if (params.user) {
-
-        var query = Statistics.findOne({
+        Statistics.find({
             'user': params.user
-        });
-
-        query.select("questionnaire user fillDate questions userTime userPoints");
-        query.exec(function(err, userStatistics) {
+        }, function(err, user) {
             if (err) {
                 console.error(err);
                 return res.json({
-                    "error": "did not find matching result object"
+                    "error": "Did not find matching user"
                 });
             }
-            res.json(userStatistics);
-        });
 
+            res.json(user);
+        });
     } else {
-        res.sendStatus(400);
+      res.sendStatus(400);
+    }
+
+});
+
+// Otsime testi id järgi
+app.get('/statistics/questionnaire/:questionnaire', function(req, res, next) {
+    var params = req.params;
+
+    if (params.questionnaire) {
+        Statistics.find({
+            'questionnaire': params.questionnaire
+        }, function(err, questionnaire) {
+            if (err) {
+                console.error(err);
+                return res.json({
+                    "error": "Did not find matching questionnaire"
+                });
+            }
+
+            res.json(questionnaire);
+        });
+    } else {
+      res.sendStatus(400);
     }
 
 });

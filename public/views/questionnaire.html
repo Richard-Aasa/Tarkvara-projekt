@@ -1,7 +1,7 @@
 <md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading">
-	<div layout="column">
+	<div layout="column" style="min-width:480px">
 		<center><h2>Küsimustikud</h2></center>
-		<md-list >
+		<md-list layout-align="center center">
 			<md-list-item ng-repeat="item in questionnaires track by $index" class="md-3-line" ng-click="view(item)" ng-class="{'active-effect' : currentIndex == $index}">
 				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
 					<p>
@@ -24,7 +24,7 @@
 			</md-list-item>
 		</md-list>
 	</div>
-	<div layout="row" flex layout-align="start start">
+	<div layout="row" flex layout-align="start start" ng-if="!loadingInner">
 		<div ng-if="activeQuestionnaire.title">
 			<md-card layout-padding>
 				<center><h2>Küsimustiku haldus</h2></center>
@@ -35,7 +35,7 @@
 					</md-input-container>
 					<md-input-container>
 						<label>Aeg minutites</label>
-						<input ng-model="activeQuestionnaire.totalTime" type="number" step="5" min="5" max="36000">
+						<input ng-model="activeQuestionnaire.totalTime" type="number" step="1" min="1" max="36000">
 					</md-input-container>
 				</div>
 				<div layout="row">
@@ -44,7 +44,7 @@
 						<md-divider></md-divider>
 						<div class="md-block md-body-2">Salvestatud: {{activeQuestionnaire.saved | date:'MM/dd/yyyy @ h:mm'}}</div>
 					</div>
-					<md-button class="md-raised md-primary" ng-click="update(activeQuestionnaire)">Muuda</md-button>
+					<md-button class="md-raised md-primary" ng-disabled="isEditable" ng-click="update(activeQuestionnaire)">Muuda</md-button>
 					<md-button class="md-raised md-warn" ng-click="remove()">Kustuta</md-button>
 				</div>
 			</md-card>
@@ -153,6 +153,9 @@
 				</div>
 			</md-card>
 		</div>
+	</div>
+	<div layout="row" flex layout-align="center center" ng-if="loadingInner">
+		<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 	</div>
 
 	<md-button class="md-fab" ng-click="create()" aria-label="Lisa uus küsimustik" style="position: fixed; bottom: 24px; right: 24px">
