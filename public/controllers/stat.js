@@ -15,24 +15,50 @@
                 }
             };
         })
-        .controller('StatController', ['$scope', '$mdDialog', function($scope, $mdDialog) {
+        .controller('StatController', ['$scope','QuestionnaireService','StatisticsService','UserService', '$mdDialog', function($scope, QuestionnaireService, StatisticsService, UserService,$mdDialog) {
 
-            $scope.loading = false;
-
-            // WORKS
-
-            // QuestionnaireService.query()
-            //     .$promise.then(
-            //         function(data) {
-            //             console.log(data);
-            //             $scope.questionnaire = data;
-            //             $scope.loading = false;
-            //         },
-            //         function(error) {
-            //             console.log(error);
-            //         }
-            //     );
-
+            $scope.loading = true;
+			$scope.questionnaires = [];
+			$scope.questionnaire = {};
+			$scope.allStatistics = [];
+			$scope.users = [];
+			$scope.statistics = [];
+            QuestionnaireService.query()
+                .$promise.then(
+                    function(data) {
+                        console.log(data);
+                        $scope.questionnaires = data;
+                        $scope.loading = false;
+                    },
+                    function(error) {
+                        console.log(error);
+                    }
+                );
+			StatisticsService.query()
+                .$promise.then(
+                    function(data) {
+                        console.log(data);
+                        $scope.allStatistics = data;
+                        $scope.loading = false;
+                    },
+                    function(error) {
+                        console.log(error);
+                    }
+                );
+			
+			UserService.query()
+                .$promise.then(
+                    function(data) {
+                        console.log(data);
+                        $scope.users = data;
+                        $scope.loading = false;
+                    },
+                    function(error) {
+                        console.log(error);
+                    }
+                );
+			
+			
             //statistika ühe küsimuse kohta, nt küsimuse id on 1
             $scope.statistics = [{
                 questionnaire: 1,
@@ -93,7 +119,7 @@
                 userPoints: 40
             }];
 
-            $scope.questionnaire = {
+            /*$scope.questionnaire = {
                 title: "Ajalugu",
                 questions: [{
                     title: "Kes on kass?",
@@ -110,7 +136,7 @@
                 }],
                 totalTime: 200,
                 totalPoints: 30
-            };
+            };*/
 
             $scope.dataOfUserTimes = [];
 
@@ -128,8 +154,10 @@
             //ja sellisel juhul pannakse massiivi samuti kasutaja viimane tulemus
             $scope.addResultsChartOne = function(statistics) {
                 var allNames = [];
-                var allResults = [];
+                var allResults = [];				
                 for (var i = 0; i < statistics.length; i++) {
+					var userIndex = $scope.users.indexOf(statistics[i].user);
+					console.log(userIndex);
                     var check = false;
                     for (var j = 0; j < allNames.length; j++) {
                         if (allNames[j] === statistics[i].user) {
@@ -173,7 +201,7 @@
                 return allTimes;
             };
 
-            $scope.dataOfUserTimes = $scope.addResultsChartTwo($scope.statistics);
+            
 
             $scope.addResultsChartThree = function(data) {
                 var allTimes = [];
@@ -198,7 +226,28 @@
                 var allResults = [sortedTimes, allNames];
                 return allResults;
             };
-
+			
+			$scope.one = [];
+			$scope.two = [];
+			$scope.three = [];
+			
+			$scope.view = function(index){
+				$scope.statistics = [];
+				//var index = $scope.questionnaires.indexOf(item);
+				$scope.questionnaire = $scope.questionnaires[index];
+				console.log($scope.questionnaire);
+				for(var i = 0; i < $scope.allStatistics.length; i++){
+					if($scope.allStatistics[i].questionnaire == $scope.questionnaire._id){
+						$scope.statistics.push($scope.allStatistics[i]);
+					}
+				}
+				console.log($scope.statistics);		
+				
+				
+				$scope.one = $scope.addResultsChartOne($scope.statistics);
+				$scope.two = $scope.addResultsChartTwo($scope.statistics);
+				$scope.three = $scope.addResultsChartThree($scope.statistics);
+			};
 
             //diagramm, mis kuvab kõikide kasutajate punktid, mis nad said terve küsimustiku eest
             $scope.chartUserPoints = {
@@ -209,7 +258,7 @@
                     text: 'Punktid kokku'
                 },
                 xAxis: {
-                    categories: $scope.addResultsChartOne($scope.statistics)[0]
+                    categories: $scope.one[0]
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -221,9 +270,11 @@
                 },
                 series: [{
                     showInLegend: false,
-                    data: $scope.addResultsChartOne($scope.statistics)[1]
+                    data: $scope.one($scope.statistics)[1]
                 }]
             };
+			
+			$scope.dataOfUserTimes = $scope.two($scope.statistics);
 
             //diagramm, mis näitab iga kasutaja puhul, kui palju aega kulus tal iga küsimuse peale
             $scope.chartUserTime = {
@@ -234,7 +285,7 @@
                     text: 'Aeg kokku'
                 },
                 xAxis: {
-                    categories: $scope.addResultsChartOne($scope.statistics)[0]
+                    categories: $scope.one($scope.statistics)[0]
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -266,7 +317,7 @@
                     text: 'Küsimustele kulunud aeg'
                 },
                 xAxis: {
-                    categories: $scope.dataChartThree[1],
+                    categories: $scope.three[1],
                     title: {
                         text: null
                     }

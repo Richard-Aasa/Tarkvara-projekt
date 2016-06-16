@@ -81,11 +81,12 @@
 
       $scope.delete = function(questionnaire) {
         $scope.questionnaires.splice($scope.currentIndex, 1);
-        $scope.activeQuestionnaire = {};
+        console.log(questionnaire);
         questionnaire.$delete()
           .then(
             function(data) {
               showToast('Küsimustik edukalt kustutatud: ' + questionnaire.title);
+              commitViewChange($scope.questionnaires[0]);
             },
             function(error) {
               showToast(error.status + ' ' + error.statusText);
@@ -103,7 +104,6 @@
           .cancel('Ei, mõtlesin ümber');
         $mdDialog.show(confirm).then(function() {
           $scope.delete($scope.activeQuestionnaire);
-          $scope.activeQuestion = {};
         });
       };
 
@@ -135,6 +135,7 @@
 
       var commitViewChange = function(questionnaire) {
         $scope.activeQuestion = {};
+        $scope.currentQuestionIndex = null;
         $scope.originalQuestionnaire = angular.copy(questionnaire);
         $scope.currentIndex = $scope.questionnaires.indexOf(questionnaire);
         $scope.activeQuestionnaire = angular.copy(questionnaire);
