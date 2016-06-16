@@ -14,7 +14,7 @@ table, th, td {
     background-color: #88C474;
 }
 .activeLi {
-	background-color: #E6D557;
+	background-color: #FBC02D;
 }
 md-checkbox.md-checked.green .md-icon {
     background-color: rgb(136, 196, 116);
@@ -74,5 +74,5 @@ md-checkbox.md-checked.green .md-icon {
   border: none;
 }
 .active-effect {
-  background-color: #E6D557;
+  background-color: #FBC02D;
 }
