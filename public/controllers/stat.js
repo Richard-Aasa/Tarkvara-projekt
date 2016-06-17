@@ -178,16 +178,12 @@
                 if (exists === false) {
                     alert("Seda küsimustikku pole veel keegi täitnud");
                     return;
-<<<<<<< HEAD
+
                 } else {
+                    $scope.currentIndex = index;
                     $scope.show = true;
                 }
-=======
-                }else{
-					$scope.currentIndex = index;
-					$scope.show = true;
-				}
->>>>>>> origin/master
+
                 $scope.both1 = $scope.addResultsChartOne($scope.statistics);
 
                 $scope.chartUserPoints = {
