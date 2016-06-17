@@ -51,7 +51,7 @@
 			
 			
             //statistika ühe küsimuse kohta, nt küsimuse id on 1
-            $scope.statistics = [{
+            /*$scope.statistics = [{
                 questionnaire: 1,
                 user: 8,
                 fillDate: "14-06-2016",
@@ -108,7 +108,7 @@
                 }],
                 userTime: 60,
                 userPoints: 40
-            }];        
+            }];  */      
 
             //abifunktsioon punktide kokkulisamiseks
             $scope.sumPoints = function(statistics, i) {
@@ -152,7 +152,7 @@
                 for (var i = 0; i < statistics[0].questions.length; i++) {
                     var temp = {};
                     var tempNames = [];
-                    temp.name = (i + 1).toString() + " küsimus";
+                    temp.name = $scope.questionnaire.questions[i].title;
                     temp.data = [];
                     for (var j = 0; j < statistics.length; j++) {
                         var check = false;
@@ -230,7 +230,6 @@
 				$scope.both2 = $scope.addResultsChartOne($scope.statistics);
 				
 				$scope.dataOfUserTimes = $scope.addResultsChartTwo($scope.statistics);
-				
 				$scope.chartUserTime = {
 					options: {chart: {type: 'bar'}},
 					title: {text: 'Aeg kokku'},
@@ -242,13 +241,13 @@
 								
 				$scope.dataChartThree = $scope.addResultsChartThree($scope.dataOfUserTimes);
 				
+				console.log($scope.dataChartThree[1]);
 				$scope.chartQuestionTime = {
-
-                options: {chart: {type: 'boxplot', inverted: true}},
-                title: {text: 'Küsimustele kulunud aeg'},
-                xAxis: {categories: $scope.dataChartThree[1],title: {text: null}},
-                yAxis: {title: {text: null}},
-                series: [{showInLegend: false, data: $scope.dataChartThree[0], tooltip: { headerFormat: '<b>Küsimus nr {point.key}</b><br/>'}}]
+					options: {chart: {type: 'boxplot', inverted: true}},
+					title: {text: 'Küsimustele kulunud aeg'},
+					xAxis: {categories: $scope.dataChartThree[1],title: {text: null}},
+					yAxis: {title: {text: null}, min: 0, max: 10000},
+					series: [{showInLegend: false, data: $scope.dataChartThree[0], tooltip: { headerFormat: '<b>Küsimus nr {point.key}</b><br/>'}}]
 				};
 			};
 
