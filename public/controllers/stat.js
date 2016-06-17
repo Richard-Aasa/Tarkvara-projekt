@@ -106,7 +106,7 @@
                         for (var k = 0; k < tempNames.length; k++) {
                             try {
                                 if (tempNames[k] === statistics[j].user) {
-                                    temp.data[k] = statistics[j].questions[i].totalTime;
+                                    temp.data[k] = statistics[j].questions[i].totalTime / 1000;
                                     check = true;
                                     break;
                                 }
@@ -116,7 +116,7 @@
                         }
                         if (check === false) {
                             try {
-                                temp.data.push(statistics[j].questions[i].totalTime);
+                                temp.data.push(statistics[j].questions[i].totalTime / 1000);
                             } catch (err) {
                                 console.log(err);
                             }
@@ -193,6 +193,7 @@
                         max: $scope.questionnaire.totalPoints
                     },
                     series: [{
+                        name: 'Punktid',
                         showInLegend: false,
                         data: $scope.both1[1]
                     }]
@@ -225,7 +226,7 @@
                             text: null
                         },
                         min: 0,
-                        max: 10000 /*$scope.questionnaire.totalTime*/
+                        max: $scope.questionnaire.totalTime * 60
                     },
                     series: $scope.dataOfUserTimes
                 };
@@ -253,15 +254,14 @@
                         title: {
                             text: null
                         },
-                        min: 0,
-                        max: 10000
+                        min: 0
                     },
                     series: [{
                         showInLegend: false,
                         data: $scope.dataChartThree[0],
                         tooltip: {
                             headerFormat: '<b>{point.key}</b><br/>'
-                        }
+                        },
                     }]
                 };
             };
