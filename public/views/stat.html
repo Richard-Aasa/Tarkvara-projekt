@@ -1,7 +1,7 @@
 <md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading1 && !loading2 && !loading3">
 		<md-list layout="column" flex="20">
 			<center><h2>Küsimustikud</h2></center>
-			<md-list-item class="md-3-line" ng-repeat="item in questionnaires track by $index" ng-click="view($index)" ng-class="{'active-effect' : currentIndex == $index}">
+			<md-list-item class="md-3-line" ng-repeat="item in questionnaires track by $index" ng-click="view($index)" ng-class="{'active-effect' : currentIndex == $index}" flex>
 				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
 					<p>
 						<b>{{item.title}}</b>
@@ -22,17 +22,17 @@
 		<md-divider></md-divider>
 	</md-list>
 	<div class="charts" layout="column" ng-if="show" flex>
-		<md-card>
-			<highchart id="UserPoints" config="chartUserPoints"></highchart>
+		<md-card flex>
+			<highchart id="UserPoints" config="chartUserPoints" flex></highchart>
 		</md-card>
-		<md-card>
-			<highchart id="UserTime" config="chartUserTime"></highchart>
+		<md-card flex>
+			<highchart id="UserTime" config="chartUserTime" flex></highchart>
 		</md-card>
-		<md-card>
-			<highchart id="QuestionTime" config="chartQuestionTime"></highchart>
+		<md-card flex>
+			<highchart id="QuestionTime" config="chartQuestionTime" flex></highchart>
 		</md-card>
 	</div>
 </md-content>
-<md-content class="md-padding" layout="row" layout-align="center center" ng-if="loading1 || loading2 || loading3">
+<md-content class="md-padding" layout="row" layout-align="center center" ng-if="loading1 || loading2 || loading3" flex>
 	<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </md-content>
