@@ -1,6 +1,6 @@
 <md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading1 && !loading2 && !loading3">
 		<md-list layout="column" flex="20">
-			<md-subheader class="md-title">Küsimustikud</md-subheader>
+			<center><h2>Küsimustikud</h2></center>
 			<md-list-item class="md-3-line" ng-repeat="item in questionnaires track by $index" ng-click="view($index)">
 				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
 					<p>
@@ -27,9 +27,6 @@
 		<highchart id="UserPoints" config="chartUserPoints"></highchart>
 		<highchart id="UserTime" config="chartUserTime"></highchart>
 		<highchart id="QuestionTime" config="chartQuestionTime"></highchart>
-		<!--<hc-chart options="chartUserPoints"></hc-chart>
-		<hc-chart options="chartUserTime"></hc-chart>
-		<hc-chart options="chartQuestionTime"></hc-chart>-->
 	</div>
 </md-content>
 <md-content class="md-padding" layout="row" layout-align="center center" ng-if="loading1 || loading2 || loading3">
