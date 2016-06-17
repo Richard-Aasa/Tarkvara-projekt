@@ -5,7 +5,9 @@
         .module('app')
         .controller('StatController', ['$scope','QuestionnaireService','StatisticsService','UserService', '$mdDialog', function($scope, QuestionnaireService, StatisticsService, UserService,$mdDialog) {
 
-            $scope.loading = true;
+            $scope.loading1 = true;
+            $scope.loading2 = true;
+            $scope.loading3 = true;
 			$scope.questionnaires = [];
 			$scope.questionnaire = {};
 			$scope.allStatistics = [];
@@ -19,7 +21,7 @@
                     function(data) {
                         console.log(data);
                         $scope.questionnaires = data;
-                        $scope.loading = false;
+                        $scope.loading1 = false;
                     },
                     function(error) {
                         console.log(error);
@@ -30,7 +32,7 @@
                     function(data) {
                         console.log(data);
                         $scope.allStatistics = data;
-                        $scope.loading = false;
+                        $scope.loading2 = false;
                     },
                     function(error) {
                         console.log(error);
@@ -42,7 +44,7 @@
                     function(data) {
                         console.log(data);
                         $scope.users = data;
-                        $scope.loading = false;
+                        $scope.loading3 = false;
                     },
                     function(error) {
                         console.log(error);
@@ -204,8 +206,12 @@
 			
 			$scope.view = function(index){
 				$scope.statistics = [];
-				//var index = $scope.questionnaires.indexOf(item);
+				/*if($scope.allStatistics[i].questionnaire.length < 0){
+					alert("Seda küsimustikku pole veel keegi täitnud");
+					return;
+				}*/
 				$scope.questionnaire = $scope.questionnaires[index];
+				$('.charts').delay(100).fadeIn();
 				console.log($scope.questionnaire);
 				for(var i = 0; i < $scope.allStatistics.length; i++){
 					if($scope.allStatistics[i].questionnaire == $scope.questionnaire._id){
