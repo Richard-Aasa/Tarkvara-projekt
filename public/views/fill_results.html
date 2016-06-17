@@ -42,19 +42,24 @@
 	<div layout="column" flex>
 		<md-list>
 			<md-list-item flex>
-			<p>
-				<b>Kasutaja:    </b>{{userName}}
-			</p>
+				<p>
+					<b>Kasutaja:    </b>{{userName}}
+				</p>
 			</md-list-item>
 			<md-list-item flex>
-				<h4>Küsimustik: </h4>{{questionnaire.title}}
+				<p>
+					<b>Küsimustik: </b>{{questionnaire.title}}
+				</p>
 			</md-list-item>
 			<md-list-item flex>
-				<h4>Kulunud aeg: </h4>{{Math.floor(resultObject.userTime / 60000)}}
-				{{((resultObject.userTime % 60000) / 1000).toFixed(0)}}
+				<p>
+					<b>Kulunud aeg: </b>{{Math.floor(resultObject.userTime / 60000)}} {{((resultObject.userTime % 60000) / 1000).toFixed(0)}}
+				</p>
 			</md-list-item>
 			<md-list-item flex>
-				<h4>Saadud punktid: </h4>{{resultObject.userPoints}}
+				<p>
+					<b>Saadud punktid: </b>{{resultObject.userPoints}}
+				</p>
 			</md-list-item>
 			<md-button class="md-raised md-primary" ng-click="return()">Sulge</md-button>
 		</md-list>
