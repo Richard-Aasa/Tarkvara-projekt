@@ -11,6 +11,7 @@
 			$scope.show = false;
 			$scope.questionnaires = [];
 			$scope.questionnaire = {};
+			$scope.currentIndex = 0;
 			$scope.allStatistics = [];
 			$scope.users = [];
 			$scope.statistics = [];
@@ -151,7 +152,7 @@
 			$scope.view = function(index){
 				$scope.statistics = [];
 				$scope.questionnaire = $scope.questionnaires[index];
-				$scope.show = true;
+				$scope.currentIndex = index;
 				var exists = false;
 				for(var i = 0; i < $scope.allStatistics.length; i++){
 					if($scope.allStatistics[i].questionnaire == $scope.questionnaire._id){
@@ -162,11 +163,12 @@
 				if(exists === false){
 					alert("Seda küsimustikku pole veel keegi täitnud");
 					return;
+				}else{
+					$scope.show = true;
 				}
 				$scope.both1 = $scope.addResultsChartOne($scope.statistics);
 				
 				console.log($scope.questionnaire);
-				console.log($scope.both);
 				
 				$scope.chartUserPoints = {
 					options: {chart: {type: 'bar'}},
