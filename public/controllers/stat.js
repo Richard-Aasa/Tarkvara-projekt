@@ -176,18 +176,16 @@
                     }
                 }
                 if (exists === false) {
-                    alert("Seda küsimustikku pole veel keegi täitnud");
+                    var confirm = $mdDialog.confirm()
+						.title('Viga')
+						.textContent('Sellele küsimustikule ei ole keegi veel vastanud.')
+						.ok('SELGE');
+					$mdDialog.show(confirm);
                     return;
-<<<<<<< HEAD
-                } else {
-                    $scope.show = true;
-                }
-=======
                 }else{
 					$scope.currentIndex = index;
 					$scope.show = true;
 				}
->>>>>>> origin/master
                 $scope.both1 = $scope.addResultsChartOne($scope.statistics);
 
                 $scope.chartUserPoints = {
