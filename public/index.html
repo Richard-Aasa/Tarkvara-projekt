@@ -15,9 +15,8 @@
 <body ng-app="app" ng-cloak layout="row" ng-controller="MainController" ng-init="service.requestCurrentUser()">
 
     <section layout="row" flex>
-        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-if="service.isAuthenticated()">
             <md-toolbar>
-                <h1 ng-show="!service.isAuthenticated()" class="md-toolbar-tools">Menüü</h1>
                 <h1 ng-show="service.isAuthenticated()" class="md-toolbar-tools">
                     Tere, {{service.currentUser.name}}
                 </h1>
@@ -28,7 +27,7 @@
                     Küsimustiku loomine
                 </md-list-item>
                 <md-divider></md-divider>
-                <md-list-item ng-click="changeView('/fill_questionnaire')" md-ink-ripple="#88C474">
+                <md-list-item ng-click="changeView('/fill_questionnaire')" ng-if="!service.currentUser.teacher && service.isAuthenticated()" md-ink-ripple="#88C474">
                     Küsimustiku täitmine
                 </md-list-item>
                 <md-divider></md-divider>
