@@ -3,11 +3,11 @@
 		<center><h2>Küsimustikud</h2></center>
 		<md-list layout-align="center center">
 			<md-list-item ng-repeat="item in questionnaires track by $index" class="md-3-line" ng-click="view(item)" ng-class="{'active-effect' : currentIndex == $index}">
-				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
-					<p>
-						<b>{{item.title}}</b>
-					</p>
-					<div class="itemPadding">
+
+
+						<p>
+							<b>{{item.title}}</b>
+						</p>
 						<p>
 							<md-icon class="material-icons">timer</md-icon>
 							{{item.totalTime}}
@@ -19,8 +19,6 @@
 							{{item.saved | date:'MM/dd/yyyy @ h:mm'}}
 						</p>
 						<md-divider></md-divider>
-					</div>
-				</div>
 			</md-list-item>
 		</md-list>
 	</div>

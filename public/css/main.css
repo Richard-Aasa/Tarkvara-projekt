@@ -58,7 +58,7 @@ md-checkbox.md-checked.green .md-icon {
 }
 
 
-.fadeIn.ng-enter,{
+.fadeIn.ng-enter {
   transition: all 0.5s linear;
   opacity: 0;
 }
@@ -68,4 +68,31 @@ md-checkbox.md-checked.green .md-icon {
 
 .active-effect {
   background-color: #607D8B;
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.010em;
+  margin: 3px 0 1px 0;
+  font-weight: 400;
+  line-height: 1.2em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0; }
+}
+.active-effect > .md-icon {
+  background-color: #607D8B;
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.010em;
+  margin: 3px 0 1px 0;
+  font-weight: 400;
+  line-height: 1.2em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0; }
+}
+md-icon.material-icons {
+  color:white;
+  background-color:white;
 }
