@@ -1,31 +1,33 @@
 <md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading">
 	<div layout="column" style="min-width:480px">
-		<center><h2>Küsimustikud</h2></center>
+		<center>
+			<h2>Küsimustikud</h2></center>
 		<md-list layout-align="center center">
-			<md-list-item ng-repeat="item in questionnaires track by $index" class="md-3-line" ng-click="view(item)" ng-class="{'active-effect' : currentIndex == $index}">
+			<md-list-item ng-repeat="item in questionnaires track by $index" class="md-3-line" ng-click="view(item)" ng-class="{'active-effect' : currentIndex == $index}" md-ink-ripple="#88C474">
 				<div layout="column">
-						<p>
-							<b>{{item.title}}</b>
-						</p>
-						<p>
-							<md-icon class="material-icons">timer</md-icon>
-							{{item.totalTime}}
-							<md-icon class="material-icons">star_rate</md-icon>
-							{{item.totalPoints}}
-						</p>
-						<p>
-							<md-icon class="material-icons">date_range</md-icon>
-							{{item.saved | date:'MM/dd/yyyy @ h:mm'}}
-						</p>
-					</div>
-						<md-divider></md-divider>
+					<p>
+						<b>{{item.title}}</b>
+					</p>
+					<p>
+						<md-icon class="material-icons">timer</md-icon>
+						{{item.totalTime}}
+						<md-icon class="material-icons">star_rate</md-icon>
+						{{item.totalPoints}}
+					</p>
+					<p>
+						<md-icon class="material-icons">date_range</md-icon>
+						{{item.saved | date:'MM/dd/yyyy @ h:mm'}}
+					</p>
+				</div>
+				<md-divider></md-divider>
 			</md-list-item>
 		</md-list>
 	</div>
 	<div layout="row" flex layout-align="start start" ng-if="!loadingInner">
 		<div ng-if="activeQuestionnaire.title">
 			<md-card layout-padding>
-				<center><h2>Küsimustiku haldus</h2></center>
+				<center>
+					<h2>Küsimustiku haldus</h2></center>
 				<div layout="row">
 					<md-input-container flex>
 						<label>Pealkiri</label>
@@ -59,7 +61,7 @@
 									<!-- <span>{{x.type}}</span> -->
 									<span><md-icon class="material-icons">star_rate</md-icon>{{x.maxPoints}}</span>
 								</div>
-							<md-list-item>
+								<md-list-item>
 						</td>
 						<td class="no-table-border">
 							<md-button ng-click="remQuestion(x)" class="md-icon-button md-secondary">
@@ -73,7 +75,8 @@
 		</div>
 		<div ng-if="activeQuestion.title">
 			<md-card layout-padding>
-				<center><h2>Küsimuse haldus</h2></center>
+				<center>
+					<h2>Küsimuse haldus</h2></center>
 				<div layout="row">
 					<md-input-container flex>
 						<label>Küsimus</label>
@@ -156,7 +159,7 @@
 		<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 	</div>
 
-	<md-button  class="md-fab" ng-click="create()" aria-label="Lisa uus küsimustik" style="position: fixed; bottom: 24px; right: 24px; background-color:##607D8B" >
+	<md-button class="md-fab" ng-click="create()" aria-label="Lisa uus küsimustik" style="position: fixed; bottom: 24px; right: 24px; background-color:##607D8B">
 		<md-tooltip>
 			Lisa uus küsimustik
 		</md-tooltip>
