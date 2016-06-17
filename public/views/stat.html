@@ -1,7 +1,7 @@
 <md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading1 && !loading2 && !loading3">
 		<md-list layout="column" flex="20">
 			<md-subheader class="md-title">Küsimustikud</md-subheader>
-			<md-list-item class="md-3-line" ng-repeat="item in questionnaires track by $index" ng-click="view($index)">
+			<md-list-item class="md-3-line" ng-repeat="item in questionnaires track by $index" ng-click="view($index)" ng-class="{'active-effect' : currentIndex == $index}">
 				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
 					<p>
 						<b>{{item.title}}</b>
@@ -23,7 +23,7 @@
 			</md-list-item>
 			<md-divider></md-divider>
 		</md-list>
-	<div class="fadeIn" layout="column" ng-if="show == true" flex>
+	<div class="charts" layout="column" ng-if="show" flex>
 		<highchart id="UserPoints" config="chartUserPoints"></highchart>
 		<highchart id="UserTime" config="chartUserTime"></highchart>
 		<highchart id="QuestionTime" config="chartQuestionTime"></highchart>
