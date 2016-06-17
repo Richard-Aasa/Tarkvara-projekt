@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('StatController', ['$scope', 'QuestionnaireService', 'StatisticsService', 'UserService', '$mdDialog', function($scope, QuestionnaireService, StatisticsService, UserService, $mdDialog) {
+        .controller('StatController', ['$scope', '$resource', 'StatisticsService', 'UserService', '$mdDialog', function($scope, $resource, StatisticsService, UserService, $mdDialog) {
 
             $scope.loading1 = true;
             $scope.loading2 = true;
@@ -18,21 +18,25 @@
             $scope.dataOfUserTimes = [];
             $scope.both1 = [];
             $scope.both2 = [];
-            QuestionnaireService.query()
-                .$promise.then(
-                    function(data) {
-                        data.sort(function(a, b) {
-                            var textA = a.title.toUpperCase();
-                            var textB = b.title.toUpperCase();
-                            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-                        });
-                        $scope.questionnaires = data;
-                        $scope.loading1 = false;
-                    },
-                    function(error) {
-                        console.log(error);
-                    }
-                );
+            var QuestionnaireByAuthor = $resource('/questionnaire/author/:author', {
+                author: '@author'
+            });
+            QuestionnaireByAuthor.query({
+                author: $scope.service.currentUser._id
+            }).$promise.then(
+                function(data) {
+                    data.sort(function(a, b) {
+                        var textA = a.title.toUpperCase();
+                        var textB = b.title.toUpperCase();
+                        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                    });
+                    $scope.questionnaires = data;
+                    $scope.loading1 = false;
+                },
+                function(error) {
+                    console.log(error);
+                }
+            );
             StatisticsService.query()
                 .$promise.then(
                     function(data) {
