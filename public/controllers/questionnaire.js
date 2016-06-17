@@ -147,6 +147,7 @@
               $scope.originalQuestionnaire = angular.copy($scope.activeQuestionnaire);
               $scope.currentIndex = $scope.questionnaires.indexOf(questionnaire);
               $scope.loadingInner = true;
+              
               StatExists.query({
                   questionnaire: questionnaire._id
               }).$promise.then(

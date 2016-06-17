@@ -548,7 +548,7 @@ app.get('/statistics/user/:user', function(req, res, next) {
     if (params.user) {
         Statistics.find({
             'user': params.user
-        }, function(err, user) {
+        }, function(err, stats) {
             if (err) {
                 console.error(err);
                 return res.json({
@@ -556,7 +556,7 @@ app.get('/statistics/user/:user', function(req, res, next) {
                 });
             }
 
-            res.json(user);
+            res.json(stats);
         });
     } else {
       res.sendStatus(400);

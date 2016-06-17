@@ -231,14 +231,16 @@
           templateUrl: 'views/fill_results.html',
           locals: {
             results: $scope.resultObject,
-            questionnaire: $scope.questionnaire
+            questionnaire: $scope.questionnaire,
+            userName: $scope.service.currentUser.name
           },
           controller: DialogController
         });
 
-        function DialogController($scope, $mdDialog, results, questionnaire) {
+        function DialogController($scope, $mdDialog, results, questionnaire, userName) {
           $scope.resultObject = results;
           $scope.questionnaire = questionnaire;
+          $scope.userName = userName;
           $scope.return = function() {
             $mdDialog.hide();
             $location.path('/fill_questionnaire');

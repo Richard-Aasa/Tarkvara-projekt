@@ -1,4 +1,4 @@
-<md-content class="md-padding" layout="row" ng-init="service.isAuthenticated()" ng-show="!loading">
+<md-content class="md-padding" layout="row" ng-init="service.isStudent()" ng-show="!loading">
 	<div layout="column" flex>
 		<md-toolbar class="md-hue-2">
         <div flex class="md-toolbar-tools">
@@ -8,7 +8,7 @@
         </div>
 		</md-toolbar>
 		<md-list>
-			<md-list-item class="md-3-line" ng-repeat="item in questionnaires">
+			<md-list-item class="md-3-line" ng-repeat="item in questionnaires track by $index">
 				<div class="md-list-item-text" layout="column">
 					<h4 class="md-title" style="word-wrap: break-word">
 							{{item.title}}
@@ -27,7 +27,7 @@
 						<md-divider></md-divider>
 					</div>
 				</div>
-				<md-button class="md-raised loginbtn" ng-click="" ng-disabled="true :  " ng-click="">Tulemus</md-button>
+				<md-button class="md-raised md-accent" ng-click="seeResults($index)" ng-disabled="exists($index)" md-ink-ripple="#88C474">Tulemus</md-button>
 				<md-button class="md-raised md-primary" ng-click="confirm(item._id)" md-ink-ripple="#88C474">Alusta</md-button>
 			</md-list-item>
 		</md-list>
