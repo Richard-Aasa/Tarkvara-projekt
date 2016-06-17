@@ -9,11 +9,6 @@
 		</md-toolbar>
 		<md-list>
 			<!--  (| orderBy: 'title'  ) kui see asi ng-repeati panna siis ta järjestab küsimustiku nime järgi, näiteks -->
-			<md-list-item class="md-3-line" ng-repeat="item in questionnaires track by $index">
-				<div class="md-list-item-text" layout="column">
-					<h4 class="md-title" style="word-wrap: break-word">
-							{{item.title}}
-					</h4>
 			<md-list-item class="md-3-line" ng-repeat="item in questionnaires | orderBy: 'title'  track by $index">
 				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
 					<p>
