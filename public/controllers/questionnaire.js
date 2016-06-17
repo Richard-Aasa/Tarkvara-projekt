@@ -21,19 +21,19 @@
             QuestionnaireByAuthor.query({
                 author: $scope.service.currentUser._id
             }).$promise.then(
-              function(data) {
-                data.sort(function(a, b) {
-                  var textA = a.title.toUpperCase();
-                  var textB = b.title.toUpperCase();
-                  return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-                });
-                $scope.questionnaires = data;
-                commitViewChange($scope.questionnaires[0]);
-                $scope.loading = false;
-              },
-              function(error) {
-                console.log(error);
-              }
+                function(data) {
+                    data.sort(function(a, b) {
+                        var textA = a.title.toUpperCase();
+                        var textB = b.title.toUpperCase();
+                        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                    });
+                    $scope.questionnaires = data;
+                    commitViewChange($scope.questionnaires[0]);
+                    $scope.loading = false;
+                },
+                function(error) {
+                    console.log(error);
+                }
             );
 
             $scope.save = function(questionnaire) {
@@ -141,24 +141,29 @@
             });
 
             var commitViewChange = function(questionnaire) {
-              $scope.activeQuestion = null;
-              $scope.currentQuestionIndex = null;
-              $scope.activeQuestionnaire = angular.copy(questionnaire);
-              $scope.originalQuestionnaire = angular.copy($scope.activeQuestionnaire);
-              $scope.currentIndex = $scope.questionnaires.indexOf(questionnaire);
-              $scope.loadingInner = true;
-              
-              StatExists.query({
-                  questionnaire: questionnaire._id
-              }).$promise.then(
-                function(success) {
+                $scope.activeQuestion = null;
+                $scope.currentQuestionIndex = null;
+                $scope.activeQuestionnaire = angular.copy(questionnaire);
+                $scope.originalQuestionnaire = angular.copy($scope.activeQuestionnaire);
+                $scope.currentIndex = $scope.questionnaires.indexOf(questionnaire);
+                $scope.loadingInner = true;
+                if(questionnaire._id) {
+                  StatExists.query({
+                      questionnaire: questionnaire._id
+                  }).$promise.then(
+                      function(success) {
+                          $scope.loadingInner = false;
+                          if (success.length > 0) {
+                              $scope.isEditable = true;
+                          } else {
+                              $scope.isEditable = false;
+                          }
+                      });
+                } else {
                   $scope.loadingInner = false;
-                  if(success.length > 0) {
-                    $scope.isEditable = true;
-                  } else {
-                    $scope.isEditable = false;
-                  }
-                });
+                  $scope.isEditable = false;
+                }
+
             };
 
             $scope.view = function(questionnaire, $event) {
@@ -233,10 +238,10 @@
                     };
 
                     $scope.create = function(item) {
-                        $mdDialog.hide();
                         item.author = author._id;
                         item.createdDate = Date.now();
                         item.saved = Date.now();
+                        $mdDialog.hide();
                         save(item);
                     };
 

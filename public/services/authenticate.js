@@ -25,7 +25,7 @@
                 $http.get('/auth/logout').
                 success(function() {
                     service.currentUser = null;
-                    $location.path('/');
+                    $location.path('/home');
                 });
             },
 
@@ -51,14 +51,13 @@
             isTeacher: function() {
                 service.requestCurrentUser();
                 if (!(service.isAuthenticated() && service.currentUser.teacher)) {
-                    $location.path('/');
+                    $location.path('/home');
                 }
             },
 
             isStudent: function() {
                 service.requestCurrentUser();
                 if (!(service.isAuthenticated() && !service.currentUser.teacher)) {
-                    $location.path('/');
                 }
             }
 

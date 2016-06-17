@@ -36,7 +36,7 @@
             controller: 'FillQuestionnaireController'
           })
           .otherwise({
-            redirectTo: '/'
+            redirectTo: '/home'
           });
 
 
