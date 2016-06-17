@@ -1,14 +1,14 @@
-<md-content class="md-padding" layout="row" ng-init="service.isStudent()" ng-show="!loading">
+<md-content class="md-padding" layout="row" ng-init="service.isStudent()" ng-show="!loading" flex>
 	<div layout="column" flex>
 		<center><h2>Küsimustikud</h2></center>
-		<md-list>
+		<md-list flex>
 			<!--  (| orderBy: 'title'  ) kui see asi ng-repeati panna siis ta järjestab küsimustiku nime järgi, näiteks -->
-			<md-list-item class="md-3-line" ng-repeat="item in questionnaires | orderBy: 'title'  track by $index">
-				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
+			<md-list-item class="md-3-line" ng-repeat="item in questionnaires | orderBy: 'title'  track by $index" flex>
+				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474" flex>
 					<p>
 						<b>{{item.title}}</b>
 					</p>
-					<div class="itemPadding">
+					<div class="itemPadding" flex>
 						<p>
 							<md-icon class="material-icons">timer</md-icon>
 							{{item.totalTime}}
