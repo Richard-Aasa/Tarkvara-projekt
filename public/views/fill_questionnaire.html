@@ -10,10 +10,10 @@
 		<md-list>
 			<!--  (| orderBy: 'title'  ) kui see asi ng-repeati panna siis ta järjestab küsimustiku nime järgi, näiteks -->
 			<md-list-item class="md-3-line" ng-repeat="item in questionnaires | orderBy: 'title'  track by $index">
-				<div class="md-list-item-text" layout="column">
-					<h4 class="md-title" style="word-wrap: break-word">
-							{{item.title}}
-					</h4>
+				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
+					<p>
+						<b>{{item.title}}</b>
+					</p>
 					<div class="itemPadding">
 						<p>
 							<md-icon class="material-icons">timer</md-icon>
