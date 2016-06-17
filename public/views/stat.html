@@ -23,7 +23,7 @@
 			</md-list-item>
 			<md-divider></md-divider>
 		</md-list>
-	<div class="charts" layout="column" flex style="display:none">
+	<div class="fadeIn" layout="column" ng-if="show == true" flex>
 		<highchart id="UserPoints" config="chartUserPoints"></highchart>
 		<highchart id="UserTime" config="chartUserTime"></highchart>
 		<highchart id="QuestionTime" config="chartQuestionTime"></highchart>

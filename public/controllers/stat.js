@@ -8,6 +8,7 @@
             $scope.loading1 = true;
             $scope.loading2 = true;
             $scope.loading3 = true;
+			$scope.show = false;
 			$scope.questionnaires = [];
 			$scope.questionnaire = {};
 			$scope.allStatistics = [];
@@ -54,67 +55,6 @@
                         console.log(error);
                     }
                 );
-
-
-            //statistika ühe küsimuse kohta, nt küsimuse id on 1
-            /*$scope.statistics = [{
-                questionnaire: 1,
-                user: 8,
-                fillDate: "14-06-2016",
-                questions: [{
-                    totalTime: 1,
-                    points: 1,
-                    correct: true
-                }, {
-                    totalTime: 1,
-                    points: 1,
-                    correct: false
-                }, {
-                    totalTime: 1,
-                    points: 1,
-                    correct: true
-                }, ],
-                userTime: 60,
-                userPoints: 40
-            }, {
-                questionnaire: 1,
-                user: 7,
-                fillDate: "14-06-2016",
-                questions: [{
-                    totalTime: 3,
-                    points: 10,
-                    correct: true
-                }, {
-                    totalTime: 10,
-                    points: 5,
-                    correct: false
-                }, {
-                    totalTime: 8,
-                    points: 7,
-                    correct: true
-                }],
-                userTime: 60,
-                userPoints: 40
-            }, {
-                questionnaire: 1,
-                user: 5,
-                fillDate: "14-06-2016",
-                questions: [{
-                    totalTime: 20,
-                    points: 3,
-                    correct: true
-                }, {
-                    totalTime: 10,
-                    points: 5,
-                    correct: false
-                }, {
-                    totalTime: 30,
-                    points: 7,
-                    correct: true
-                }],
-                userTime: 60,
-                userPoints: 40
-            }];  */
 
             //abifunktsioon punktide kokkulisamiseks
             $scope.sumPoints = function(statistics, i) {
@@ -211,6 +151,7 @@
 			$scope.view = function(index){
 				$scope.statistics = [];
 				$scope.questionnaire = $scope.questionnaires[index];
+				$scope.show = true;
 				var exists = false;
 				for(var i = 0; i < $scope.allStatistics.length; i++){
 					if($scope.allStatistics[i].questionnaire == $scope.questionnaire._id){
@@ -222,10 +163,11 @@
 					alert("Seda küsimustikku pole veel keegi täitnud");
 					return;
 				}
-				$('.charts').delay(100).fadeIn();
-				console.log($scope.statistics);
 				$scope.both1 = $scope.addResultsChartOne($scope.statistics);
-
+				
+				console.log($scope.questionnaire);
+				console.log($scope.both);
+				
 				$scope.chartUserPoints = {
 					options: {chart: {type: 'bar'}},
 					title: {text: 'Punktid kokku'},
@@ -241,11 +183,10 @@
 
 				$scope.dataOfUserTimes = $scope.addResultsChartTwo($scope.statistics);
 				$scope.chartUserTime = {
-					options: {chart: {type: 'bar'}},
+					options: {chart: {type: 'bar'}, plotOptions: {series: {stacking: 'normal'}}},
 					title: {text: 'Aeg kokku'},
 					xAxis: {categories: $scope.both2[0]},
 					yAxis: {allowDecimals: false, reversedStacks: false, title: {text: null}, min: 0, max: 10000/*$scope.questionnaire.totalTime*/},
-					plotOptions: {series: {stacking: 'normal'}},
 					series: $scope.dataOfUserTimes
 				};
 
