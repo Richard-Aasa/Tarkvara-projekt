@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('StatController', ['$scope','QuestionnaireService','StatisticsService','UserService', '$mdDialog', function($scope, QuestionnaireService, StatisticsService, UserService,$mdDialog) {
+        .controller('StatController', ['$scope', 'QuestionnaireService', 'StatisticsService', 'UserService', '$mdDialog', function($scope, QuestionnaireService, StatisticsService, UserService, $mdDialog) {
 
             $scope.loading1 = true;
             $scope.loading2 = true;
@@ -18,6 +18,7 @@
 			$scope.dataOfUserTimes = [];
 			$scope.both1 = [];
 			$scope.both2 = [];
+
             QuestionnaireService.query()
                 .$promise.then(
                     function(data) {
@@ -33,7 +34,7 @@
                         console.log(error);
                     }
                 );
-			StatisticsService.query()
+            StatisticsService.query()
                 .$promise.then(
                     function(data) {
                         console.log(data);
@@ -45,7 +46,7 @@
                     }
                 );
 
-			UserService.query()
+            UserService.query()
                 .$promise.then(
                     function(data) {
                         console.log(data);
@@ -72,11 +73,11 @@
             $scope.addResultsChartOne = function(statistics) {
                 var allNames = [];
                 var allResults = [];
-				console.log($scope.users);
+                console.log($scope.users);
                 for (var i = 0; i < statistics.length; i++) {
-					//var userIndex = $scope.users.indexOf("575daed5811cc15c12ab7a40");
-					console.log($scope.users.indexOf("575daed5811cc15c12ab7a40"));
-					console.log(statistics[i].user);
+                    //var userIndex = $scope.users.indexOf("575daed5811cc15c12ab7a40");
+                    console.log($scope.users.indexOf("575daed5811cc15c12ab7a40"));
+                    console.log(statistics[i].user);
                     var check = false;
                     for (var j = 0; j < allNames.length; j++) {
                         if (allNames[j] === statistics[i].user) {
@@ -103,20 +104,24 @@
                     temp.data = [];
                     for (var j = 0; j < statistics.length; j++) {
                         var check = false;
-						//console.log(statistics[j].questions[i].totalTime);
+                        //console.log(statistics[j].questions[i].totalTime);
                         for (var k = 0; k < tempNames.length; k++) {
-							try{
-								if (tempNames[k] === statistics[j].user) {
-									temp.data[k] = statistics[j].questions[i].totalTime;
-									check = true;
-									break;
-								}
-							}catch(err){console.log(err);}
+                            try {
+                                if (tempNames[k] === statistics[j].user) {
+                                    temp.data[k] = statistics[j].questions[i].totalTime;
+                                    check = true;
+                                    break;
+                                }
+                            } catch (err) {
+                                console.log(err);
+                            }
                         }
                         if (check === false) {
-							try{
-								temp.data.push(statistics[j].questions[i].totalTime);
-							}catch(err){console.log(err);}
+                            try {
+                                temp.data.push(statistics[j].questions[i].totalTime);
+                            } catch (err) {
+                                console.log(err);
+                            }
                         }
                         tempNames.push(statistics[j].user);
                     }
