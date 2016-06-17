@@ -1,6 +1,6 @@
 <md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading1 && !loading2 && !loading3">
 		<md-list layout="column" flex="20">
-			<md-subheader class="md-no-sticky"></md-subheader>
+			<md-subheader class="md-title">Küsimustikud</md-subheader>
 			<md-list-item class="md-3-line" ng-repeat="item in questionnaires track by $index" ng-click="view($index)">
 				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
 					<p>

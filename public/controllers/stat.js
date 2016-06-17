@@ -206,18 +206,19 @@
 			
 			$scope.view = function(index){
 				$scope.statistics = [];
-				/*if($scope.allStatistics[i].questionnaire.length < 0){
-					alert("Seda küsimustikku pole veel keegi täitnud");
-					return;
-				}*/
 				$scope.questionnaire = $scope.questionnaires[index];
-				$('.charts').delay(100).fadeIn();
-				console.log($scope.questionnaire);
+				var exists = false;
 				for(var i = 0; i < $scope.allStatistics.length; i++){
 					if($scope.allStatistics[i].questionnaire == $scope.questionnaire._id){
 						$scope.statistics.push($scope.allStatistics[i]);
+						exists = true;
 					}
 				}
+				if(exists === false){
+					alert("Seda küsimustikku pole veel keegi täitnud");
+					return;
+				}
+				$('.charts').delay(100).fadeIn();
 				console.log($scope.statistics);		
 				
 				$scope.both1 = $scope.addResultsChartOne($scope.statistics);
