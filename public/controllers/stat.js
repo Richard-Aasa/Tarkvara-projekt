@@ -155,7 +155,6 @@
             $scope.view = function(index) {
                 $scope.statistics = [];
                 $scope.questionnaire = $scope.questionnaires[index];
-                $scope.show = true;
                 var exists = false;
                 for (var i = 0; i < $scope.allStatistics.length; i++) {
                     if ($scope.allStatistics[i].questionnaire == $scope.questionnaire._id) {
@@ -166,7 +165,9 @@
                 if (exists === false) {
                     alert("Seda küsimustikku pole veel keegi täitnud");
                     return;
-                }
+                }else{
+					$scope.show = true;
+				}
                 $scope.both1 = $scope.addResultsChartOne($scope.statistics);
 
                 console.log($scope.questionnaire);
