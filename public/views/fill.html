@@ -16,7 +16,7 @@
                 </md-card-header-text>
             </div> -->
             <md-list>
-                <md-list-item ng-repeat="item in questionnaire.questions" class="listItem md-3-line" ng-click="view(item)">
+                <md-list-item ng-repeat="item in questionnaire.questions track by $index" class="listItem md-3-line" ng-click="view(item)">
                     <div md-ink-ripple="#88C474" class="md-list-item-text" layout="column">
                         <p>
                             <b>{{item.title}}</b>

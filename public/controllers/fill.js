@@ -140,7 +140,7 @@
           $scope.filledQuestion[index] = vastused;
         }
         //kontrolli veel kas sellisele küsimusele on juba vastatud.
-        $('.listItem')[index].className += " passedLi";
+        $('.listItem')[index].className += " hall";
 
         var real_len = 0;
 
