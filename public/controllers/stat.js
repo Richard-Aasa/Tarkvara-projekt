@@ -3,20 +3,20 @@
 
     angular
         .module('app')
-        .controller('StatController', ['$scope','QuestionnaireService','StatisticsService','UserService', '$mdDialog', function($scope, QuestionnaireService, StatisticsService, UserService,$mdDialog) {
+        .controller('StatController', ['$scope', 'QuestionnaireService', 'StatisticsService', 'UserService', '$mdDialog', function($scope, QuestionnaireService, StatisticsService, UserService, $mdDialog) {
 
             $scope.loading1 = true;
             $scope.loading2 = true;
             $scope.loading3 = true;
-			$scope.show = false;
-			$scope.questionnaires = [];
-			$scope.questionnaire = {};
-			$scope.allStatistics = [];
-			$scope.users = [];
-			$scope.statistics = [];
-			$scope.dataOfUserTimes = [];
-			$scope.both1 = [];
-			$scope.both2 = [];
+            $scope.show = false;
+            $scope.questionnaires = [];
+            $scope.questionnaire = {};
+            $scope.allStatistics = [];
+            $scope.users = [];
+            $scope.statistics = [];
+            $scope.dataOfUserTimes = [];
+            $scope.both1 = [];
+            $scope.both2 = [];
             QuestionnaireService.query()
                 .$promise.then(
                     function(data) {
@@ -32,7 +32,7 @@
                         console.log(error);
                     }
                 );
-			StatisticsService.query()
+            StatisticsService.query()
                 .$promise.then(
                     function(data) {
                         console.log(data);
@@ -44,7 +44,7 @@
                     }
                 );
 
-			UserService.query()
+            UserService.query()
                 .$promise.then(
                     function(data) {
                         console.log(data);
@@ -71,11 +71,11 @@
             $scope.addResultsChartOne = function(statistics) {
                 var allNames = [];
                 var allResults = [];
-				console.log($scope.users);
+                console.log($scope.users);
                 for (var i = 0; i < statistics.length; i++) {
-					//var userIndex = $scope.users.indexOf("575daed5811cc15c12ab7a40");
-					console.log($scope.users.indexOf("575daed5811cc15c12ab7a40"));
-					console.log(statistics[i].user);
+                    //var userIndex = $scope.users.indexOf("575daed5811cc15c12ab7a40");
+                    console.log($scope.users.indexOf("575daed5811cc15c12ab7a40"));
+                    console.log(statistics[i].user);
                     var check = false;
                     for (var j = 0; j < allNames.length; j++) {
                         if (allNames[j] === statistics[i].user) {
@@ -102,20 +102,24 @@
                     temp.data = [];
                     for (var j = 0; j < statistics.length; j++) {
                         var check = false;
-						//console.log(statistics[j].questions[i].totalTime);
+                        //console.log(statistics[j].questions[i].totalTime);
                         for (var k = 0; k < tempNames.length; k++) {
-							try{
-								if (tempNames[k] === statistics[j].user) {
-									temp.data[k] = statistics[j].questions[i].totalTime;
-									check = true;
-									break;
-								}
-							}catch(err){console.log(err);}
+                            try {
+                                if (tempNames[k] === statistics[j].user) {
+                                    temp.data[k] = statistics[j].questions[i].totalTime;
+                                    check = true;
+                                    break;
+                                }
+                            } catch (err) {
+                                console.log(err);
+                            }
                         }
                         if (check === false) {
-							try{
-								temp.data.push(statistics[j].questions[i].totalTime);
-							}catch(err){console.log(err);}
+                            try {
+                                temp.data.push(statistics[j].questions[i].totalTime);
+                            } catch (err) {
+                                console.log(err);
+                            }
                         }
                         tempNames.push(statistics[j].user);
                     }
@@ -148,71 +152,120 @@
                 return allResults;
             };
 
-			$scope.view = function(index){
-				$scope.statistics = [];
-				$scope.questionnaire = $scope.questionnaires[index];
-				$scope.show = true;
-				var exists = false;
-				for(var i = 0; i < $scope.allStatistics.length; i++){
-					if($scope.allStatistics[i].questionnaire == $scope.questionnaire._id){
-						$scope.statistics.push($scope.allStatistics[i]);
-						exists = true;
-					}
-				}
-				if(exists === false){
-					alert("Seda küsimustikku pole veel keegi täitnud");
-					return;
-				}
-				$scope.both1 = $scope.addResultsChartOne($scope.statistics);
-				
-				console.log($scope.questionnaire);
-				console.log($scope.both);
-				
-				$scope.chartUserPoints = {
-					options: {chart: {type: 'bar'}},
-					title: {text: 'Punktid kokku'},
-					xAxis: {categories: $scope.both1[0]},
-					yAxis: {allowDecimals: false,title: {text: null}, min: 0, max: $scope.questionnaire.totalPoints},
-					series: [{
-						showInLegend: false,
-						data: $scope.both1[1]
-					}]
-				};
+            $scope.view = function(index) {
+                $scope.statistics = [];
+                $scope.questionnaire = $scope.questionnaires[index];
+                $scope.show = true;
+                var exists = false;
+                for (var i = 0; i < $scope.allStatistics.length; i++) {
+                    if ($scope.allStatistics[i].questionnaire == $scope.questionnaire._id) {
+                        $scope.statistics.push($scope.allStatistics[i]);
+                        exists = true;
+                    }
+                }
+                if (exists === false) {
+                    alert("Seda küsimustikku pole veel keegi täitnud");
+                    return;
+                }
+                $scope.both1 = $scope.addResultsChartOne($scope.statistics);
 
-				$scope.both2 = $scope.addResultsChartOne($scope.statistics);
+                console.log($scope.questionnaire);
+                console.log($scope.both);
 
-				$scope.dataOfUserTimes = $scope.addResultsChartTwo($scope.statistics);
-				$scope.chartUserTime = {
-					options: {chart: {type: 'bar'}, plotOptions: {series: {stacking: 'normal'}}},
-					title: {text: 'Aeg kokku'},
-					xAxis: {categories: $scope.both2[0]},
-					yAxis: {allowDecimals: false, reversedStacks: false, title: {text: null}, min: 0, max: 10000/*$scope.questionnaire.totalTime*/},
-					series: $scope.dataOfUserTimes
-				};
+                $scope.chartUserPoints = {
+                    options: {
+                        chart: {
+                            type: 'bar'
+                        }
+                    },
+                    title: {
+                        text: 'Õpilaste punktid'
+                    },
+                    xAxis: {
+                        categories: $scope.both1[0]
+                    },
+                    yAxis: {
+                        allowDecimals: false,
+                        title: {
+                            text: null
+                        },
+                        min: 0,
+                        max: $scope.questionnaire.totalPoints
+                    },
+                    series: [{
+                        showInLegend: false,
+                        data: $scope.both1[1]
+                    }]
+                };
 
-				$scope.dataChartThree = $scope.addResultsChartThree($scope.dataOfUserTimes);
+                $scope.both2 = $scope.addResultsChartOne($scope.statistics);
 
-				console.log($scope.dataChartThree[1]);
-				$scope.chartQuestionTime = {
-					options: {chart: {type: 'boxplot', inverted: true}},
-					title: {text: 'Küsimustele kulunud aeg'},
-					xAxis: {categories: $scope.dataChartThree[1],title: {text: null}},
-					yAxis: {title: {text: null}, min: 0, max: 10000},
-					series: [{showInLegend: false, data: $scope.dataChartThree[0], tooltip: { headerFormat: '<b>Küsimus nr {point.key}</b><br/>'}}]
-				};
-			};
+                $scope.dataOfUserTimes = $scope.addResultsChartTwo($scope.statistics);
+                $scope.chartUserTime = {
+                    options: {
+                        chart: {
+                            type: 'bar'
+                        },
+                        plotOptions: {
+                            series: {
+                                stacking: 'normal'
+                            }
+                        }
+                    },
+                    title: {
+                        text: 'Õpilaste ajakulu'
+                    },
+                    xAxis: {
+                        categories: $scope.both2[0]
+                    },
+                    yAxis: {
+                        allowDecimals: false,
+                        reversedStacks: false,
+                        title: {
+                            text: null
+                        },
+                        min: 0,
+                        max: 10000 /*$scope.questionnaire.totalTime*/
+                    },
+                    series: $scope.dataOfUserTimes
+                };
 
-            //diagramm, mis kuvab kõikide kasutajate punktid, mis nad said terve küsimustiku eest
+                $scope.dataChartThree = $scope.addResultsChartThree($scope.dataOfUserTimes);
 
+                console.log($scope.dataChartThree[1]);
+                $scope.chartQuestionTime = {
+                    options: {
+                        chart: {
+                            type: 'boxplot',
+                            inverted: true
+                        }
+                    },
+                    title: {
+                        text: 'Küsimuste ajakulu'
+                    },
+                    xAxis: {
+                        categories: $scope.dataChartThree[1],
+                        title: {
+                            text: null
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: null
+                        },
+                        min: 0,
+                        max: 10000
+                    },
+                    series: [{
+                        showInLegend: false,
+                        data: $scope.dataChartThree[0],
+                        tooltip: {
+                            headerFormat: '<b>{point.key}</b><br/>'
+                        }
+                    }]
+                };
+            };
 
-
-            //diagramm, mis näitab iga kasutaja puhul, kui palju aega kulus tal iga küsimuse peale
-           /*
-
-
-
-            //diagramm, mis näitab küsimustele kulunud aega
-            */
 
         }]);
 }());
