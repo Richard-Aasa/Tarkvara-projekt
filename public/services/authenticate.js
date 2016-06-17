@@ -58,6 +58,7 @@
             isStudent: function() {
                 service.requestCurrentUser();
                 if (!(service.isAuthenticated() && !service.currentUser.teacher)) {
+                    $location.path('/home');
                 }
             }
 
