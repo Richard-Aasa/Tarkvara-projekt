@@ -76,14 +76,14 @@
             $scope.addResultsChartOne = function(statistics) {
                 var allNames = [];
                 var allResults = [];
-				var activeUser;
+                var activeUser;
                 console.log($scope.users);
                 for (var i = 0; i < statistics.length; i++) {
-					for(var k = 0; k < $scope.users.length; k++){
-						if($scope.users[k]._id == statistics[i].user) {
-							activeUser = $scope.users[k].name;
-						}
-					}
+                    for (var k = 0; k < $scope.users.length; k++) {
+                        if ($scope.users[k]._id == statistics[i].user) {
+                            activeUser = $scope.users[k].name;
+                        }
+                    }
                     /*var userIndex = $scope.users.indexOf(statistics[i].user);
 					var randObject = $scope.users.indexOf($scope.users[0]);
                     console.log(randObject);
@@ -179,16 +179,19 @@
                 if (exists === false) {
                     alert("Seda küsimustikku pole veel keegi täitnud");
                     return;
-                }else{
-					$scope.show = true;
-				}
+                } else {
+                    $scope.show = true;
+                }
                 $scope.both1 = $scope.addResultsChartOne($scope.statistics);
 
                 $scope.chartUserPoints = {
                     options: {
                         chart: {
                             type: 'bar'
-                        }
+                        },
+                        colors: [
+                            '#88c474', '#37474f', '#c95d5d'
+                        ]
                     },
                     title: {
                         text: 'Õpilaste punktid'
@@ -223,7 +226,10 @@
                             series: {
                                 stacking: 'normal'
                             }
-                        }
+                        },
+                        colors: [
+                            '#88c474', '#37474f', '#c95d5d'
+                        ],
                     },
                     title: {
                         text: 'Õpilaste ajakulu'
@@ -251,7 +257,10 @@
                         chart: {
                             type: 'boxplot',
                             inverted: true
-                        }
+                        },
+                        colors: [
+                            '#88c474', '#37474f', '#c95d5d'
+                        ]
                     },
                     title: {
                         text: 'Küsimuste ajakulu'
