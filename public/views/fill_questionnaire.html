@@ -1,12 +1,6 @@
 <md-content class="md-padding" layout="row" ng-init="service.isStudent()" ng-show="!loading">
 	<div layout="column" flex>
-		<md-toolbar class="md-hue-1">
-        <div flex class="md-toolbar-tools">
-            <h4 class="md-title">
-                 Küsimustikud:
-            </h4>
-        </div>
-		</md-toolbar>
+		<center><h2>Küsimustikud</h2></center>
 		<md-list>
 			<!--  (| orderBy: 'title'  ) kui see asi ng-repeati panna siis ta järjestab küsimustiku nime järgi, näiteks -->
 			<md-list-item class="md-3-line" ng-repeat="item in questionnaires | orderBy: 'title'  track by $index">

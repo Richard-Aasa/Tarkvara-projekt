@@ -11,6 +11,7 @@
             $scope.show = false;
             $scope.questionnaires = [];
             $scope.questionnaire = {};
+            $scope.currentIndex = 0;
             $scope.allStatistics = [];
             $scope.users = [];
             $scope.statistics = [];
@@ -71,21 +72,29 @@
             $scope.addResultsChartOne = function(statistics) {
                 var allNames = [];
                 var allResults = [];
+				var activeUser;
                 console.log($scope.users);
                 for (var i = 0; i < statistics.length; i++) {
-                    //var userIndex = $scope.users.indexOf("575daed5811cc15c12ab7a40");
-                    console.log($scope.users.indexOf("575daed5811cc15c12ab7a40"));
-                    console.log(statistics[i].user);
+					for(var k = 0; k < $scope.users.length; k++){
+						if($scope.users[k]._id == statistics[i].user) {
+							activeUser = $scope.users[k].name;
+						}
+					}
+                    /*var userIndex = $scope.users.indexOf(statistics[i].user);
+					var randObject = $scope.users.indexOf($scope.users[0]);
+                    console.log(randObject);
+					console.log($scope.users[0]);
+					console.log(statistics[i].user);*/
                     var check = false;
                     for (var j = 0; j < allNames.length; j++) {
-                        if (allNames[j] === statistics[i].user) {
+                        if (allNames[j] == activeUser) {
                             allResults[j] = $scope.sumPoints(statistics, i);
                             check = true;
                             break;
                         }
                     }
                     if (check === false) {
-                        allNames.push(statistics[i].user);
+                        allNames.push(activeUser);
                         allResults.push($scope.sumPoints(statistics, i));
                     }
                 }
@@ -155,7 +164,7 @@
             $scope.view = function(index) {
                 $scope.statistics = [];
                 $scope.questionnaire = $scope.questionnaires[index];
-                $scope.show = true;
+                $scope.currentIndex = index;
                 var exists = false;
                 for (var i = 0; i < $scope.allStatistics.length; i++) {
                     if ($scope.allStatistics[i].questionnaire == $scope.questionnaire._id) {
@@ -166,11 +175,10 @@
                 if (exists === false) {
                     alert("Seda küsimustikku pole veel keegi täitnud");
                     return;
-                }
+                }else{
+					$scope.show = true;
+				}
                 $scope.both1 = $scope.addResultsChartOne($scope.statistics);
-
-                console.log($scope.questionnaire);
-                console.log($scope.both);
 
                 $scope.chartUserPoints = {
                     options: {

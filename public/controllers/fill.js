@@ -75,11 +75,9 @@
       };
 
       $scope.view = function(item) {
-
         $scope.questionEndTime = Date.now();
-        $scope.activeQuestion = item;
-
         $scope.measureTime($scope.activeQuestion._id, $scope.questionStartTime, $scope.questionEndTime);
+        $scope.activeQuestion = item;
         $scope.questionStartTime = Date.now();
         if ($scope.arrayOfItems !== null) {
           $scope.arrayOfItems = [];
@@ -171,10 +169,14 @@
         }
         if (check === false) {
           $scope.allQuestionsTime.push(questionTotalTime);
+
         }
+        console.log($scope.allQuestionsTime);
       };
 
       $scope.save = function() {
+        $scope.questionEndTime = Date.now();
+        $scope.measureTime($scope.activeQuestion._id, $scope.questionStartTime, $scope.questionEndTime);
         //suhtleb serveriga
         //oleks vaja lisada funktsioon mis arvutab kokku punktid, aja jms
         var totalPoints = 0;
@@ -238,6 +240,7 @@
         });
 
         function DialogController($scope, $mdDialog, results, questionnaire, userName) {
+
           $scope.resultObject = results;
           $scope.questionnaire = questionnaire;
           $scope.userName = userName;
