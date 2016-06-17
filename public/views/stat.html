@@ -3,19 +3,23 @@
 		<md-list>
 			<md-subheader class="md-no-sticky"></md-subheader>
 			<md-list-item class="md-3-line" ng-repeat="item in questionnaires track by $index" ng-click="view($index)">
-				<div class="md-list-item-text" layout="column">
-					<h4>
-						Pealkiri: {{item.title}}
-					</h4>
+				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
 					<p>
-						Aeg mis kulub: {{item.totalTime}}
+						<b>{{item.title}}</b>
 					</p>
-					<p>
-						Maksimum punktid: {{item.totalPoints}}
-					</p>
-					<p>
-						Loodud: {{item.createdDate | date:'MM/dd/yyyy @ h:mm'}}
-					</p>
+					<div class="itemPadding">
+						<p>
+							<md-icon class="material-icons">timer</md-icon>
+							{{item.totalTime}}
+							<md-icon class="material-icons">star_rate</md-icon>
+							{{item.totalPoints}}
+						</p>
+						<p>
+							<md-icon class="material-icons">date_range</md-icon>
+							{{item.saved | date:'MM/dd/yyyy @ h:mm'}}
+						</p>
+						<md-divider></md-divider>
+					</div>
 				</div>
 			</md-list-item>
 			<md-divider></md-divider>
