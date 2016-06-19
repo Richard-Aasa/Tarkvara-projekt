@@ -53,13 +53,13 @@
                     .then(
                         function(data) {
                             showToast('Küsimustik edukalt salvestatud: ' + questionnaire.title);
-                            $scope.questionnaires.push(questionnaire);
+                            $scope.questionnaires.push(data);
                             $scope.questionnaires.sort(function(a, b) {
                                 var textA = a.title.toUpperCase();
                                 var textB = b.title.toUpperCase();
                                 return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
                             });
-                            commitViewChange(questionnaire);
+                            commitViewChange(data);
                         },
                         function(error) {
                             showToast(error.status + ' ' + error.statusText);
@@ -70,6 +70,7 @@
             $scope.update = function(questionnaire) {
                 questionnaire.saved = Date.now();
                 var serviceQuestionnaire = new QuestionnaireService(questionnaire);
+                console.log(questionnaire);
                 serviceQuestionnaire.$update().then(
                     function(data) {
                         showToast('Küsimustik edukalt salvestatud: ' + questionnaire.title);

@@ -1,38 +1,38 @@
-<md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading1 && !loading2 && !loading3">
-		<md-list layout="column" flex="20">
-			<center><h2>Küsimustikud</h2></center>
-			<md-list-item class="md-3-line" ng-repeat="item in questionnaires track by $index" ng-click="view($index)" ng-class="{'active-effect' : currentIndex == $index}" flex>
-				<div class="md-list-item-text" layout="column" md-ink-ripple="#88C474">
-					<p>
+<md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading1 && !loading2 && !loading3" flex>
+	<div layout="column" style="min-width:480px">
+		<center>
+			<h2>Küsimustikud</h2>
+		</center>
+		<md-list>
+			<md-list-item md-ink-ripple="#88C474" ng-repeat="item in questionnaires track by $index" ng-click="view($index)" ng-class="{'active-effect' : currentIndex == $index}">
+				<div layout="column">
+					<span>
 						<b>{{item.title}}</b>
-					</p>
-					<p>
+					</span>
+					<span>
 						<md-icon class="material-icons">timer</md-icon>
 						{{item.totalTime}}
 						<md-icon class="material-icons">star_rate</md-icon>
 						{{item.totalPoints}}
-					</p>
-					<p>
+					</span>
+					<span>
 						<md-icon class="material-icons">date_range</md-icon>
 						{{item.saved | date:'MM/dd/yyyy @ h:mm'}}
-					</p>
-					<md-divider></md-divider>
+					</span>
 				</div>
-		</md-list-item>
-		<md-divider></md-divider>
-	</md-list>
-	<div class="charts" layout="column" ng-if="show" flex>
-		<md-card flex>
-			<highchart id="UserPoints" config="chartUserPoints" flex></highchart>
-		</md-card>
-		<md-card flex>
-			<highchart id="UserTime" config="chartUserTime" flex></highchart>
-		</md-card>
-		<md-card flex>
-			<highchart id="QuestionTime" config="chartQuestionTime" flex></highchart>
-		</md-card>
+				<md-divider></md-divider>
+			</md-list-item>
+		</md-list>
+	</div>
+	<div layout="column" ng-if="show" flex="60">
+			<highchart id="UserPoints" config="chartUserPoints"></highchart>
+			<highchart id="UserTime" config="chartUserTime"></highchart>
+			<highchart id="QuestionTime" config="chartQuestionTime"></highchart>
+	</div>
+	<div layout="column" ng-if="loading2 || loading3" layout-align="center center">
+		<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 	</div>
 </md-content>
-<md-content class="md-padding" layout="row" layout-align="center center" ng-if="loading1 || loading2 || loading3" flex>
-	<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+<md-content class="md-padding" layout="row" ng-if="loading1 || loading2 || loading3">
+	<md-progress-circular style="margin-left: 50%;margin-top:25%" md-mode="indeterminate"></md-progress-circular>
 </md-content>

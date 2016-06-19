@@ -1,77 +1,59 @@
-<md-content class="md-padding" layout="row" ng-init="service.isStudent()" ng-show="!loading">
+<md-content class="md-padding" layout="row" flex ng-init="service.isStudent()" ng-show="!loading">
     <div layout="column" flex>
         <md-card>
-            <md-toolbar class="md-hue-1">
+            <md-toolbar class="md-secondary">
                 <div flex class="md-toolbar-tools">
                     <h4 class="md-title">
                   {{questionnaire.title}}
               </h4>
                 </div>
             </md-toolbar>
-            <!-- <div class="itemPadding textStuff">
-                <md-card-header-text>
-                    <h4 class="md-title">
-                      {{questionnaire.title}}
-                  </h4>
-                </md-card-header-text>
-            </div> -->
             <md-list>
-                <md-list-item ng-repeat="item in questionnaire.questions track by $index" class="listItem md-3-line" ng-click="view(item)">
-                    <div md-ink-ripple="#88C474" class="md-list-item-text" layout="column">
-                        <p>
+                <md-list-item ng-repeat="item in questionnaire.questions track by $index" ng-click="view(item)" ng-class="{'active-effect' : currentIndex == $index, 'hall' : currentIndex != $index && submittedQuestion[$index]}">
+                    <div md-ink-ripple="#88C474" layout="column">
+                        <span>
                             <b>{{item.title}}</b>
-                        </p>
-                        <p>
+                        </span>
+                        <span>
                             <md-icon class="material-icons">star_rate</md-icon>
                             {{item.maxPoints}} punkti
-                        </p>
-                        <md-divider></md-divider>
+                        </span>
                     </div>
+                    <md-divider></md-divider>
                 </md-list-item>
             </md-list>
         </md-card>
     </div>
     <div layout="column" flex>
         <md-card>
-            <md-toolbar class="md-hue-1">
+            <md-toolbar class="md-secondary">
                 <div flex class="md-toolbar-tools">
                     <h2 flex>Aega jäänud:</h2>
                     <md-icon class="material-icons">timer</md-icon>{{displayRemainingTime(questionnaireLeftTime)}}
                 </div>
             </md-toolbar>
-            <md-card-content ng-init="activeQuestion = questionnaire.questions[0]">
+            <md-card-content>
                 <p>
                     <b>{{activeQuestion.title}}</b>
                 </p>
                 <!-- kui on valikvastusega küsimus -->
                 <div ng-if="activeQuestion.type=='Valik'">
-                    <md-list>
-                        <md-list-item ng-if="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants[$index] == null" ng-repeat="item in activeQuestion.variants track by $index" ng-click="null">
-                            <span>
-                {{item.answer}}
-              </span>
-                            <md-checkbox class="green" ng-model="arrayOfItems[$index]" aria-label="Õige/Vale" ng-init="arrayOfItems[$index] = false"></md-checkbox>
-                        </md-list-item>
-                        <md-list-item ng-if="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants[$index] != null" ng-repeat="item in activeQuestion.variants track by $index" ng-click="null">
-                            <span>
-                {{item.answer}}
-              </span>
-                            <md-checkbox class="green" aria-label="Õige/Vale" ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants[$index]"></md-checkbox>
+                    <md-list ng-repeat="option in activeQuestion.variants track by $index">
+                        <md-list-item>
+                          <span>{{option.answer}}</span>
+                          <md-checkbox aria-label="Õige/Vale" ng-model="answers[currentIndex].answer[$index]"></md-checkbox>
                         </md-list-item>
                     </md-list>
-                    <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(arrayOfItems, activeQuestion)">Vasta küsimusele</md-button>
-                    <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
                 </div>
                 <!-- kui on tühja lüngaga küsimus -->
                 <div ng-if="activeQuestion.type=='Tühi lünk'">
-
                     <md-input-container>
                         <label>Vastus</label>
-                        <input ng-model="filledQuestion[questionnaire.questions.indexOf(activeQuestion)].variants">
-                        <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == false" ng-click="submit(answer, activeQuestion)">Vasta küsimusele</md-button>
-                        <md-button class="md-raised md-primary" ng-if="allQuestionsFilled == true" ng-click="save()">Lõpeta küsimustik</md-button>
+                        <input ng-model="answers[currentIndex]">
                     </md-input-container>
                 </div>
+                <md-button class="md-raised md-primary" ng-click="submit(activeQuestion)">Vasta küsimusele</md-button>
+                <md-button class="md-raised md-accent" ng-disabled="!allQuestionsFilled" ng-click="save()">Lõpeta küsimustik</md-button>
             </md-card-content>
         </md-card>
     </div>

@@ -12,99 +12,90 @@
 <!-- NB! ng-app="app" tähendab, et kui me loome controllerit/servicet vms,
   siis põhirakendusele viitame sõnaga "app". Näiteks angular.module('app').controller() -->
 
-<body ng-app="app" ng-cloak layout="row" ng-controller="MainController" ng-init="service.requestCurrentUser()">
-
-    <section layout="row" flex>
-        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-if="service.isAuthenticated()">
-            <md-toolbar>
-                <h1 ng-show="service.isAuthenticated()" class="md-toolbar-tools">
+<body ng-app="app" layout="row" ng-cloak ng-controller="MainController" ng-init="service.requestCurrentUser()">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-if="service.isAuthenticated()" layout="column">
+        <md-toolbar>
+            <h1 ng-show="service.isAuthenticated()" class="md-toolbar-tools">
                     Tere, {{service.currentUser.name}}
                 </h1>
-            </md-toolbar>
+        </md-toolbar>
+        <md-list ng-controller="LeftNavCtrl">
+            <md-list-item ng-if="service.currentUser.teacher" ng-click="changeView('/questionnaire')" md-ink-ripple="#88C474">
+                Küsimustiku loomine
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item ng-click="changeView('/fill_questionnaire')" ng-if="!service.currentUser.teacher && service.isAuthenticated()" md-ink-ripple="#88C474">
+                Küsimustiku täitmine
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item ng-if="service.currentUser.teacher" ng-click="changeView('/stat')" md-ink-ripple="#88C474">
+                Statistika
+            </md-list-item>
+            <md-divider></md-divider>
+        </md-list>
+    </md-sidenav>
+    <div layout="column" flex>
+      <md-toolbar class="md-hue-2" layout="row">
+          <div class="md-toolbar-tools">
+              <md-button ng-click="toggleLeft()" hide-gt-md md-no-ink class="md-icon-button md-secondary" aria-label="Settings">
+                  <md-icon class="material-icons">menu</md-icon>
+              </md-button>
+              <md-button ng-click="changeView('/home')" class="md-icon-button" aria-label="Home">
+                  <md-icon class="md-primary material-icons">home</md-icon>
+              </md-button>
+              <h2 class="md-title" flex>
+                    Mälumäng
+                  </h2>
 
-            <md-list ng-controller="LeftNavCtrl">
-                <md-list-item ng-if="service.currentUser.teacher" ng-click="changeView('/questionnaire')" md-ink-ripple="#88C474">
-                    Küsimustiku loomine
-                </md-list-item>
-                <md-divider></md-divider>
-                <md-list-item ng-click="changeView('/fill_questionnaire')" ng-if="!service.currentUser.teacher && service.isAuthenticated()" md-ink-ripple="#88C474">
-                    Küsimustiku täitmine
-                </md-list-item>
-                <md-divider></md-divider>
-                <md-list-item ng-if="service.currentUser.teacher" ng-click="changeView('/stat')" md-ink-ripple="#88C474">
-                    Statistika
-                </md-list-item>
-                <md-divider></md-divider>
-            </md-list>
-
-        </md-sidenav>
-
-        <md-content flex>
-            <md-toolbar class="md-hue-2">
-                <div class="md-toolbar-tools">
-                    <md-button ng-click="toggleLeft()" hide-gt-md md-no-ink class="md-icon-button md-secondary" aria-label="Settings">
-                        <md-icon class="material-icons">menu</md-icon>
-                    </md-button>
-                    <md-button ng-click="changeView('/home')" class="md-icon-button" aria-label="Home">
-                        <md-icon class="md-primary material-icons">home</md-icon>
-                    </md-button>
-                    <h2 class="md-title" flex>
-                      Mälumäng
-                    </h2>
-
-                    <div ng-show="!service.isAuthenticated()" layout-align="end center">
-                        <md-button class="loginbtn" ng-click="login($event)" md-ink-ripple="#88C474">
-                            <md-icon class="md-primary material-icons">lock</md-icon>
-                            Login
-                        </md-button>
-                        <md-button class="registerbtn" ng-click="register($event)" md-ink-ripple="#88C474">
-                            <md-icon class="md-primary material-icons">person_add</md-icon>
-                            Register
-                        </md-button>
-                    </div>
-                    <div ng-show="service.isAuthenticated()" layout-align="end center">
-                        <md-button class="logoutbtn" ng-click="service.logout()" md-ink-ripple="#88C474">
-                            <md-icon class="md-primary material-icons">exit_to_app</md-icon>
-                            Log out
-                        </md-button>
-                    </div>
-                </div>
-            </md-toolbar>
-            <div ng-view layout="column" flex></div>
-        </md-content>
-    </section>
-
-
-    <!-- Main angular modules from bower install -->
-
-    <script src="/lib/angular/angular.min.js"></script>
-    <script src="/lib/angular-route/angular-route.min.js"></script>
-    <script src="/lib/angular-resource/angular-resource.min.js"></script>
-    <script src="/lib/angular-aria/angular-aria.min.js"></script>
-    <script src="/lib/angular-animate/angular-animate.min.js"></script>
-    <script src="/lib/angular-material/angular-material.min.js"></script>
-    <script src="/lib/angular-messages/angular-messages.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>
-    <script src="/lib/highcharts/highcharts.js"></script>
-    <script src="/lib/highcharts/highcharts-more.js"></script>
-    <script src="/lib/highcharts-ng/dist/highcharts-ng.min.js"></script>
-
-
-    <script src="/client.js"></script>
-    <script src="/controllers/main.js"></script>
-    <script src="/controllers/question.js"></script>
-    <script src="/controllers/questionnaire.js"></script>
-    <script src="/controllers/fill.js"></script>
-    <script src="/controllers/fill_questionnaire.js"></script>
-    <script src="/controllers/stat.js"></script>
-
-    <script src="/services/question.js"></script>
-    <script src="/services/questionnaire.js"></script>
-    <script src="/services/authenticate.js"></script>
-  	<script src="/services/statistics.js"></script>
-  	<script src="/services/user.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+              <div ng-show="!service.isAuthenticated()" layout-align="end center">
+                  <md-button class="loginbtn" ng-click="login($event)" md-ink-ripple="#88C474">
+                      <md-icon class="md-primary material-icons">lock</md-icon>
+                      Login
+                  </md-button>
+                  <md-button class="registerbtn" ng-click="register($event)" md-ink-ripple="#88C474">
+                      <md-icon class="md-primary material-icons">person_add</md-icon>
+                      Register
+                  </md-button>
+              </div>
+              <div ng-show="service.isAuthenticated()" layout-align="end center">
+                  <md-button class="logoutbtn" ng-click="service.logout()" md-ink-ripple="#88C474">
+                      <md-icon class="md-primary material-icons">exit_to_app</md-icon>
+                      Log out
+                  </md-button>
+              </div>
+          </div>
+      </md-toolbar>
+      <md-content layout="row" ng-view></md-content>
+    </div>
 </body>
+<!-- Main angular modules from bower install -->
 
+<script src="/lib/angular/angular.min.js"></script>
+<script src="/lib/angular-route/angular-route.min.js"></script>
+<script src="/lib/angular-resource/angular-resource.min.js"></script>
+<script src="/lib/angular-aria/angular-aria.min.js"></script>
+<script src="/lib/angular-animate/angular-animate.min.js"></script>
+<script src="/lib/angular-material/angular-material.min.js"></script>
+<script src="/lib/angular-messages/angular-messages.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>
+<script src="/lib/highcharts/highcharts.js"></script>
+<script src="/lib/highcharts/highcharts-more.js"></script>
+<script src="/lib/highcharts-ng/dist/highcharts-ng.min.js"></script>
+
+
+<script src="/client.js"></script>
+<script src="/controllers/main.js"></script>
+<script src="/controllers/question.js"></script>
+<script src="/controllers/questionnaire.js"></script>
+<script src="/controllers/fill.js"></script>
+<script src="/controllers/fill_questionnaire.js"></script>
+<script src="/controllers/stat.js"></script>
+
+<script src="/services/question.js"></script>
+<script src="/services/questionnaire.js"></script>
+<script src="/services/authenticate.js"></script>
+<script src="/services/statistics.js"></script>
+<script src="/services/user.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 </html>

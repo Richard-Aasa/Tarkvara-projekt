@@ -10,16 +10,6 @@ table, th, td {
     border-collapse: collapse;
     text-align: center;
 }
-.passedLi {
-    background-color: #88C474;
-}
-.activeLi {
-	background-color: #FBC02D;
-}
-md-checkbox.md-checked.green .md-icon {
-    background-color: rgb(136, 196, 116);
-}
-
 .loginbtn {
     color: rgb(255, 255, 255);
     background-color: rgb(136, 196, 116);
@@ -32,35 +22,27 @@ md-checkbox.md-checked.green .md-icon {
     color: rgb(255, 255, 255);
     background-color: rgb(201, 93, 93);
 }
-.itemPadding {
-    margin: 8px 8px 8px 8px;
-}
-.background {
-    background-image: url(/img/logotest.png);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: 800px 800px;
 
-}
-
-.Aligner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: auto;
-    margin-top: 40%;
-    background-color: #444545;
-    border: 1px solid black;
-    opacity: 0;
-    filter: alpha(opacity=60);
+img.bg {
+  /* Set rules to fill background */
+  min-height: 50%;
+  min-width: 1024px;
+  /* Set up proportionate scaling */
+  width: 50%;
+  height: auto;
+  /* Set up positioning */
+  position: fixed;
+  top: 0;
+  left: -128px;
 }
 
-
-.fadeIn.ng-enter {
-  transition: all 0.5s linear;
-  opacity: 0;
+.home-intro {
+  width: 50%;
+  min-height: 100%;
+  float: right;
+}
+.home-intro md-card {
+  z-index: 2;
 }
 .no-table-border {
   border: none;
@@ -69,34 +51,14 @@ md-checkbox.md-checked.green .md-icon {
 .active-effect {
   background-color: #607D8B;
   color: white;
-  font-size: 14px;
-  letter-spacing: 0.010em;
-  margin: 3px 0 1px 0;
-  font-weight: 400;
-  line-height: 1.2em;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin: 0; }
 }
-.active-effect > .md-icon {
-  background-color: #607D8B;
+.active-effect md-icon {
   color: white;
-  font-size: 14px;
-  letter-spacing: 0.010em;
-  margin: 3px 0 1px 0;
-  font-weight: 400;
-  line-height: 1.2em;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin: 0; }
-}
-md-icon.material-icons {
-  color:white;
-  background-color:white;
 }
 
 .hall {
   background-color: #E1E1E1;
+}
+.questionnaire-fill-list {
+  padding: 0 15px;
 }

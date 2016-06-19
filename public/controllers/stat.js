@@ -177,15 +177,15 @@
                 }
                 if (exists === false) {
                     var confirm = $mdDialog.confirm()
-						.title('Viga')
-						.textContent('Sellele küsimustikule ei ole keegi veel vastanud.')
-						.ok('SELGE');
-					$mdDialog.show(confirm);
+                        .title('Viga')
+                        .textContent('Sellele küsimustikule ei ole keegi veel vastanud.')
+                        .ok('SELGE');
+                    $mdDialog.show(confirm);
                     return;
-                }else{
-					$scope.currentIndex = index;
-					$scope.show = true;
-				}
+                } else {
+                    $scope.currentIndex = index;
+                    $scope.show = true;
+                }
                 $scope.both1 = $scope.addResultsChartOne($scope.statistics);
 
                 $scope.chartUserPoints = {

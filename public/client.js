@@ -43,8 +43,8 @@
         //Theme
                 $mdThemingProvider.theme('default')
                   .primaryPalette('blue-grey')
-                  .accentPalette('blue-grey', {
-                    'default' : '100'
+                  .accentPalette('green', {
+                    'default' : '200'
                   });
       }
     ]);

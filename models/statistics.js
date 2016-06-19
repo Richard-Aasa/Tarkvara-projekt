@@ -8,21 +8,42 @@ var Schema = mongoose.Schema;
 });*/
 
 var StatisticsSchema = new Schema({
-    questionnaire: { type: String, required: true },
-    user: { type: String, required: true},
-	//küsimustiku täitmise algusaeg
-	fillDate: { type: Date, default: Date.now},
+    questionnaire: {
+        type: String,
+        required: true
+    },
+    user: {
+        type: String,
+        required: true
+    },
+    //küsimustiku täitmise algusaeg
+    fillDate: {
+        type: Date,
+        default: Date.now
+    },
     //iga küsimuse peale kulunud aeg ja iga küsimuse eest saadud punktid, objektidena massiivis
-	questions: [{
-		totalTime: { type: Number, required: true },
-		points: { type: Number, required: true },
-		correct: Boolean
-	}],
-	userTime: {type: Number, required: true},
-    userPoints: {type: Number, required: true}
+    questions: [{
+        totalTime: {
+            type: Number,
+            required: true
+        },
+        points: {
+            type: Number,
+            required: true
+        },
+        correct: Boolean
+    }],
+    userTime: {
+        type: Number,
+        required: true
+    },
+    userPoints: {
+        type: Number,
+        required: true
+    }
 });
 var Statistics = mongoose.model('Statistics', StatisticsSchema);
 
 module.exports = {
-  Statistics: Statistics
+    Statistics: Statistics
 };
