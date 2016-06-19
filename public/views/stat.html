@@ -29,10 +29,8 @@
 			<highchart id="UserTime" config="chartUserTime"></highchart>
 			<highchart id="QuestionTime" config="chartQuestionTime"></highchart>
 	</div>
-	<div layout="column" ng-if="loading2 || loading3" layout-align="center center">
-		<md-progress-circular md-mode="indeterminate"></md-progress-circular>
-	</div>
+
 </md-content>
-<md-content class="md-padding" layout="row" ng-if="loading1 || loading2 || loading3">
-	<md-progress-circular style="margin-left: 50%;margin-top:25%" md-mode="indeterminate"></md-progress-circular>
+<md-content layout="row" style="padding: 25% 50%" ng-if="loading1 || loading2 || loading3">
+	<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </md-content>

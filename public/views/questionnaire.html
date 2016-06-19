@@ -1,4 +1,4 @@
-<md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading">
+<md-content layout="row" ng-init="service.isTeacher()" ng-show="!loading" flex>
 	<div layout="column" style="min-width:480px">
 		<center>
 			<h2>Küsimustikud</h2>
@@ -24,7 +24,7 @@
 			</md-list-item>
 		</md-list>
 	</div>
-	<div layout="row" flex layout-align="start start" ng-if="!loadingInner">
+	<div layout="row" layout-align="start start" ng-if="!loadingInner">
 		<div ng-if="activeQuestionnaire.title">
 			<md-card layout-padding>
 				<center>
@@ -156,7 +156,7 @@
 			</md-card>
 		</div>
 	</div>
-	<div layout="row" flex layout-align="center center" ng-if="loadingInner">
+	<div layout="row" ng-if="loadingInner" class="center-align">
 		<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 	</div>
 	<md-button class="md-fab" ng-click="create()" aria-label="Lisa uus küsimustik" style="position: fixed; bottom: 24px; right: 24px; background-color:#88C474">

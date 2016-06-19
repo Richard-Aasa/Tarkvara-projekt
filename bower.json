@@ -20,7 +20,6 @@
     "angular-route": "^1.5.5",
     "angular-material": "^1.0.7",
     "angular-resource": "^1.5.5",
-    "Chart.js": "^2.1.5",
     "simple-statistics": "^2.0.0",
     "highcharts-ng": "^0.0.11",
     "highcharts": "^4.2.5"
