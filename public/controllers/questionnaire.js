@@ -28,7 +28,9 @@
                         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
                     });
                     $scope.questionnaires = data;
-                    commitViewChange($scope.questionnaires[0]);
+                    if (typeof $scope.questionnaires !== 'undefined') {
+                      commitViewChange($scope.questionnaires[0]);
+                    }  
                     $scope.loading = false;
                 },
                 function(error) {
